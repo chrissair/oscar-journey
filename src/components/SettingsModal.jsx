@@ -13,7 +13,10 @@ const DEFAULT_FILTERS = {
   // Categories only governs Oscar-eligible films (BP nominees, INT/ANIM
   // broadly defined). Essentials bypass Categories entirely — they're gated
   // by Canon depth (tier + oscarsOnly / essentialsOnly).
-  categories: { BP: true, INT: true, ANIM: true },
+  // Additive attribute filter: checking INT shows only non-English films,
+  // checking ANIM shows only animated, both checked shows films matching
+  // either. Neither checked = no attribute restriction (show all).
+  categories: { INT: false, ANIM: false },
   genres: Object.fromEntries(Object.keys(GENRE_LABELS).map(k => [k, true])),
   runtimes: { short: true, medium: true, long: true },
   // Unified canon-tier floor applied to ALL films via getTier() — OSCAR /
@@ -57,7 +60,6 @@ const ERA_LABELS = {
 // depth (tier + oscarsOnly / essentialsOnly), not Categories. INT and ANIM
 // use broad predicates (any non-English / any animated) in FilmList.
 const CATEGORY_LABELS = {
-  BP: 'Best Picture',
   INT: 'International',
   ANIM: 'Animated',
 };

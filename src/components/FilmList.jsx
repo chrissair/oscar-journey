@@ -10,7 +10,7 @@ import { ratingKey } from '../utils/storage';
 import { readCachedRuntime, runtimeBucket, prefetchRuntimes, RUNTIME_LABELS } from '../utils/runtime';
 import { ERA_LABELS, CATEGORY_LABELS } from './SettingsModal';
 import { getTier } from '../utils/tierInfo';
-import LANGUAGES from '../data/languages.json';
+import { isInternational, isAnimated, matchesCategoryFilter } from '../utils/filmAttributes';
 import DIRECTORS from '../data/directors.json';
 import ACTORS from '../data/actors.json';
 import CAST from '../data/cast.json';
@@ -51,20 +51,8 @@ const SEARCH_INDEX = (() => {
 
 // A film is "International" if its primary language isn't English — sourced
 // from the baked-in languages.json. Also matches legacy category tags so
-// Oscar INT winners stay in the set.
-function isInternational(m) {
-  if (m.category === 'INT') return true;
-  if ((m.alsoWon || []).includes('INT')) return true;
-  return LANGUAGES[m.id] != null;
-}
-// A film is "Animated" via either the Oscar ANIM category, a genre code of
-// 'A' (Animation/Family), or an alsoWon entry. Catches non-Oscar animated
-// films like Toy Story that are otherwise tagged ESSENTIAL.
-function isAnimated(m) {
-  if (m.category === 'ANIM') return true;
-  if ((m.alsoWon || []).includes('ANIM')) return true;
-  return m.genre === 'A';
-}
+// Predicates imported from utils/filmAttributes so the Journey filter and
+// the Film tab filter stay in sync.
 
 // "Wins" filter — default all OFF, OR semantic. A film passes if it won at least one checked award.
 // Some Oscar categories were renamed/split across years; we group equivalents under one label.
@@ -105,9 +93,10 @@ const DEFAULT_FILM_FILTERS = {
     '1910s': true, '1920s': true, '1930s': true, '1940s': true, '1950s': true, '1960s': true,
     '70s': true, '80s': true, '90s': true, '00s': true, '10s': true, '20s': true,
   },
-  // Categories only governs Oscar-eligible films. Essentials bypass this
-  // section entirely — they're gated by Canon depth (tier + focus mode).
-  categories: { BP: true, INT: true, ANIM: true },
+  // Additive attribute filter. Unchecked = no restriction (show all). INT
+  // catches any non-English film; ANIM catches any animated film. BP and
+  // Essentials are governed by Canon depth + oscarsOnly/essentialsOnly.
+  categories: { INT: false, ANIM: false },
   genres: Object.fromEntries(Object.keys(GENRE_LABELS).map(k => [k, true])),
   runtimes: { short: true, medium: true, long: true },
   wins: Object.fromEntries(Object.keys(WIN_CATEGORIES).map(k => [k, false])),
@@ -288,19 +277,7 @@ export default function FilmList({ watchedTitleSet, onOpenDetail, onToggleWatche
         return true;
       })
       .filter(m => filters.eras[eraBucket(m.year)])
-      .filter(m => {
-        // Essentials bypass Categories — they're governed by Canon depth.
-        if (m.category === 'ESSENTIAL') return true;
-        // Oscar-eligible films: OR semantics over BP / broad-INT / broad-ANIM.
-        // INT and ANIM use broad predicates (non-English / genre=A / alsoWon)
-        // so they catch international winners that are also BP-nominated or
-        // animated films like Toy Story across the Oscar catalog.
-        const c = filters.categories;
-        if (c.BP && m.category === 'BP') return true;
-        if (c.INT && isInternational(m)) return true;
-        if (c.ANIM && isAnimated(m)) return true;
-        return false;
-      })
+      .filter(m => matchesCategoryFilter(m, filters.categories))
       // Canon depth + focus mode are bypassed when there's an active search — if you know
       // the film you want (e.g. "Matrix"), you shouldn't have to widen your curation to find it.
       // Tier applies UNIFORMLY to all films via the unified getTier helper, which counts
@@ -360,12 +337,9 @@ export default function FilmList({ watchedTitleSet, onOpenDetail, onToggleWatche
 
   const categoryCounts = useMemo(() => {
     // Counts reflect Oscar-eligible films only — essentials bypass Categories,
-    // so a count for ESSENTIAL would be misleading here. INT / ANIM are
-    // broad predicates applied to the Oscar-eligible subset.
-    const c = { BP: 0, INT: 0, ANIM: 0 };
+    // INT / ANIM are broad predicates spanning ALL films (including essentials).
+    const c = { INT: 0, ANIM: 0 };
     for (const m of eligiblePool) {
-      if (m.category === 'ESSENTIAL') continue;
-      if (m.category === 'BP') c.BP++;
       if (isInternational(m)) c.INT++;
       if (isAnimated(m)) c.ANIM++;
     }
