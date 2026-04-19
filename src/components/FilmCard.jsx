@@ -3,7 +3,6 @@ import { fetchOmdbData, readCachedOmdbData, tidyPlot } from '../utils/omdb';
 import { extractDominantColor } from '../utils/colorExtract';
 import { MovieBadges } from './Badges';
 import { getGlobalRank, getPersonalRank } from '../utils/eloRanks';
-import LanguagePill from './LanguagePill';
 import OscarIcon, { getOscarBadges } from './OscarIcon';
 import TierPips from './TierPips';
 import StarPicker from './StarPicker';
@@ -208,7 +207,6 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, fading, ra
             return <span className="film-year-runtime"> · {pretty}</span>;
           })()}
           <TierPips movie={movie} variant="compact" />
-          <LanguagePill movie={movie} />
         </div>
         <MovieBadges movie={movie} />
 
