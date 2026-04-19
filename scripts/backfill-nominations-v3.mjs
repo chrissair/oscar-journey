@@ -86,6 +86,7 @@ const AWARD_MAP = {
   'Best Foreign Language Film': { category: 'International Feature' },
   'Best International Feature Film': { category: 'International Feature' },
   'Best Animated Feature': { category: 'Animated Feature' },
+  'Best Animated Feature Film': { category: 'Animated Feature' },
   'Best Motion Picture': { category: 'Best Picture' },
   'Best Picture': { category: 'Best Picture' },
   'Outstanding Motion Picture': { category: 'Best Picture' },
@@ -110,10 +111,13 @@ function ordinal(n) {
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
-// Normalize a Wikipedia film title to a catalog-id-style slug.
+// Normalize a Wikipedia film title to a catalog-id-style slug. Expand
+// "&" to " and " before slugging so "Wallace & Gromit" matches the
+// catalog's "wallace-and-gromit" form.
 function slugify(title, year) {
   return title
     .toLowerCase()
+    .replace(/\s*&\s*/g, ' and ')
     .replace(/['’]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '') + '-' + year;
@@ -123,12 +127,53 @@ function slugify(title, year) {
 // block. Returns [{category, films: [{title, won}]}].
 function parseCeremonyPage(wt) {
   if (!wt) return [];
-  const markerRe = /\{\{\s*Award category\|[^|}]*\|\s*\[\[\s*Academy Award for Best [^|}]+(?:\|\s*([^}\]]+))?\]\]\s*\}\}/gi;
+  // Match {{Award category|...|[[TARGET|LABEL]]}} AND {{Award category|...|[[TARGET]]}}.
+  // Category labels vary across decades/pages:
+  //   - Modern:  [[Academy Award for Best X|Best X Display]]
+  //   - Newer:   [[Best X in a Leading Role]] (no "Academy Award for")
+  //   - Foreign: [[List of submissions to the Nth Academy Awards...|Best Foreign Language Film]]
+  // Rule: prefer the display label (after "|"); fall back to the link target.
+  // The color argument may be a literal hex (`#F9EFAA`) or a nested
+  // template call like `{{Academy Awards/color}}` — allow both. Template
+  // name may be "Award category" (two words, older pages) or
+  // "AwardCategory" (one word, 86th AA+).
+  const markerRe = /\{\{\s*Award\s*[Cc]ategory\|(?:[^|]|\{\{[^}]*\}\})*\|\s*\[\[\s*([^\]|]+?)(?:\|\s*([^}\]]+))?\]\]\s*\}\}/g;
   const results = [];
   const markers = [];
   let m;
   while ((m = markerRe.exec(wt)) !== null) {
-    markers.push({ idx: m.index + m[0].length, label: (m[1] || '').trim() });
+    const target = m[1].trim();
+    const display = (m[2] || '').trim();
+    // The usable label is the display text OR the target stripped of any
+    // "Academy Award for " prefix. Filter: must start with "Best " or an
+    // "Outstanding " variant (older wording) — skips non-award markers.
+    let label = display || target.replace(/^Academy Award for /, '');
+    label = label.trim();
+    if (!/^(Best|Outstanding) /i.test(label)) continue;
+    // Normalize common label variants so a single AWARD_MAP entry covers
+    // each category:
+    //   "Best Documentary (Feature)" / "Best Documentary Feature Film"
+    //   → "Best Documentary Feature"
+    //   "Best Music (Original Score)" → "Best Original Score"
+    //   "Best Music (Song)" → "Best Original Song"
+    //   "Best Writing (Original Screenplay)" → "Best Original Screenplay"
+    label = label
+      .replace(/^Best Documentary\s*\(Feature\)$/i, 'Best Documentary Feature')
+      .replace(/^Best Documentary Feature Film$/i, 'Best Documentary Feature')
+      .replace(/^Best Music\s*\((?:Original )?Score\)$/i, 'Best Original Score')
+      .replace(/^Best Music\s*\(Original Dramatic Score\)$/i, 'Best Original Score')
+      .replace(/^Best Music\s*\(Original Musical or Comedy Score\)$/i, 'Best Original Score')
+      .replace(/^Best Music\s*\(Scoring[^)]*\)$/i, 'Best Original Score')
+      .replace(/^Best Music\s*\((?:Original )?Song\)$/i, 'Best Original Song')
+      .replace(/^Best Writing\s*\(Original Screenplay\)$/i, 'Best Original Screenplay')
+      .replace(/^Best Writing\s*\(Screenplay[^)]*\)$/i, 'Best Adapted Screenplay')
+      .replace(/^Best Foreign Language Film$/i, 'Best Foreign Language Film')
+      .replace(/^Best Animated Feature Film$/i, 'Best Animated Feature')
+      .replace(/\s+/g, ' ').trim();
+    // Skip short-film categories quickly (no parenthetical stripping
+    // means these don't accidentally collide with long-form awards).
+    if (/\(Short/i.test(label)) continue;
+    markers.push({ idx: m.index + m[0].length, label });
   }
   for (let i = 0; i < markers.length; i++) {
     const start = markers[i].idx;
@@ -184,6 +229,16 @@ async function main() {
   }
   console.log(`Targeting ${targets.length} films across ${byCeremony.size} ceremonies`);
 
+  // ESSENTIAL films store the film's production year, which doesn't
+  // always match AMPAS eligibility (e.g. Cinema Paradiso released
+  // 1988 in Italy but competed at the 62nd AA, not our derived 61st).
+  // Include ceremony+1 as a fallback lookup when the primary comes up
+  // empty for derived-ceremony essentials.
+  const needsFallback = new Set();
+  for (const t of targets) {
+    if (!t._movie.ceremony) needsFallback.add(t._ceremony);
+  }
+
   let recovered = 0;
   for (const [cer, films] of [...byCeremony].sort((a, b) => a[0] - b[0])) {
     const page = `${ordinal(cer)} Academy Awards`;
@@ -196,13 +251,36 @@ async function main() {
       const matches = [];
       const expectedSlug = m.id;
       const lcTitle = m.title.toLowerCase();
-      for (const section of parsed) {
-        for (const f of section.films) {
-          const fslug = slugify(f.title, m.year);
-          if (fslug === expectedSlug || f.title.toLowerCase() === lcTitle) {
-            matches.push({ category: section.category, won: f.won });
+      // Wikipedia often uses longer disambiguated titles (e.g. "Il Postino:
+      // The Postman" for our catalog's "Il Postino"). Accept a match if
+      // the Wikipedia title STARTS WITH our catalog title (boundary-safe).
+      const startsLike = (a, b) => {
+        if (!a.startsWith(b)) return false;
+        const next = a[b.length];
+        return !next || next === ':' || next === ' ' || next === ',';
+      };
+      const scan = (sections) => {
+        for (const section of sections) {
+          for (const f of section.films) {
+            const fLc = f.title.toLowerCase();
+            const fslug = slugify(f.title, m.year);
+            if (fslug === expectedSlug || fLc === lcTitle || startsLike(fLc, lcTitle)) {
+              matches.push({ category: section.category, won: f.won });
+            }
           }
         }
+      };
+      scan(parsed);
+      // Fallback for essentials with derived ceremony: try ceremony+1 if
+      // the primary page yielded no matches. Catches films like Cinema
+      // Paradiso (production-year 1988, AMPAS-eligible at 62nd not 61st).
+      if (matches.length === 0 && !m.ceremony && t._ceremony < 97) {
+        const fallbackCer = t._ceremony + 1;
+        const fallbackPage = `${ordinal(fallbackCer)} Academy Awards`;
+        const fallbackWt = await fetchWikitext(fallbackPage);
+        const fallbackParsed = parseCeremonyPage(fallbackWt);
+        scan(fallbackParsed);
+        await new Promise(r => setTimeout(r, 500));
       }
       if (matches.length === 0) continue;
       // Dedupe: same category may appear twice (winner + bulleted non-winner if

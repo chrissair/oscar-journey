@@ -2162,9 +2162,26 @@
     "title": "Atlantic City",
     "year": 1981,
     "category": "BP",
-    "source": null,
+    "source": "54th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Actress",
+        "won": false
+      }
+    ]
   },
   {
     "id": "on-golden-pond-1981",
@@ -2226,9 +2243,38 @@
     "title": "Raiders of the Lost Ark",
     "year": 1981,
     "category": "BP",
-    "source": null,
+    "source": "54th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Art Direction",
+        "won": true
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": true
+      },
+      {
+        "category": "Visual Effects",
+        "won": true
+      }
+    ]
   },
   {
     "id": "reds-1981",
@@ -4967,9 +5013,26 @@
     "title": "Il Postino",
     "year": 1995,
     "category": "BP",
-    "source": null,
+    "source": "68th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Adapted Screenplay",
+        "won": false
+      },
+      {
+        "category": "Original Score",
+        "won": true
+      }
+    ]
   },
   {
     "id": "sense-and-sensibility-1995",
@@ -9066,9 +9129,26 @@
     "title": "The Wolf of Wall Street",
     "year": 2013,
     "category": "BP",
-    "source": "List of accolades received by The Wolf of Wall Street",
+    "source": "86th Academy Awards (ceremony-page)",
     "rawCount": 2,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      }
+    ]
   },
   {
     "id": "birdman-2014",
@@ -11104,9 +11184,18 @@
     "title": "Don't Look Up",
     "year": 2021,
     "category": "BP",
-    "source": "Don't Look Up",
+    "source": "94th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "drive-my-car-2021",
@@ -11136,9 +11225,42 @@
     "title": "Dune",
     "year": 2021,
     "category": "BP",
-    "source": null,
+    "source": "94th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Production Design",
+        "won": true
+      },
+      {
+        "category": "Cinematography",
+        "won": true
+      },
+      {
+        "category": "Makeup",
+        "won": false
+      },
+      {
+        "category": "Costume Design",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": true
+      },
+      {
+        "category": "Visual Effects",
+        "won": true
+      }
+    ]
   },
   {
     "id": "king-richard-2021",
@@ -13067,27 +13189,42 @@
     "title": "Closely Watched Trains",
     "year": 1966,
     "category": "INT",
-    "source": null,
+    "source": "40th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "investigation-of-a-citizen-above-suspicion-1970",
     "title": "Investigation of a Citizen Above Suspicion",
     "year": 1970,
     "category": "INT",
-    "source": null,
+    "source": "43rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-garden-of-the-finzi-continis-1970",
     "title": "The Garden of the Finzi-Continis",
     "year": 1970,
     "category": "INT",
-    "source": null,
+    "source": "44th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-discreet-charm-of-the-bourgeoisie-1972",
@@ -13158,18 +13295,28 @@
     "title": "Dersu Uzala",
     "year": 1975,
     "category": "INT",
-    "source": "Dersu Uzala (1975 film)",
+    "source": "48th Academy Awards (ceremony-page)",
     "rawCount": 2,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "mephisto-1981",
     "title": "Mephisto",
     "year": 1981,
     "category": "INT",
-    "source": "Mephisto (1981 film)",
+    "source": "54th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "babettes-feast-1987",
@@ -13286,9 +13433,14 @@
     "title": "Wallace and Gromit The Curse of the Were-Rabbit",
     "year": 2005,
     "category": "ANIM",
-    "source": null,
+    "source": "78th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "happy-feet-2006",
@@ -13353,9 +13505,14 @@
     "title": "Rango",
     "year": 2011,
     "category": "ANIM",
-    "source": "Rango (2011 film)",
+    "source": "84th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "brave-2012",
@@ -13391,45 +13548,70 @@
     "title": "Big Hero 6",
     "year": 2014,
     "category": "ANIM",
-    "source": "Big Hero 6 (film)",
+    "source": "87th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "inside-out-2015",
     "title": "Inside Out",
     "year": 2015,
     "category": "ANIM",
-    "source": null,
+    "source": "88th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "zootopia-2016",
     "title": "Zootopia",
     "year": 2016,
     "category": "ANIM",
-    "source": "List of accolades received by Zootopia",
+    "source": "89th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "coco-2017",
     "title": "Coco",
     "year": 2017,
     "category": "ANIM",
-    "source": null,
+    "source": "90th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "spider-man-into-the-spider-verse-2018",
     "title": "Spider-Man Into the Spider-Verse",
     "year": 2018,
     "category": "ANIM",
-    "source": null,
+    "source": "91st Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "toy-story-4-2019",
@@ -13484,18 +13666,28 @@
     "title": "Guillermo del Toro's Pinocchio",
     "year": 2022,
     "category": "ANIM",
-    "source": "List of accolades received by Guillermo del Toro's Pinocchio",
+    "source": "95th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-boy-and-the-heron-2023",
     "title": "The Boy and the Heron",
     "year": 2023,
     "category": "ANIM",
-    "source": "The Boy and the Heron",
+    "source": "96th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Animated Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "flow-2024",
@@ -14503,9 +14695,14 @@
     "title": "La Dolce Vita",
     "year": 1960,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "33rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Director",
+        "won": false
+      }
+    ]
   },
   {
     "id": "judgment-at-nuremberg-1961",
@@ -14811,9 +15008,14 @@
     "title": "Swing Time",
     "year": 1936,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "9th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Original Song",
+        "won": true
+      }
+    ]
   },
   {
     "id": "bringing-up-baby-1938",
@@ -16901,18 +17103,28 @@
     "title": "Nights of Cabiria",
     "year": 1957,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "30th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "black-orpheus-1959",
     "title": "Black Orpheus",
     "year": 1959,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "32nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "breathless-1960",
@@ -17399,9 +17611,14 @@
     "title": "Hearts and Minds",
     "year": 1974,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "47th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Documentary Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "adoption-1975",
@@ -17435,9 +17652,14 @@
     "title": "Harlan County, USA",
     "year": 1976,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "49th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Documentary Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "a-special-day-1977",
@@ -17784,9 +18006,14 @@
     "title": "The Times of Harvey Milk",
     "year": 1984,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "57th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Documentary Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "this-is-spinal-tap-1984",
@@ -17907,9 +18134,14 @@
     "title": "Cinema Paradiso",
     "year": 1988,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "61st Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "die-hard-1988",
@@ -19281,9 +19513,14 @@
     "title": "When We Were Kings",
     "year": 1996,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "69th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Documentary Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "happy-together-1997",
@@ -19326,9 +19563,14 @@
     "title": "The Fog of War",
     "year": 2003,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "76th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Documentary Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-wrestler-2008",
