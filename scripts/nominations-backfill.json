@@ -1326,9 +1326,26 @@
     "title": "Annie Hall",
     "year": 1977,
     "category": "BP",
-    "source": null,
+    "source": "50th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": true
+      },
+      {
+        "category": "Director",
+        "won": true
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Actress",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-goodbye-girl-1977",
@@ -2074,9 +2091,30 @@
     "title": "Tess",
     "year": 1980,
     "category": "BP",
-    "source": null,
+    "source": "53rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Art Direction",
+        "won": true
+      },
+      {
+        "category": "Cinematography",
+        "won": true
+      },
+      {
+        "category": "Costume Design",
+        "won": true
+      }
+    ]
   },
   {
     "id": "chariots-of-fire-1981",
@@ -4683,9 +4721,14 @@
     "title": "Four Weddings and a Funeral",
     "year": 1994,
     "category": "BP",
-    "source": null,
+    "source": "67th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      }
+    ]
   },
   {
     "id": "pulp-fiction-1994",
@@ -4760,9 +4803,26 @@
     "title": "The Shawshank Redemption",
     "year": 1994,
     "category": "BP",
-    "source": null,
+    "source": "67th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Sound",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "braveheart-1995",
@@ -5012,9 +5072,34 @@
     "title": "Fargo",
     "year": 1996,
     "category": "BP",
-    "source": "Fargo (1996 film)",
+    "source": "69th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Actress",
+        "won": true
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "jerry-maguire-1996",
@@ -5225,9 +5310,18 @@
     "title": "The Full Monty",
     "year": 1997,
     "category": "BP",
-    "source": null,
+    "source": "70th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      }
+    ]
   },
   {
     "id": "good-will-hunting-1997",
@@ -5447,9 +5541,46 @@
     "title": "Saving Private Ryan",
     "year": 1998,
     "category": "BP",
-    "source": null,
+    "source": "71st Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": true
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Sound Effects Editing",
+        "won": true
+      },
+      {
+        "category": "Art Direction",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": true
+      },
+      {
+        "category": "Makeup",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-thin-red-line-1998",
@@ -6588,9 +6719,34 @@
     "title": "Ray",
     "year": 2004,
     "category": "BP",
-    "source": null,
+    "source": "77th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Actor",
+        "won": true
+      },
+      {
+        "category": "Sound Mixing",
+        "won": true
+      },
+      {
+        "category": "Costume Design",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "sideways-2004",
@@ -6616,9 +6772,26 @@
     "title": "Crash",
     "year": 2005,
     "category": "BP",
-    "source": null,
+    "source": "78th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": true
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": true
+      }
+    ]
   },
   {
     "id": "brokeback-mountain-2005",
@@ -7434,9 +7607,22 @@
     "title": "District 9",
     "year": 2009,
     "category": "BP",
-    "source": null,
+    "source": "82nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      },
+      {
+        "category": "Visual Effects",
+        "won": false
+      }
+    ]
   },
   {
     "id": "an-education-2009",
@@ -7546,9 +7732,14 @@
     "title": "A Serious Man",
     "year": 2009,
     "category": "BP",
-    "source": null,
+    "source": "82nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      }
+    ]
   },
   {
     "id": "up-2009",
@@ -7812,9 +8003,22 @@
     "title": "The Kids Are All Right",
     "year": 2010,
     "category": "BP",
-    "source": null,
+    "source": "83rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      }
+    ]
   },
   {
     "id": "the-social-network-2010",
@@ -8331,9 +8535,18 @@
     "title": "Beasts of the Southern Wild",
     "year": 2012,
     "category": "BP",
-    "source": null,
+    "source": "85th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      }
+    ]
   },
   {
     "id": "django-unchained-2012",
@@ -8366,9 +8579,38 @@
     "title": "Les Misérables",
     "year": 2012,
     "category": "BP",
-    "source": null,
+    "source": "85th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Supporting Actress",
+        "won": true
+      },
+      {
+        "category": "Sound Editing",
+        "won": true
+      },
+      {
+        "category": "Production Design",
+        "won": false
+      },
+      {
+        "category": "Makeup",
+        "won": true
+      },
+      {
+        "category": "Costume Design",
+        "won": false
+      }
+    ]
   },
   {
     "id": "life-of-pi-2012",
@@ -9409,9 +9651,34 @@
     "title": "Moonlight",
     "year": 2016,
     "category": "BP",
-    "source": null,
+    "source": "89th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": true
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": true
+      },
+      {
+        "category": "Supporting Actress",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "arrival-2016",
@@ -10463,9 +10730,38 @@
     "title": "1917",
     "year": 2019,
     "category": "BP",
-    "source": null,
+    "source": "92nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Sound Editing",
+        "won": true
+      },
+      {
+        "category": "Production Design",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": true
+      },
+      {
+        "category": "Makeup",
+        "won": false
+      },
+      {
+        "category": "Visual Effects",
+        "won": true
+      }
+    ]
   },
   {
     "id": "once-upon-a-time-in-hollywood-2019",
@@ -11945,9 +12241,46 @@
     "title": "Wicked",
     "year": 2024,
     "category": "BP",
-    "source": null,
+    "source": "97th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Actress",
+        "won": false
+      },
+      {
+        "category": "Supporting Actress",
+        "won": false
+      },
+      {
+        "category": "Sound",
+        "won": false
+      },
+      {
+        "category": "Production Design",
+        "won": true
+      },
+      {
+        "category": "Makeup",
+        "won": false
+      },
+      {
+        "category": "Costume Design",
+        "won": true
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      },
+      {
+        "category": "Visual Effects",
+        "won": false
+      }
+    ]
   },
   {
     "id": "one-battle-after-another-2025",
@@ -12327,9 +12660,14 @@
     "title": "Mediterraneo",
     "year": 1991,
     "category": "INT",
-    "source": null,
+    "source": "64th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "indochine-1992",
@@ -12369,27 +12707,42 @@
     "title": "Burnt by the Sun",
     "year": 1994,
     "category": "INT",
-    "source": "Burnt by the Sun",
+    "source": "67th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "antonias-line-1995",
     "title": "Antonia's Line",
     "year": 1995,
     "category": "INT",
-    "source": "Antonia's Line",
+    "source": "68th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "kolya-1996",
     "title": "Kolya",
     "year": 1996,
     "category": "INT",
-    "source": null,
+    "source": "69th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "character-1997",
@@ -12410,27 +12763,42 @@
     "title": "All About My Mother",
     "year": 1999,
     "category": "INT",
-    "source": null,
+    "source": "72nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "no-mans-land-2001",
     "title": "No Man's Land",
     "year": 2001,
     "category": "INT",
-    "source": null,
+    "source": "74th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "nowhere-in-africa-2001",
     "title": "Nowhere in Africa",
     "year": 2001,
     "category": "INT",
-    "source": null,
+    "source": "75th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-barbarian-invasions-2003",
@@ -12469,27 +12837,42 @@
     "title": "Tsotsi",
     "year": 2005,
     "category": "INT",
-    "source": null,
+    "source": "78th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-lives-of-others-2006",
     "title": "The Lives of Others",
     "year": 2006,
     "category": "INT",
-    "source": null,
+    "source": "79th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-counterfeiters-2007",
     "title": "The Counterfeiters",
     "year": 2007,
     "category": "INT",
-    "source": null,
+    "source": "80th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "departures-2008",
@@ -12510,18 +12893,28 @@
     "title": "The Secret in Their Eyes",
     "year": 2009,
     "category": "INT",
-    "source": null,
+    "source": "82nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "in-a-better-world-2010",
     "title": "In a Better World",
     "year": 2010,
     "category": "INT",
-    "source": null,
+    "source": "83rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "a-separation-2011",
@@ -12588,18 +12981,28 @@
     "title": "The Salesman",
     "year": 2016,
     "category": "INT",
-    "source": "The Salesman (2016 film)",
+    "source": "89th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "a-fantastic-woman-2017",
     "title": "A Fantastic Woman",
     "year": 2017,
     "category": "INT",
-    "source": "A Fantastic Woman",
+    "source": "90th Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "another-round-2020",
@@ -12650,9 +13053,14 @@
     "title": "The Shop on Main Street",
     "year": 1965,
     "category": "INT",
-    "source": null,
+    "source": "38th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "closely-watched-trains-1966",
@@ -12768,9 +13176,14 @@
     "title": "Babette's Feast",
     "year": 1987,
     "category": "INT",
-    "source": null,
+    "source": "60th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "pelle-the-conqueror-1987",
@@ -12922,9 +13335,18 @@
     "title": "WALL-E",
     "year": 2008,
     "category": "ANIM",
-    "source": null,
+    "source": "81st Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Sound Editing",
+        "won": false
+      },
+      {
+        "category": "Sound Mixing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "rango-2011",
@@ -13730,9 +14152,22 @@
     "title": "The Great Dictator",
     "year": 1940,
     "category": "BP",
-    "source": null,
+    "source": "13th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Actor",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      }
+    ]
   },
   {
     "id": "its-a-wonderful-life-1946",
@@ -14248,9 +14683,34 @@
     "title": "Terminator 2: Judgment Day",
     "year": 1991,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "64th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Sound Effects Editing",
+        "won": true
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Makeup",
+        "won": true
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      },
+      {
+        "category": "Visual Effects",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-lion-king-1994",
@@ -14757,9 +15217,38 @@
     "title": "Ben-Hur",
     "year": 1959,
     "category": "BP",
-    "source": null,
+    "source": "32nd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": true
+      },
+      {
+        "category": "Director",
+        "won": true
+      },
+      {
+        "category": "Actor",
+        "won": true
+      },
+      {
+        "category": "Supporting Actor",
+        "won": true
+      },
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Film Editing",
+        "won": true
+      },
+      {
+        "category": "Visual Effects",
+        "won": true
+      }
+    ]
   },
   {
     "id": "the-400-blows-1959",
@@ -15278,9 +15767,22 @@
     "title": "The Empire Strikes Back",
     "year": 1980,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "53rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Sound",
+        "won": true
+      },
+      {
+        "category": "Art Direction",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "the-thing-1982",
@@ -15305,18 +15807,44 @@
     "title": "Back to the Future",
     "year": 1985,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "58th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Sound",
+        "won": false
+      },
+      {
+        "category": "Sound Effects Editing",
+        "won": true
+      }
+    ]
   },
   {
     "id": "ran-1985",
     "title": "Ran",
     "year": 1985,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "58th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Director",
+        "won": false
+      },
+      {
+        "category": "Art Direction",
+        "won": false
+      },
+      {
+        "category": "Cinematography",
+        "won": false
+      },
+      {
+        "category": "Costume Design",
+        "won": true
+      }
+    ]
   },
   {
     "id": "vagabond-1985",
@@ -15866,9 +16394,18 @@
     "title": "The Maltese Falcon",
     "year": 1941,
     "category": "BP",
-    "source": null,
+    "source": "14th Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Best Picture",
+        "won": false
+      },
+      {
+        "category": "Supporting Actor",
+        "won": false
+      }
+    ]
   },
   {
     "id": "the-magnificent-ambersons-1942",
@@ -17041,9 +17578,14 @@
     "title": "The Tin Drum",
     "year": 1979,
     "category": "ESSENTIAL",
-    "source": "The Tin Drum (film)",
+    "source": "52nd Academy Awards (ceremony-page)",
     "rawCount": 1,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "International Feature",
+        "won": true
+      }
+    ]
   },
   {
     "id": "kagemusha-1980",
@@ -18353,9 +18895,18 @@
     "title": "Woodstock",
     "year": 1970,
     "category": "ESSENTIAL",
-    "source": null,
+    "source": "43rd Academy Awards (ceremony-page)",
     "rawCount": 0,
-    "nominations": []
+    "nominations": [
+      {
+        "category": "Sound",
+        "won": false
+      },
+      {
+        "category": "Film Editing",
+        "won": false
+      }
+    ]
   },
   {
     "id": "dirty-harry-1971",
