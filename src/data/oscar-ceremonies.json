@@ -109,6 +109,134 @@
       }
     ]
   },
+  "10": {
+    "bpNominees": [
+      {
+        "title": "The Life of Emile Zola",
+        "year": 1937,
+        "id": null,
+        "won": true
+      },
+      {
+        "title": "The Awful Truth",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Captains Courageous",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Dead End",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "The Good Earth",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "In Old Chicago",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Lost Horizon",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "One Hundred Men and a Girl",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Stage Door",
+        "year": 1937,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "A Star Is Born",
+        "year": 1937,
+        "id": null,
+        "won": false
+      }
+    ]
+  },
+  "11": {
+    "bpNominees": [
+      {
+        "title": "You Can't Take It with You",
+        "year": 1938,
+        "id": null,
+        "won": true
+      },
+      {
+        "title": "The Adventures of Robin Hood",
+        "year": 1938,
+        "id": "the-adventures-of-robin-hood-1938",
+        "won": false
+      },
+      {
+        "title": "Alexander's Ragtime Band",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Boys Town",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "The Citadel",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Four Daughters",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "La Grande Illusion",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Jezebel",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Pygmalion",
+        "year": 1938,
+        "id": null,
+        "won": false
+      },
+      {
+        "title": "Test Pilot",
+        "year": 1938,
+        "id": null,
+        "won": false
+      }
+    ]
+  },
   "12": {
     "bpNominees": [
       {

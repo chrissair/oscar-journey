@@ -90,11 +90,21 @@ function slugify(title, year) {
 async function main() {
   const mm = await import(pathToFileURL(MOVIES_PATH).href);
   const MOVIES = mm.MOVIES;
-  // Ceremonies with pre-1970 BP catalog films.
+  // Ceremonies we need to cover: any pre-1970 ceremony where a catalog
+  // film was BP-nominated. Two sources:
+  //   (a) catalog films with category='BP' and ceremony set
+  //   (b) any catalog film (often ESSENTIAL) whose `nominations` array
+  //       includes Best Picture — ceremony derived from year-1927 when
+  //       not explicitly tagged (e.g. Adventures of Robin Hood is an
+  //       ESSENTIAL in our catalog but was BP-nominated at 11th AA).
   const ceremonies = new Set();
   for (const m of MOVIES) {
-    if (m.category === 'BP' && m.ceremony != null && m.ceremony < 43) {
-      ceremonies.add(m.ceremony);
+    const cer = m.ceremony ?? (m.year >= 1929 ? m.year - 1927 : null);
+    if (cer == null || cer >= 43) continue;
+    if (m.category === 'BP') { ceremonies.add(cer); continue; }
+    if (Array.isArray(m.nominations)
+        && m.nominations.some(n => n.category === 'Best Picture')) {
+      ceremonies.add(cer);
     }
   }
   const sorted = [...ceremonies].sort((a, b) => a - b);

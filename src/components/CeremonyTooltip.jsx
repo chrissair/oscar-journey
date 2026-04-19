@@ -169,6 +169,12 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
   const wins = sortedWins(nonBP.filter(n => n.won));
   const losses = sortedLosses(nonBP.filter(n => !n.won));
   const bpNominated = nominations.some(n => n.category === 'Best Picture');
+  // When the film won Best Picture, BP is already surfaced in the BP
+  // section above — so label the wins list as "Other" to make explicit
+  // it excludes BP. For BP losers / non-BP films, plain "Oscars Won"
+  // already unambiguously includes every win.
+  const bpWon = nominations.some(n => n.category === 'Best Picture' && n.won);
+  const winsHeading = bpWon ? `🏆 Other Oscars Won (${wins.length})` : `🏆 Oscars Won (${wins.length})`;
 
   // BP section content (only if current film was BP-nominated). Shows all
   // catalog BP films from this ceremony + any phantom nominees from
@@ -287,7 +293,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                 as the "big" wins before tech categories. */}
             {wins.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">🏆 Oscars Won ({wins.length})</h3>
+                <h3 className="ceremony-modal-category">{winsHeading}</h3>
                 <div className="ceremony-modal-awards-list">
                   {wins.map((n, i) => (
                     <WinChip key={`w-${i}`} nomination={n} movie={movie} />
