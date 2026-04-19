@@ -152,8 +152,12 @@ for (let li = 0; li < lines.length; li++) {
     // derived-from-legacy path in CeremonyTooltip, which correctly
     // reports "X won" without claiming a nom-total we don't know.
     if (!r?.nominations || r.nominations.length === 0) { skipped++; continue; }
-    const existing = legacyWins(movie);
-    merged = mergeNominations(existing, r.nominations, movie)
+    // DLu/oscar_data is the authoritative source now — no legacy merge.
+    // Merging risked double-counting categories that AMPAS renamed over
+    // time (e.g. "Sound Effects Editing" (1986) vs. "Sound Editing"
+    // (modern canonical) would both appear for Aliens). DLu normalizes
+    // canonical labels across decades; trust it outright.
+    merged = [...r.nominations]
       .sort((a, b) => orderKey(a.category) - orderKey(b.category));
   }
   if (!merged) { skipped++; continue; }
