@@ -11,6 +11,7 @@ import ACTORS from '../data/actors.json';
 import DIRECTORS from '../data/directors.json';
 import StarPicker from './StarPicker';
 import { ratingKey } from '../utils/storage';
+import { justWatchUrl } from '../utils/justwatch';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../utils/firebase';
 import CeremonyTooltip from './CeremonyTooltip';
@@ -285,18 +286,6 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onC
                   </div>
                 );
               })()}
-              {hasAnyRank && (
-                <>
-                  <span className="metric-divider" aria-hidden="true" />
-                  <div className="metric-item">
-                    <span className="metric-value">
-                      ⚔️ {personalRank != null ? `#${personalRank}` : '—'}
-                      <span className="metric-value-sub"> ({globalRank != null ? `#${globalRank}` : '—'})</span>
-                    </span>
-                    <span className="metric-label">My Rank <span className="metric-label-sub">(Global)</span></span>
-                  </div>
-                </>
-              )}
               <span className="metric-divider" aria-hidden="true" />
               <a className="metric-item metric-trailer"
                 href={`https://www.youtube.com/results?search_query=${encodeURIComponent(movie.title + ' ' + movie.year + ' official trailer')}`}
@@ -308,6 +297,14 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onC
                   <polygon points="11,4 11,16 21,10" fill="#FFF"/>
                 </svg></span>
                 <span className="metric-label">Trailer</span>
+              </a>
+              <a className="metric-item metric-justwatch"
+                href={justWatchUrl(movie.title)}
+                target="_blank" rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <span className="metric-value">📺</span>
+                <span className="metric-label">Watch</span>
               </a>
             </div>
 

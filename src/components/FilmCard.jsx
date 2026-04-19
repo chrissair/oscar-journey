@@ -8,6 +8,7 @@ import OscarIcon, { getOscarBadges } from './OscarIcon';
 import TierPips from './TierPips';
 import StarPicker from './StarPicker';
 import { ratingKey } from '../utils/storage';
+import { justWatchUrl } from '../utils/justwatch';
 import CeremonyTooltip from './CeremonyTooltip';
 import ACTORS from '../data/actors.json';
 import DIRECTORS from '../data/directors.json';
@@ -238,6 +239,14 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, fading, ra
               <polygon points="11,4 11,16 21,10" fill="#FFF"/>
             </svg></span>
             <span className="metric-label">Trailer</span>
+          </a>
+          <a className="metric-item metric-justwatch"
+            href={justWatchUrl(movie.title)}
+            target="_blank" rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <span className="metric-value">📺</span>
+            <span className="metric-label">Watch</span>
           </a>
         </div>
         {(() => {
