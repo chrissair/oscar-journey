@@ -67,7 +67,7 @@ const CATEGORY_LABELS = {
 
 export { DEFAULT_FILTERS, ERA_LABELS, GENRE_LABELS, CATEGORY_LABELS, SMART_LABELS };
 
-export default function SettingsModal({ raters, onRatersChange, avatar, onAvatarChange, allowSkip, onAllowSkipChange, simpleBattle, onSimpleBattleChange, hideDailyOscar, onHideDailyOscarChange, privateProfile, onPrivateProfileChange, onClose, onClearCache, profile, onLogout }) {
+export default function SettingsModal({ raters, onRatersChange, avatar, onAvatarChange, allowSkip, onAllowSkipChange, simpleBattle, onSimpleBattleChange, checklistMode, onChecklistModeChange, hideDailyOscar, onHideDailyOscarChange, privateProfile, onPrivateProfileChange, onClose, onClearCache, profile, onLogout }) {
   const [editRaters, setEditRaters] = useState(raters);
   const [newName, setNewName] = useState('');
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
@@ -196,6 +196,12 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
             onChange={onSimpleBattleChange}
             label="Simple battle graphics"
             hint="Removes animations for faster battles. Visual feedback still shown."
+          />
+          <Toggle
+            active={checklistMode}
+            onChange={onChecklistModeChange}
+            label="Film tab checklist mode"
+            hint="Tap any film in the A–Z list to mark it watched — great for first-timers catching up."
           />
           <Toggle
             active={privateProfile}

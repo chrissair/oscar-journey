@@ -1045,6 +1045,12 @@ export default function App() {
     firebaseSave('simpleBattle', val);
   }, [firebaseSave]);
 
+  // --- Film-tab checklist mode toggle ---
+  const handleChecklistModeChange = useCallback((val) => {
+    setProfile(prev => prev ? { ...prev, checklistMode: val } : prev);
+    firebaseSave('checklistMode', val);
+  }, [firebaseSave]);
+
   // --- Private profile toggle ---
   const handlePrivateProfileChange = useCallback((val) => {
     setProfile(prev => prev ? { ...prev, privateProfile: val } : prev);
@@ -1321,6 +1327,7 @@ export default function App() {
           raters={raters}
           filterPreset={listFilterPreset}
           onFilterPresetApplied={() => setListFilterPreset(null)}
+          checklistMode={profile?.checklistMode || false}
         />
       )}
 
@@ -1460,6 +1467,8 @@ export default function App() {
           onAllowSkipChange={handleAllowSkipChange}
           simpleBattle={profile?.simpleBattle || false}
           onSimpleBattleChange={handleSimpleBattleChange}
+          checklistMode={profile?.checklistMode || false}
+          onChecklistModeChange={handleChecklistModeChange}
           hideDailyOscar={profile?.hideDailyOscar || false}
           onHideDailyOscarChange={handleHideDailyOscarChange}
           privateProfile={profile?.privateProfile || false}
