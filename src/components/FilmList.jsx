@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { MOVIES, GENRE_LABELS } from '../data/movies';
 import { MovieBadges } from './Badges';
 import OscarIcon, { getOscarBadges } from './OscarIcon';
+import { LanguageFlag } from './LanguagePill';
 
 // Prototype flag: Option A layout moves Oscar statuettes to a fixed-width
 // left column before the title. Flip to false to revert to the inline layout.
@@ -850,6 +851,7 @@ export default function FilmList({ watchedTitleSet, onOpenDetail, onToggleWatche
                           {getOscarBadges(m).map(k => (
                             <OscarIcon key={k} movie={m} kind={k} size="sm" />
                           ))}
+                          <LanguageFlag movie={m} />
                         </span>
                       </span>
                     ) : (

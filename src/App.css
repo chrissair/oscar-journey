@@ -606,6 +606,37 @@ main {
   letter-spacing: 0.04em;
 }
 
+/* Attribute category pills (Doc / Silent / B&W / Animated). Shown
+   alongside the genre pill in the modal/card badges row, and in place of
+   the genre pill in the A-Z list row (small variant). International is
+   intentionally absent — the language/flag pill already conveys that. */
+.badge-category {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--cream-dim);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 50px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.badge-category-sm {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--cream-dim);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+/* Per-category tinting — keeps the row readable but adds a small visual
+   hook so pills aren't indistinguishable when stacked (e.g. Silent + B&W). */
+.badge-cat-doc    { border-color: rgba(110, 169, 196, 0.45); color: #9ccde0; }
+.badge-cat-silent { border-color: rgba(212, 195, 160, 0.45); color: #d4c3a0; }
+.badge-cat-bw     { border-color: rgba(200, 200, 200, 0.45); color: #d6d6d6; }
+.badge-cat-anim   { border-color: var(--badge-anim-border); color: var(--badge-anim-color); }
+
 /* Category pills for INT and ANIM films */
 .badge-int {
   background: var(--badge-int-bg);
@@ -1119,6 +1150,21 @@ main {
   text-align: center;
 }
 
+/* Secondary-hierarchy text inside a metric — used for the "(Global)"
+   suffix on the rank label, the "(2)" count on User Avg, and the global
+   rank parenthetical. Rendered smaller and dimmer so the primary value
+   reads as the "big" number. */
+.metric-value-sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--cream-dim);
+  margin-left: 1px;
+}
+.metric-label-sub {
+  font-size: 0.58rem;
+  opacity: 0.85;
+}
+
 .film-detail-all-ratings {
   display: flex;
   flex-wrap: wrap;
@@ -1137,8 +1183,11 @@ main {
 
 .all-rating-chip.no-rating {
   color: var(--cream-dim);
-  font-style: italic;
-  opacity: 0.75;
+  opacity: 0.55;
+}
+.all-rating-chip-score {
+  color: var(--gold);
+  font-weight: 600;
 }
 
 /* Profile selector in battle */
@@ -2707,6 +2756,18 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 2px;
+}
+
+/* Bare flag emoji that sits inline with the statuette, co-locating the
+   language signal with the other film-identity glyphs after the title.
+   No pill chrome — just the emoji, scaled to match the statuette line. */
+.film-row-flag {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1rem;
+  line-height: 1;
+  margin-left: 4px;
+  user-select: none;
 }
 
 .film-row-title {
@@ -4973,14 +5034,16 @@ main {
     width: 13px;
     height: 21px;
   }
-  /* Legacy small text badges — no longer rendered in rows, but keep the
-     hide rule as a safety net if anything else routes MovieBadges here. */
+  /* Legacy small text badges — kept hidden in rows on mobile to preserve
+     row density. Genre-sm is intentionally NOT in this list: since the
+     2026-04 redesign the genre pill sits inline on both desktop and
+     mobile, next to the category pills. */
   .film-row .badge-winner-sm,
-  .film-row .badge-genre-sm,
   .film-row .badge-bp-sm,
   .film-row .badge-int-sm,
   .film-row .badge-anim-sm,
-  .film-row .badge-essential-sm {
+  .film-row .badge-essential-sm,
+  .film-row .badge-category-sm {
     display: none;
   }
   /* Language pill: keep it on mobile but collapse to flag-only. The flag
@@ -5130,6 +5193,21 @@ main {
   font-weight: normal;
   letter-spacing: 0.03em;
   margin-left: 4px;
+}
+.rating-source-sub {
+  font-size: 0.62rem;
+  opacity: 0.85;
+  margin-left: 1px;
+}
+
+/* Secondary-hierarchy text inside the film-card ELO-rank line — same
+   role as .metric-value-sub in the modal: dimmer, smaller number for
+   the global rank parenthetical. */
+.film-elo-rating-sub {
+  font-size: 0.75rem;
+  color: var(--cream-dim);
+  font-weight: 400;
+  margin-left: 1px;
 }
 
 /* =====================================================
