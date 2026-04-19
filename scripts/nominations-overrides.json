@@ -3,5 +3,12 @@
   "king-kong-1933": {
     "nominations": [],
     "_note": "1933 King Kong received ZERO Oscar nominations — it predates the Visual Effects (1939) and Documentary (1942) categories. Parser mis-associated 2005 remake data via the shared article/disambiguation page."
+  },
+  "alien-1979": {
+    "nominations": [
+      { "category": "Art Direction", "won": false },
+      { "category": "Visual Effects", "won": true }
+    ],
+    "_note": "Alien (1979) was nominated for Art Direction and Visual Effects; won VFX. Parser pulled the franchise accolades page which includes Aliens-1986 techs (Film Editing, Sound, Sound Editing, Score)."
   }
 }
