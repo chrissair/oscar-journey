@@ -10,7 +10,7 @@ import { ratingKey } from '../utils/storage';
 import { readCachedRuntime, runtimeBucket, prefetchRuntimes, RUNTIME_LABELS } from '../utils/runtime';
 import { ERA_LABELS, CATEGORY_LABELS } from './SettingsModal';
 import { getTier } from '../utils/tierInfo';
-import { isInternational, isAnimated, matchesCategoryFilter } from '../utils/filmAttributes';
+import { isInternational, isAnimated, isDocumentary, isSilent, isBlackAndWhite, matchesCategoryFilter } from '../utils/filmAttributes';
 import DIRECTORS from '../data/directors.json';
 import ACTORS from '../data/actors.json';
 import CAST from '../data/cast.json';
@@ -93,10 +93,8 @@ const DEFAULT_FILM_FILTERS = {
     '1910s': true, '1920s': true, '1930s': true, '1940s': true, '1950s': true, '1960s': true,
     '70s': true, '80s': true, '90s': true, '00s': true, '10s': true, '20s': true,
   },
-  // Additive attribute filter. Unchecked = no restriction (show all). INT
-  // catches any non-English film; ANIM catches any animated film. BP and
-  // Essentials are governed by Canon depth + oscarsOnly/essentialsOnly.
-  categories: { INT: false, ANIM: false },
+  // Additive attribute filter — any combination. Unchecked = no restriction.
+  categories: { INT: false, ANIM: false, DOC: false, SILENT: false, BW: false },
   genres: Object.fromEntries(Object.keys(GENRE_LABELS).map(k => [k, true])),
   runtimes: { short: true, medium: true, long: true },
   wins: Object.fromEntries(Object.keys(WIN_CATEGORIES).map(k => [k, false])),
@@ -336,12 +334,14 @@ export default function FilmList({ watchedTitleSet, onOpenDetail, onToggleWatche
   }, [eligiblePool]);
 
   const categoryCounts = useMemo(() => {
-    // Counts reflect Oscar-eligible films only — essentials bypass Categories,
-    // INT / ANIM are broad predicates spanning ALL films (including essentials).
-    const c = { INT: 0, ANIM: 0 };
+    // Broad attribute predicates spanning ALL films (including essentials).
+    const c = { INT: 0, ANIM: 0, DOC: 0, SILENT: 0, BW: 0 };
     for (const m of eligiblePool) {
       if (isInternational(m)) c.INT++;
       if (isAnimated(m)) c.ANIM++;
+      if (isDocumentary(m)) c.DOC++;
+      if (isSilent(m)) c.SILENT++;
+      if (isBlackAndWhite(m)) c.BW++;
     }
     return c;
   }, [eligiblePool]);
