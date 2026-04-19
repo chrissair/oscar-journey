@@ -79,10 +79,21 @@ function hasAuthoritativeNominations(movie) {
   return Array.isArray(movie?.nominations) && movie.nominations.length > 0;
 }
 
-// "Category — Person" or "Category — "Song Title"" display.
+// "Category — Person" or "Category — "Song Title"" display. The DLu
+// dataset joins co-nominees with `|`; reformat to a human-readable list
+// so readers see "Frank Galati, Lawrence Kasdan" instead of the raw
+// pipe-delimited string.
+function formatPeople(s) {
+  if (!s) return s;
+  const names = s.split('|').map(n => n.trim()).filter(Boolean);
+  if (names.length === 0) return s;
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return `${names[0]} & ${names[1]}`;
+  return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
+}
 function formatLabel(n) {
   if (n.detail) return `${n.category} — "${n.detail}"`;
-  if (n.nominee) return `${n.category} — ${n.nominee}`;
+  if (n.nominee) return `${n.category} — ${formatPeople(n.nominee)}`;
   return n.category;
 }
 
@@ -276,7 +287,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                 as the "big" wins before tech categories. */}
             {wins.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">🏆 Oscars Won</h3>
+                <h3 className="ceremony-modal-category">🏆 Oscars Won ({wins.length})</h3>
                 <div className="ceremony-modal-awards-list">
                   {wins.map((n, i) => (
                     <WinChip key={`w-${i}`} nomination={n} movie={movie} />
@@ -285,12 +296,14 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
               </div>
             )}
 
-            {/* 3. Nominations — losses only, plain chips. The user's call
-                is that the winner of each lost category isn't surfaced —
-                only Best Picture gets the full-slate treatment above. */}
+            {/* 3. Also Nominated For — non-BP losses, plain chips. The
+                user's call is that the winner of each lost category isn't
+                surfaced; only Best Picture gets the full-slate treatment.
+                The label skips the word "losing" — "Also Nominated For"
+                reads as an achievement, not a ding. */}
             {losses.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">Nominations</h3>
+                <h3 className="ceremony-modal-category">Also Nominated For ({losses.length})</h3>
                 <div className="ceremony-modal-awards-list">
                   {losses.map((n, i) => (
                     <NomChip key={`n-${i}`} nomination={n} />
