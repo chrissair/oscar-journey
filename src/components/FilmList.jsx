@@ -96,10 +96,11 @@ const RUNTIME_MIN = 30;
 const RUNTIME_MAX = 300;
 const RUNTIME_STEP = 5;
 
-// Year slider bounds. 1920–2025 covers the full catalog (earliest is 1923).
+// Year slider bounds. 1920 covers the full catalog (earliest is 1923);
+// upper bound is the current year so it doesn't need a yearly bump.
 // Step 1 so users can pick a specific year if they want. Default = full range.
 const YEAR_MIN = 1920;
-const YEAR_MAX = 2025;
+const YEAR_MAX = new Date().getFullYear();
 const YEAR_STEP = 1;
 
 const DEFAULT_FILM_FILTERS = {
