@@ -5,6 +5,7 @@ import { MOVIES_BY_ID } from '../data/movies';
 import { RARITIES, getCollectorScore } from '../utils/cards';
 import { fetchOmdbData } from '../utils/omdb';
 import { AVATAR_EMOJIS } from '../data/avatars';
+import { useT } from '../i18n';
 
 function FeaturedCard({ card }) {
   const [poster, setPoster] = useState(null);
@@ -60,6 +61,7 @@ function FeaturedCard({ card }) {
 }
 
 export default function ProfileModal({ profileId, onClose, currentProfile, currentRatings, onOpenDetail, onSaveProfile, onOpenProfile, onAvatarChange, onViewFullProfile }) {
+  const { t } = useT();
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
@@ -150,7 +152,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
                 </div>
                 <div className="pm-stat">
                   <div className="pm-stat-value">{p.battleCount || 0}</div>
-                  <div className="pm-stat-label">Battles</div>
+                  <div className="pm-stat-label">{t('profile.battles')}</div>
                 </div>
                 {collectorScore > 0 && (
                   <div className="pm-stat pm-stat-featured">
@@ -204,7 +206,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
                   onClose();
                   if (onViewFullProfile) onViewFullProfile(profileId);
                 }}>
-                  View full profile →
+                  {t('profile.viewProfile')}
                 </button>
               </div>
             </div>
