@@ -14,11 +14,12 @@ import { useT } from '../i18n';
 // The Animated pill renders even when the Anim-Winner speech pill is
 // present — winner and category convey different facts (ceremony result
 // vs. film attribute), so we don't dedupe across them.
+// i18n keys: badges.documentary, badges.silent, badges.blackAndWhite, badges.animated
 const CATEGORY_LIST = [
-  { key: 'DOC',    label: 'Documentary', test: isDocumentary,   cls: 'badge-cat-doc' },
-  { key: 'SILENT', label: 'Silent',      test: isSilent,         cls: 'badge-cat-silent' },
-  { key: 'BW',     label: 'B&W',         test: isBlackAndWhite,  cls: 'badge-cat-bw' },
-  { key: 'ANIM',   label: 'Animated',    test: isAnimated,       cls: 'badge-cat-anim' },
+  { key: 'DOC',    i18nKey: 'documentary', label: 'Documentary', test: isDocumentary,   cls: 'badge-cat-doc' },
+  { key: 'SILENT', i18nKey: 'silent',      label: 'Silent',      test: isSilent,         cls: 'badge-cat-silent' },
+  { key: 'BW',     i18nKey: 'blackAndWhite', label: 'B&W',       test: isBlackAndWhite,  cls: 'badge-cat-bw' },
+  { key: 'ANIM',   i18nKey: 'animated',    label: 'Animated',    test: isAnimated,       cls: 'badge-cat-anim' },
 ];
 
 function activeCategories(movie) {
@@ -26,18 +27,20 @@ function activeCategories(movie) {
 }
 
 export function BadgeCategorySm({ movie }) {
+  const { t } = useT();
   const active = activeCategories(movie);
   if (!active.length) return null;
   return active.map(c => (
-    <span key={c.key} className={`badge-category-sm ${c.cls}`}>{c.label}</span>
+    <span key={c.key} className={`badge-category-sm ${c.cls}`}>{t(`badges.${c.i18nKey}`)}</span>
   ));
 }
 
 export function BadgeCategory({ movie }) {
+  const { t } = useT();
   const active = activeCategories(movie);
   if (!active.length) return null;
   return active.map(c => (
-    <span key={c.key} className={`badge-category ${c.cls}`}>{c.label}</span>
+    <span key={c.key} className={`badge-category ${c.cls}`}>{t(`badges.${c.i18nKey}`)}</span>
   ));
 }
 
@@ -52,24 +55,25 @@ function speechUrl(title, year, kind = 'best picture') {
 // Replaces the old standalone BadgeInt / BadgeAnim chips — the winner pill
 // carries both the category and the speech link (via tooltip + ↗ icon).
 export function BadgeWinner({ movie, kind = 'bp' }) {
+  const { t } = useT();
   const meta = {
-    bp:   { label: 'Winner',      query: 'best picture',              cls: 'badge-winner-bp' },
-    int:  { label: 'Intl Winner', query: 'best international feature',cls: 'badge-winner-int' },
-    anim: { label: 'Anim Winner', query: 'best animated feature',     cls: 'badge-winner-anim' },
-  }[kind] || { label: 'Winner', query: 'best picture', cls: 'badge-winner-bp' };
+    bp:   { i18nKey: 'winner',      query: 'best picture',              cls: 'badge-winner-bp' },
+    int:  { i18nKey: 'intlWinner',  query: 'best international feature',cls: 'badge-winner-int' },
+    anim: { i18nKey: 'animWinner',  query: 'best animated feature',     cls: 'badge-winner-anim' },
+  }[kind] || { i18nKey: 'winner', query: 'best picture', cls: 'badge-winner-bp' };
   if (movie) {
     return (
       <a className={`badge-winner badge-winner-link ${meta.cls}`}
         href={speechUrl(movie.title, movie.year, meta.query)}
         target="_blank" rel="noopener noreferrer"
         onClick={(e) => e.stopPropagation()}
-        title="Watch acceptance speech"
+        title={t('badges.watchAcceptance')}
       >
-        🏆 {meta.label} ↗
+        🏆 {t(`badges.${meta.i18nKey}`)} ↗
       </a>
     );
   }
-  return <span className="badge-winner">★ Winner</span>;
+  return <span className="badge-winner">★ {t('badges.winner')}</span>;
 }
 
 export function BadgeGenre({ genre }) {
@@ -129,6 +133,7 @@ export function BadgeBpSm() {
 // the broad genre grouping). Genre still renders in the non-small variant
 // alongside winner + category pills.
 export function MovieBadges({ movie, small = false, excludeOscars = false }) {
+  const { t } = useT();
   const alsoWon = movie.alsoWon || [];
   const oscarStatus = getOscarStatus(movie);
 
@@ -176,7 +181,7 @@ export function MovieBadges({ movie, small = false, excludeOscars = false }) {
       <div className="badges">
         <LanguagePill movie={movie} />
         {categoryPills.map(c => (
-          <span key={c.key} className={`badge-category ${c.cls}`}>{c.label}</span>
+          <span key={c.key} className={`badge-category ${c.cls}`}>{t(`badges.${c.i18nKey}`)}</span>
         ))}
         {movie.genre && <BadgeGenre genre={movie.genre} />}
         {altGenres.map(g => <BadgeGenreAlt key={g} genre={g} />)}
