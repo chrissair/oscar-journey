@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getDirectorFilmography } from '../utils/directorIndex';
+import { useT } from '../i18n';
 
 // Inline "(N more)" link + modal listing a director's full catalog
 // filmography. Returns null when the current film's director has no
@@ -11,6 +12,7 @@ import { getDirectorFilmography } from '../utils/directorIndex';
 // into document.body, backdrop/✕ close, row click closes this modal
 // and hands the clicked film to onOpenDetail for the caller to render.
 export default function DirectorFilmographyLink({ movie, onOpenDetail }) {
+  const { t } = useT();
   const [showModal, setShowModal] = useState(false);
 
   const filmography = movie ? getDirectorFilmography(movie.id) : null;
@@ -27,7 +29,7 @@ export default function DirectorFilmographyLink({ movie, onOpenDetail }) {
           setShowModal(true);
         }}
       >
-        ({otherCount} more)
+        {t('directorLink.andMore', { count: otherCount })}
       </span>
 
       {showModal && createPortal(
@@ -49,7 +51,7 @@ export default function DirectorFilmographyLink({ movie, onOpenDetail }) {
               }}
               aria-label="Close"
             >✕</button>
-            <h2 className="ceremony-modal-title">More by {directorsDisplay}</h2>
+            <h2 className="ceremony-modal-title">{t('directorLink.moreByName', { names: directorsDisplay })}</h2>
 
             <div className="ceremony-modal-section">
               {films.map((m) => {
