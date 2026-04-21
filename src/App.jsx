@@ -1304,10 +1304,10 @@ export default function App() {
           {screen === 'card' && eligibleStats.total === 0 && (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <p style={{ color: 'var(--cream-dim)', fontSize: '1.1rem', marginBottom: '12px' }}>
-                All films are filtered out.
+                {t('journey.allFilteredOut')}
               </p>
               <p style={{ color: 'var(--cream-dim)', fontSize: '0.9rem', marginBottom: '20px' }}>
-                Turn some filters back on below.
+                {t('journey.turnFiltersOn')}
               </p>
             </div>
           )}
@@ -1316,9 +1316,9 @@ export default function App() {
               {watchedSet.size === 0 && eligiblePosition < 1 && !bannerDismissed && (
                 <div className="journey-welcome-banner">
                   <button className="journey-welcome-close" onClick={() => { setBannerDismissed(true); localStorage.setItem('oscars_banner_dismissed', 'true'); }}>✕</button>
-                  <div className="journey-welcome-title">🏆 The Oscars Journey</div>
+                  <div className="journey-welcome-title">{t('start.welcomeBannerTitle')}</div>
                   <div className="journey-welcome-text">
-                    {MOVIES.length} films — every Best Picture nominee (1970+), every International Feature winner (1956+), every Animated Feature winner, plus 330 essential non-Oscar must-watches curated across 8 canon lists (Sight &amp; Sound, Criterion, IMDb, Letterboxd, AFI, Rotten Tomatoes, festival grand prizes, National Film Registry). Shuffled so you never watch two similar films back-to-back. Watch each one, rate it, and move on.
+                    {t('start.welcomeBannerBody', { count: MOVIES.length })}
                   </div>
                 </div>
               )}
@@ -1331,13 +1331,13 @@ export default function App() {
                     <div className="daily-banner-left">
                       <span className="daily-banner-icon">🎬</span>
                       <div>
-                        <div className="daily-banner-text">Daily Oscar</div>
+                        <div className="daily-banner-text">{t('daily.title')}</div>
                         <div className="daily-banner-sub">
-                          {status?.solved ? 'Completed!' : status?.failed ? 'Try again tomorrow' : 'Guess today\'s movie from a quote'}
+                          {status?.solved ? t('daily.completed') : status?.failed ? t('daily.tryAgain') : t('daily.guessPrompt')}
                         </div>
                       </div>
                     </div>
-                    {streak > 0 && <div className="daily-banner-streak">{streak} day streak</div>}
+                    {streak > 0 && <div className="daily-banner-streak">{t('daily.streak', { count: streak })}</div>}
                   </div>
                 );
               })()}

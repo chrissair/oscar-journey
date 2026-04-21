@@ -36,6 +36,7 @@ export const en = {
     begin: 'Begin your journey',
     continueJourney: 'Continue journey',
     welcomeBannerTitle: '🏆 The Oscars Journey',
+    welcomeBannerBody: '{count} films — every Best Picture nominee (1970+), every International Feature winner (1956+), every Animated Feature winner, plus 330 essential non-Oscar must-watches curated across 8 canon lists (Sight & Sound, Criterion, IMDb, Letterboxd, AFI, Rotten Tomatoes, festival grand prizes, National Film Registry). Shuffled so you never watch two similar films back-to-back. Watch each one, rate it, and move on.',
   },
   journey: {
     filmOf: 'Film {current} of {total}',

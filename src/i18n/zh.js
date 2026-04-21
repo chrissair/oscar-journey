@@ -39,6 +39,7 @@ export const zh = {
     begin: '開始旅程',
     continueJourney: '繼續旅程',
     welcomeBannerTitle: '🏆 奧斯卡電影之旅',
+    welcomeBannerBody: '共 {count} 部電影——包括每一部最佳影片入圍作品（1970 年起）、每一部最佳國際影片得獎作品（1956 年起）、每一部最佳動畫長片得獎作品，外加 330 部精選必看經典，跨越 8 份權威名單（Sight & Sound、Criterion、IMDb、Letterboxd、AFI、Rotten Tomatoes、各大影展最高獎、National Film Registry）。洗牌排序讓你不會連續看到風格相近的電影。一部一部看完，打上評分，然後繼續前進。',
   },
   journey: {
     filmOf: '第 {current} 部 / 共 {total} 部',
