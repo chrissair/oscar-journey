@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useT } from '../i18n';
 import { useFilmModalGestures } from './useFilmModalGestures';
 import { fetchOmdbData, readCachedOmdbData, tidyPlot } from '../utils/omdb';
 import { getLetterboxdRating } from '../utils/letterboxd';
@@ -26,6 +27,7 @@ import { getCardOwner } from '../utils/cardRegistry';
 import { getGlobalRank, getPersonalRank } from '../utils/eloRanks';
 
 export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isBookmarked, onToggleWatchlist, onClose, ratings, onRatingChange, raters, personalElo, movieList, onNavigate, onOpenProfile, wallet, onOpenSeriesPreview, watchedSet, seriesSiblings, onSeriesNavigate, openInstant, initialScrollTop }) {
+  const { t } = useT();
   const [omdbData, setOmdbData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [globalElo, setGlobalElo] = useState(null);
@@ -300,7 +302,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                   <rect rx="4" ry="4" width="28" height="20" fill="#FF0000"/>
                   <polygon points="11,4 11,16 21,10" fill="#FFF"/>
                 </svg></span>
-                <span className="metric-label">Trailer</span>
+                <span className="metric-label">{t('filmCard.trailer')}</span>
               </a>
               <a className="metric-item metric-justwatch"
                 href={justWatchUrl(movie.title)}
@@ -308,7 +310,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                 onClick={(e) => e.stopPropagation()}
               >
                 <span className="metric-value">📺</span>
-                <span className="metric-label">Watch</span>
+                <span className="metric-label">{t('filmCard.where')}</span>
               </a>
             </div>
 
@@ -320,7 +322,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               if (!director) return null;
               return (
                 <div className="film-detail-director">
-                  <strong>Directed by</strong> {director}
+                  <strong>{t('journey.directedBy')}</strong> {director}
                   <DirectorFilmographyLink movie={movie} onOpenDetail={onNavigate} />
                 </div>
               );
@@ -334,7 +336,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               // OMDb returns "Actor 1, Actor 2, Actor 3" — convert commas to
               // middle dots so it reads like a credits line.
               const pretty = actors.split(',').map(s => s.trim()).filter(Boolean).join(' · ');
-              return <div className="film-detail-starring"><strong>Starring</strong> {pretty}</div>;
+              return <div className="film-detail-starring"><strong>{t('journey.starring')}</strong> {pretty}</div>;
             })()}
             {omdbData?.plot && (
               <div className="film-detail-plot">{tidyPlot(omdbData.plot)}</div>
@@ -394,7 +396,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
             {isWatched ? (
               raters.length === 1 ? (
                 <div className="rating-pickers rating-pickers-inline">
-                  <div className="rating-pickers-label">Your rating</div>
+                  <div className="rating-pickers-label">{t('filmCard.yourRating')}</div>
                   <StarPicker
                     key={raters[0]}
                     label={raters[0]}
@@ -405,7 +407,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                 </div>
               ) : (
                 <div className="rating-pickers">
-                  <div className="rating-pickers-label">Your ratings</div>
+                  <div className="rating-pickers-label">{t('filmCard.yourRating')}</div>
                   {raters.map(name => (
                     <StarPicker
                       key={name}
@@ -427,7 +429,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                 style={{ flex: 1, justifyContent: 'center' }}
               >
                 {isWatched && <span className="watched-icon">✓</span>}
-                <span>{isWatched ? 'Watched' : 'Mark as Watched'}</span>
+                <span>{isWatched ? t('journey.unmarkWatched') : t('journey.markWatched')}</span>
               </button>
               <WatchlistButton
                 isBookmarked={isBookmarked}
