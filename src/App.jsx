@@ -213,12 +213,60 @@ const JOURNEY_TAGLINES = [
   "Watching great films is a personality trait. A good one.",
 ];
 
+// Traditional Chinese taglines. These aren't literal translations of the
+// English array — many of the English ones lean on American idioms (Marvel,
+// Netflix, Black Mirror, "doomscrolling") that don't land the same in
+// Chinese. Instead these cover the same spirit — playful nudges toward
+// watching instead of skipping, building taste, and trusting the journey.
+const JOURNEY_TAGLINES_ZH = [
+  "重點是看那些你平常不會選的電影。跳過按鈕？不認識。",
+  "你走到這裡，不是為了再看一部漫威電影。認真點。",
+  "舒適圈打來找你了。別接。",
+  "每一部奧斯卡得獎作，都曾是某人眼中的「我才不看」。看看現在。",
+  "某個地方有個電影系學生，在為你還沒看過這部電影流淚。",
+  "你不是「不愛看電影」。你只是還沒遇到對的那部。",
+  "一集實境秀你都能追八小時了，一部經典電影絕對可以。",
+  "有趣的事實：這份名單上的每一部，都比你上週隨手看的好太多。",
+  "跳過按鈕是給弱者用的。你不弱。大概吧。",
+  "想像告訴別人你看完了整份必看名單。那就是我們要的氣勢。",
+  "這部電影不會自己看完。雖然那會是《黑鏡》絕佳題材。",
+  "你正在累積品味。品味需要時間。這就是那段時間。",
+  "未來的你會感謝你。現在的你可能會抱怨。別理他。",
+  "一次一部電影。我們真的只要求這樣。",
+  "奧斯卡從 1929 年就開始挑電影了，他們練過。",
+  "就算這部電影難看，至少你在聚餐時能發表強烈意見。",
+  "爆米花可以不帶。看完這部不能不做。",
+  "這不是作業。好吧，有點像作業。但是有趣的那種。",
+  "每一部不朽名作，都曾是某人差點跳過的那部。",
+  "你不是在看電影，你是在體驗一場文化儀式。",
+  "遙控器有播放鍵，沒有「無限滑動」鍵。",
+  "這個網站有 787 部電影。你的工作只有一個。",
+  "把這當作大腦的健身會員。差別是你真的會用。",
+  "你 Netflix 收藏夾有 200 部電影。看過三部。我們正在修正這件事。",
+  "得獎電影 > 漫無目的滑手機。沒得討論。",
+  "你已經按下「開始旅程」了。旅程包含這部電影。繼續走。",
+  "有人爬山。你看經典電影。兩種都是正當嗜好。",
+  "影評、影展、奧斯卡都同意這些最好。你憑什麼反對？",
+  "從來沒有人說過：「我後悔看了那部曠世巨作。」真的，沒有一個。",
+  "如果你跳過這部，你頭像上的爆米花 emoji 會白眼你。🍿",
+  "你挑片花的時間，已經可以看完一部了。按播放吧。",
+  "劇情反轉：你最不想看的那部，往往變成你最愛。每次都這樣。",
+  "你的專注力打來說，它準備好回來了。",
+  "別人花兩小時拍這部電影。你可以花兩小時看。",
+  "你的觀影紀錄，就是你的自傳。寫好看一點。",
+  "最好的電影，往往是你差點沒看的那部。",
+  "羅馬不是一天建成的。你的品味也不是。",
+  "唯一糟的電影夜，是你沒按播放的那一晚。",
+  "找點零食，關燈，假裝你在影展現場。其實差不多就是了。",
+  "看好電影是一種人格特質。而且是正面的那種。",
+];
+
 const LS_PROFILE_KEY = 'oscars_profile_id';
 const LS_THEME_KEY = 'oscars_theme';
 const LS_TAB_KEY = 'oscars_active_tab';
 
 export default function App() {
-  const { t } = useT();
+  const { t, lang } = useT();
   // --- Auth state ---
   const [profile, setProfile] = useState(null); // null = not logged in
   const [loading, setLoading] = useState(true); // initial profile load
@@ -280,7 +328,11 @@ export default function App() {
   // Stable tagline that only changes when the current film changes — not on every
   // render (e.g., when rating changes), which previously made the page feel jumpy.
   const [currentTaglineIdx, setCurrentTaglineIdx] = useState(() => Math.floor(Math.random() * JOURNEY_TAGLINES.length));
-  const currentTagline = JOURNEY_TAGLINES[currentTaglineIdx];
+  // Pick from the locale-matching tagline pool; use modulo so an index from
+  // a longer pool (English, 76 items) still maps safely into the shorter
+  // Chinese pool (~40 items) when the user flips languages mid-session.
+  const taglinePool = lang === 'zh' ? JOURNEY_TAGLINES_ZH : JOURNEY_TAGLINES;
+  const currentTagline = taglinePool[currentTaglineIdx % taglinePool.length];
 
   // Modals
   const [settingsOpen, setSettingsOpen] = useState(false);
