@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { createPortal } from 'react-dom';
 import { getDirectorFilmography } from '../utils/directorIndex';
-import TierPips from './TierPips';
 
 // Inline "(N more)" link + modal listing a director's full catalog
 // filmography. Returns null when the current film's director has no
@@ -60,7 +59,6 @@ export default function DirectorFilmographyLink({ movie, onOpenDetail }) {
                   <>
                     <span className="ceremony-modal-film-title">{m.title}</span>
                     <span className="ceremony-modal-film-year">{m.year}</span>
-                    <TierPips movie={m} variant="compact" />
                   </>
                 );
                 if (isCurrent) {
