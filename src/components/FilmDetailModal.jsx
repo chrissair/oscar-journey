@@ -10,6 +10,7 @@ import OscarIcon, { getOscarBadges } from './OscarIcon';
 import TierPips from './TierPips';
 import ACTORS from '../data/actors.json';
 import DIRECTORS from '../data/directors.json';
+import { getChineseTitle, getChineseOverview } from '../data/chineseMetadata';
 import StarPicker from './StarPicker';
 import { ratingKey } from '../utils/storage';
 import { justWatchUrl } from '../utils/justwatch';
@@ -27,7 +28,7 @@ import { getCardOwner } from '../utils/cardRegistry';
 import { getGlobalRank, getPersonalRank } from '../utils/eloRanks';
 
 export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isBookmarked, onToggleWatchlist, onClose, ratings, onRatingChange, raters, personalElo, movieList, onNavigate, onOpenProfile, wallet, onOpenSeriesPreview, watchedSet, seriesSiblings, onSeriesNavigate, openInstant, initialScrollTop }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [omdbData, setOmdbData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [globalElo, setGlobalElo] = useState(null);
@@ -238,6 +239,10 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               <CeremonyTooltip ceremony={movie.ceremony} year={movie.year} currentMovieId={movie.id} onOpenDetail={onNavigate} movie={movie} />
             </div>
             <div className="film-title">{movie.title}</div>
+            {lang === 'zh' && (() => {
+              const zh = getChineseTitle(movie.id);
+              return zh ? <div className="film-title-zh">{zh}</div> : null;
+            })()}
             <div className="film-year">
               <span>{movie.year}</span>
               {omdbData?.runtime && (() => {
@@ -338,9 +343,17 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               const pretty = actors.split(',').map(s => s.trim()).filter(Boolean).join(' · ');
               return <div className="film-detail-starring"><strong>{t('journey.starring')}</strong> {pretty}</div>;
             })()}
-            {omdbData?.plot && (
-              <div className="film-detail-plot">{tidyPlot(omdbData.plot)}</div>
-            )}
+            {(() => {
+              // Prefer the zh-TW plot when the user is in Chinese mode and
+              // TMDB has a translation; fall back to OMDb's English plot
+              // otherwise. OMDb is the only plot source for many films, so
+              // English remains the baseline.
+              const zhPlot = lang === 'zh' ? getChineseOverview(movie.id) : null;
+              if (zhPlot) return <div className="film-detail-plot">{zhPlot}</div>;
+              return omdbData?.plot ? (
+                <div className="film-detail-plot">{tidyPlot(omdbData.plot)}</div>
+              ) : null;
+            })()}
 
             <SeriesSection
               filmId={movie.id}

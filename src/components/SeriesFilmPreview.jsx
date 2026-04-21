@@ -9,6 +9,7 @@ import InfoTooltip from './InfoTooltip';
 import SeriesSection from './SeriesSection';
 import StarPicker from './StarPicker';
 import { useFilmModalGestures } from './useFilmModalGestures';
+import { getChineseTitleByTmdbId, getChineseOverviewByTmdbId } from '../data/chineseMetadata';
 
 // Synthesize a stable id for an out-of-canon film so watched/ratings can
 // store it alongside catalog films without key collisions. Catalog IDs are
@@ -43,7 +44,7 @@ export default function SeriesFilmPreview({
   onRatingChange,
   raters,
 }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [currentFilm, setCurrentFilm] = useState(initialFilm);
 
   // Reset internal state when the parent opens a different preview
@@ -166,6 +167,10 @@ export default function SeriesFilmPreview({
             </div>
 
             <div className="film-title">{film.title}</div>
+            {lang === 'zh' && film.tmdbId && (() => {
+              const zh = getChineseTitleByTmdbId(film.tmdbId);
+              return zh ? <div className="film-title-zh">{zh}</div> : null;
+            })()}
 
             <div className="film-year">
               <span>{film.year}</span>
@@ -237,9 +242,11 @@ export default function SeriesFilmPreview({
               </div>
             )}
 
-            {film.overview && (
-              <div className="film-detail-plot">{film.overview}</div>
-            )}
+            {(() => {
+              const zhPlot = lang === 'zh' && film.tmdbId ? getChineseOverviewByTmdbId(film.tmdbId) : null;
+              if (zhPlot) return <div className="film-detail-plot">{zhPlot}</div>;
+              return film.overview ? <div className="film-detail-plot">{film.overview}</div> : null;
+            })()}
 
             <SeriesSection
               currentTmdbId={film.tmdbId}

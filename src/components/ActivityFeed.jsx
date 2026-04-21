@@ -1,6 +1,7 @@
 import React from 'react';
 import { MOVIES_BY_ID } from '../data/movies';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 function useTimeAgo() {
   const { t, lang } = useT();
@@ -20,7 +21,7 @@ function useTimeAgo() {
 }
 
 export default function ActivityFeed({ activities, currentProfileId, onOpenDetail }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const timeAgo = useTimeAgo();
   if (!activities || activities.length === 0) return null;
 
@@ -41,16 +42,23 @@ export default function ActivityFeed({ activities, currentProfileId, onOpenDetai
             <span className="activity-text">
               {parts.map((p, i) => {
                 if (p === '__NAME__') return <strong key={i}>{name}</strong>;
-                if (p === '__FILM__') return (
-                  <span key={i} className="activity-movie-link" onClick={() => {
-                    if (onOpenDetail) {
-                      const movie = MOVIES_BY_ID[a.movieId];
-                      if (movie) onOpenDetail(movie);
-                    }
-                  }}>
-                    {a.movieTitle}
-                  </span>
-                );
+                if (p === '__FILM__') {
+                  // Prefer the zh-TW title when in zh mode and TMDB has one —
+                  // the activity line reads naturally in Chinese ("John 看了 教父")
+                  // instead of mixing scripts. Falls back to the English title
+                  // stored on the activity record for films without a zh entry.
+                  const zhTitle = lang === 'zh' ? getChineseTitle(a.movieId) : null;
+                  return (
+                    <span key={i} className="activity-movie-link" onClick={() => {
+                      if (onOpenDetail) {
+                        const movie = MOVIES_BY_ID[a.movieId];
+                        if (movie) onOpenDetail(movie);
+                      }
+                    }}>
+                      {zhTitle || a.movieTitle}
+                    </span>
+                  );
+                }
                 return <React.Fragment key={i}>{p}</React.Fragment>;
               })}
               <span className="activity-year"> ({a.movieYear})</span>

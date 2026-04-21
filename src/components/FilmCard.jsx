@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 import { fetchOmdbData, readCachedOmdbData, tidyPlot } from '../utils/omdb';
 import { getConsensusScore, CONSENSUS_TOOLTIP_TEXT } from '../utils/ratings';
 import InfoTooltip from './InfoTooltip';
@@ -87,7 +88,7 @@ function pickSkipMessage(movie) {
 }
 
 export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmarked, onToggleWatchlist, fading, ratings, onRatingChange, raters, allowSkip, onSkip, allProfiles, currentProfileId, onOpenDetail, onOpenProfile, onOpenSeriesPreview, watchedSet }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [omdbData, setOmdbData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -188,6 +189,15 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
           <CeremonyTooltip ceremony={movie.ceremony} year={movie.year} currentMovieId={movie.id} onOpenDetail={onOpenDetail} movie={movie} />
         </div>
         <div className="film-title">{movie.title}</div>
+        {(() => {
+          // Chinese title renders as a smaller secondary line under the English
+          // title when (a) the user is in zh mode and (b) TMDB has a zh-TW
+          // translation for this film. Staying silent on missing films keeps
+          // the layout honest — no empty gaps or machine-translated fallbacks.
+          if (lang !== 'zh') return null;
+          const zh = getChineseTitle(movie.id);
+          return zh ? <div className="film-title-zh">{zh}</div> : null;
+        })()}
         <div className="film-year">
           <span>{movie.year}</span>
           {omdbData?.runtime && (() => {

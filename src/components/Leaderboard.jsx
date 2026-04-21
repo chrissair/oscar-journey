@@ -8,6 +8,7 @@ import StatsTab from './StatsTab';
 import { getCollectorScore, RARITIES } from '../utils/cards';
 import { fetchOmdbData } from '../utils/omdb';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 // Mini featured card for profile grid
 function MiniShowcase({ card }) {
@@ -36,7 +37,7 @@ async function getAllProfiles() {
 }
 
 export default function Leaderboard({ currentProfile, currentRatings, onOpenDetail, onOpenTmdbPreview, watchedTitleSet, ratings, raters, onSaveProfile, autoSelectProfileId, onClearAutoSelect, onNavigateToTier }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState(null);

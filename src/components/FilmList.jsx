@@ -14,6 +14,7 @@ import { CATEGORY_LABELS } from './SettingsModal';
 import { getTier } from '../utils/tierInfo';
 import { isInternational, isAnimated, isDocumentary, isSilent, isBlackAndWhite, matchesCategoryFilter, matchesGenreFilter } from '../utils/filmAttributes';
 import DIRECTORS from '../data/directors.json';
+import { getChineseTitle } from '../data/chineseMetadata';
 import ACTORS from '../data/actors.json';
 import CAST from '../data/cast.json';
 
@@ -156,7 +157,7 @@ function formatRuntimeLabel(minutes) {
 
 
 export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, onToggleWatched, ratings, raters, filterPreset, onFilterPresetApplied, checklistMode = false }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [query, setQuery] = useState('');
   // `watchMode` is a three-way enum: 'all' | 'watched' | 'unwatched'.
   // Watched-only and Unwatched-only are mutually exclusive — clicking one
@@ -925,7 +926,13 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                     )}
                     {OPTION_A_LAYOUT ? (
                       <span className="film-row-title-group">
-                        <span className="film-row-title film-row-title-inline">{m.title}</span>
+                        <span className="film-row-title film-row-title-inline">
+                          {m.title}
+                          {lang === 'zh' && (() => {
+                            const zh = getChineseTitle(m.id);
+                            return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                          })()}
+                        </span>
                         <span className="film-row-awards">
                           {getOscarBadges(m).map(k => (
                             <OscarIcon key={k} movie={m} kind={k} size="sm" />
@@ -934,7 +941,13 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                         </span>
                       </span>
                     ) : (
-                      <span className="film-row-title">{m.title}</span>
+                      <span className="film-row-title">
+                        {m.title}
+                        {lang === 'zh' && (() => {
+                          const zh = getChineseTitle(m.id);
+                          return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                        })()}
+                      </span>
                     )}
                     <MovieBadges movie={m} small excludeOscars={OPTION_A_LAYOUT} />
                     <span className="film-row-year">{m.year}</span>

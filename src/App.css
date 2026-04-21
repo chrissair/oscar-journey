@@ -528,6 +528,27 @@ main {
   margin-bottom: 0;
 }
 
+/* Secondary Chinese title. Renders below the English title when the user
+   is in zh mode and TMDB has a zh-TW translation. Smaller and dimmer so
+   the English title still carries primary weight. */
+.film-title-zh {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--cream-dim);
+  line-height: 1.2;
+  letter-spacing: 0;
+  margin-top: 2px;
+}
+
+/* Inline Chinese title in the A-Z list rows. Runs alongside the English
+   title with a bullet separator; slightly dimmer and reduced weight so the
+   row keeps the English title as primary scannable anchor. */
+.film-row-title-zh {
+  color: var(--cream-dim);
+  font-weight: 400;
+  font-size: 0.95em;
+}
+
 .film-year {
   font-size: 0.85rem;
   color: var(--cream-dim);
