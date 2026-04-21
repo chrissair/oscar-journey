@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, useMemo, useRef } from 'react';
 import { MOVIES, MOVIES_BY_ID } from './data/movies';
 import { getSeriesForFilm } from './data/seriesCollections';
 import { getTier } from './utils/tierInfo';
@@ -1013,7 +1013,12 @@ export default function App() {
   // We persist the auto-skipped currentIdx to Firestore too — the Profile
   // view reads profile.currentIdx and would otherwise desync from Journey's
   // playlist[currentIdx] whenever a filter hides the current film.
-  useEffect(() => {
+  //
+  // useLayoutEffect (not useEffect) so the snap-back happens BEFORE the
+  // browser paints. Without this, removing a filter would briefly show the
+  // "Film X of Y" counter at the detour position before flipping to the
+  // snapped-back position — a visible one-frame flicker.
+  useLayoutEffect(() => {
     if (screen !== 'card' || !playlist.length || eligibleStats.total === 0) return;
 
     // Resolve the saved film ID to an index in the current playlist.
