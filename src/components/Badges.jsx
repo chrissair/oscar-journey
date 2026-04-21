@@ -4,6 +4,9 @@ import TierPips from './TierPips';
 import OscarIcon, { getOscarStatus, getOscarBadges } from './OscarIcon';
 import LanguagePill from './LanguagePill';
 import { isAnimated, isDocumentary, isSilent, isBlackAndWhite } from '../utils/filmAttributes';
+// useT imported for future i18n; badge labels (Documentary, Silent, B&W, Animated,
+// Winner, Intl Winner, Anim Winner, Essential, Best Picture) have no matching keys yet.
+import { useT } from '../i18n';
 
 // Category pill definitions. International is intentionally absent —
 // the LanguagePill's flag already conveys that signal. A film can carry
