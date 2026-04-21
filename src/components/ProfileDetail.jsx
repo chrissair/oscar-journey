@@ -296,7 +296,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
   return (
     <div className="profile-detail">
       <button className="profile-detail-back" onClick={onBack}>
-        &larr; Back to Leaderboard
+        {t('profile.backToLeaderboard')}
       </button>
 
       {/* Header */}
@@ -308,7 +308,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
         </div>
         {focusRater && (
           <div className="profile-detail-joined" style={{ fontStyle: 'italic' }}>
-            Co-watching with {profileData.displayName || profileData.id}
+            {t('profile.coWatching', { name: profileData.displayName || profileData.id })}
           </div>
         )}
         {memberSince && (
@@ -319,22 +319,22 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
             onClick={() => onOpenDetail && onOpenDetail(currentJourneyMovie)}
             style={{ cursor: 'pointer' }}
           >
-            🎬 Currently on: <strong>{currentJourneyMovie.title}</strong> ({currentJourneyMovie.year})
+            {t('profile.currentlyOn', { title: currentJourneyMovie.title, year: currentJourneyMovie.year })}
           </div>
         )}
 
         <div className="profile-detail-summary">
           <div className="profile-summary-item">
             <div className="profile-summary-value">{stats.watchedCount}</div>
-            <div className="profile-summary-label">Films Watched</div>
+            <div className="profile-summary-label">{t('profile.filmsWatched')}</div>
           </div>
           <div className="profile-summary-item">
             <div className="profile-summary-value">{stats.avgRating}</div>
-            <div className="profile-summary-label">Avg Rating</div>
+            <div className="profile-summary-label">{t('profile.avgRating')}</div>
           </div>
           <div className="profile-summary-item">
             <div className="profile-summary-value">{stats.ratingCount}</div>
-            <div className="profile-summary-label">Total Ratings</div>
+            <div className="profile-summary-label">{t('profile.totalRatings')}</div>
           </div>
           <div className="profile-summary-item">
             <div className="profile-summary-value" style={{ fontSize: stats.favGenre.length > 12 ? '1rem' : undefined }}>
@@ -353,10 +353,10 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
       {(profileData.showcase?.length > 0 || (isOwnProfile && profileData.wallet?.length > 0)) && (
         <div className="pd-cards-section">
           <div className="pd-cards-header">
-            <span className="pd-section-label">Cards</span>
+            <span className="pd-section-label">{t('profile.cards')}</span>
             {profileData.wallet?.length > 0 && (
               <span className="pd-collector-score" title="Points from your wallet cards. Rarer cards = more points.">
-                Collector Score: <strong>{getCollectorScore(profileData.wallet)}</strong>
+                {t('profile.collectorScore', { n: getCollectorScore(profileData.wallet) })}
               </span>
             )}
           </div>
@@ -387,7 +387,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
             {/* Wallet — visible to everyone, tap-to-feature only on own profile */}
             {profileData.wallet?.length > 0 && (
               <div className="pd-wallet">
-                <div className="pd-wallet-label">{isOwnProfile ? 'Your ' : ''}Wallet ({profileData.wallet.length}/{getMaxWallet(watchedMovies.length)})</div>
+                <div className="pd-wallet-label">{isOwnProfile ? t('profile.yourWallet', { n: profileData.wallet.length, max: getMaxWallet(watchedMovies.length) }) : `Wallet (${profileData.wallet.length}/${getMaxWallet(watchedMovies.length)})`}</div>
                 <div className="pd-wallet-cards">
                   {profileData.wallet.map((card, i) => {
                     const movie = MOVIES_BY_ID[card.movieId];
@@ -416,7 +416,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                     );
                   })}
                 </div>
-                {isOwnProfile && <div className="pd-wallet-hint">Tap to feature</div>}
+                {isOwnProfile && <div className="pd-wallet-hint">{t('profile.tapToFeature')}</div>}
               </div>
             )}
           </div>
@@ -439,13 +439,13 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
 
       {/* Watched Films */}
       <h2 className="pd-section-heading">
-        Watched Films ({stats.watchedCount})
+        {t('profile.watchedFilmsHeading', { n: stats.watchedCount })}
       </h2>
 
       <input
         className="profile-films-search"
         type="text"
-        placeholder="Search films..."
+        placeholder={t('profile.searchFilmsPlaceholder')}
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
       />
@@ -456,19 +456,19 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
           className={`sort-btn ${sortMode === 'az' ? 'active' : ''}`}
           onClick={() => setSortMode('az')}
         >
-          A-Z
+          {t('profile.sortAZ')}
         </button>
         <button
           className={`sort-btn ${sortMode === 'rating' ? 'active' : ''}`}
           onClick={() => setSortMode('rating')}
         >
-          Highest Rated
+          {t('profile.sortHighestRated')}
         </button>
       </div>
 
       {filteredWatched.length === 0 ? (
         <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic', fontSize: '0.9rem', padding: '12px 0' }}>
-          {searchQuery ? 'No films match your search.' : 'No films watched yet.'}
+          {searchQuery ? t('profile.noFilmsMatchSearch') : t('profile.noFilmsWatchedYet')}
         </p>
       ) : (
         <div className="film-tiles">
@@ -528,7 +528,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                 onClick={() => onOpenDetail && onOpenDetail(movie)}>
                 <div className="film-tile-poster-wrap">
                   <FilmTilePoster movie={movie} />
-                  {movie.won && movie.category === 'BP' && <span className="film-tile-winner">Winner</span>}
+                  {movie.won && movie.category === 'BP' && <span className="film-tile-winner">{t('profile.bpWinner')}</span>}
                 </div>
                 <div className="film-tile-info">
                   <div className="film-tile-title">{movie.title}</div>
@@ -564,7 +564,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
             onClick={() => setShowSkipped(prev => !prev)}
             style={{ marginTop: '24px' }}
           >
-            {showSkipped ? 'Hide' : 'Show'} Skipped Films 😤 ({skippedMovies.length})
+            {showSkipped ? t('profile.hideSkipped', { n: skippedMovies.length }) : t('profile.showSkipped', { n: skippedMovies.length })}
           </button>
           {showSkipped && (
             <div>
@@ -586,7 +586,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
         className="profile-unwatched-toggle"
         onClick={() => setShowUnwatched(prev => !prev)}
       >
-        {showUnwatched ? 'Hide' : 'Show'} Not Yet Watched ({unwatchedMovies.length} films remaining)
+        {showUnwatched ? t('profile.hideNotWatched') : t('profile.showNotWatched', { n: unwatchedMovies.length })}
       </button>
 
       {showUnwatched && (
