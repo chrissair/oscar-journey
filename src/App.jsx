@@ -1291,31 +1291,14 @@ export default function App() {
             <StartScreen onStart={handleStart} />
           )}
           {screen === 'card' && eligibleStats.total === 0 && (
-            <>
-              <div style={{ textAlign: 'center', padding: '60px 20px' }}>
-                <p style={{ color: 'var(--cream-dim)', fontSize: '1.1rem', marginBottom: '12px' }}>
-                  All films are filtered out.
-                </p>
-                <p style={{ color: 'var(--cream-dim)', fontSize: '0.9rem', marginBottom: '20px' }}>
-                  Turn some filters back on below.
-                </p>
-              </div>
-              <JourneyControls
-                filters={profile?.filters}
-                onFiltersChange={(newFilters) => {
-                  setProfile(prev => prev ? { ...prev, filters: newFilters } : prev);
-                  firebaseSave('filters', newFilters);
-                }}
-                onReshuffle={handleReshuffle}
-                eligibleCount={eligibleStats.total}
-                totalCount={playlist.length}
-                profiles={allProfilesForSync}
-                currentProfileId={profile?.id}
-                onSyncJourney={handleSyncJourney}
-                syncedWith={profile?.syncedWith}
-                onUnsync={handleUnsync}
-              />
-            </>
+            <div style={{ textAlign: 'center', padding: '60px 20px' }}>
+              <p style={{ color: 'var(--cream-dim)', fontSize: '1.1rem', marginBottom: '12px' }}>
+                All films are filtered out.
+              </p>
+              <p style={{ color: 'var(--cream-dim)', fontSize: '0.9rem', marginBottom: '20px' }}>
+                Turn some filters back on below.
+              </p>
+            </div>
           )}
           {screen === 'card' && currentMovie && eligibleStats.total > 0 && (
             <>
@@ -1389,22 +1372,29 @@ export default function App() {
                 {currentTagline}
               </div>
               <ActivityFeed activities={activityFeed} currentProfileId={profile?.id} onOpenDetail={setDetailMovie} />
-              <JourneyControls
-                filters={profile?.filters}
-                onFiltersChange={(newFilters) => {
-                  setProfile(prev => prev ? { ...prev, filters: newFilters } : prev);
-                  firebaseSave('filters', newFilters);
-                }}
-                onReshuffle={handleReshuffle}
-                eligibleCount={eligibleStats.total}
-                totalCount={playlist.length}
-                profiles={allProfilesForSync}
-                currentProfileId={profile?.id}
-                onSyncJourney={handleSyncJourney}
-                syncedWith={profile?.syncedWith}
-                onUnsync={handleUnsync}
-              />
             </>
+          )}
+          {/* JourneyControls renders for both the has-films and all-filtered-out
+              states. Rendering it as one persistent instance (instead of one
+              per branch) keeps its local state — like the expanded/collapsed
+              filter panel — from resetting when the eligible count crosses
+              the zero boundary. */}
+          {screen === 'card' && (
+            <JourneyControls
+              filters={profile?.filters}
+              onFiltersChange={(newFilters) => {
+                setProfile(prev => prev ? { ...prev, filters: newFilters } : prev);
+                firebaseSave('filters', newFilters);
+              }}
+              onReshuffle={handleReshuffle}
+              eligibleCount={eligibleStats.total}
+              totalCount={playlist.length}
+              profiles={allProfilesForSync}
+              currentProfileId={profile?.id}
+              onSyncJourney={handleSyncJourney}
+              syncedWith={profile?.syncedWith}
+              onUnsync={handleUnsync}
+            />
           )}
           {screen === 'complete' && (
             <CompletionScreen total={eligibleStats.total} onRestart={handleRestart} />
