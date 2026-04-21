@@ -498,6 +498,7 @@ export const en = {
     dismiss: 'Dismiss',
     wallet: 'Wallet',
     showcase: 'Showcase',
+    couldBe: 'Could be {rare}, {epic}, or even {legendary}',
   },
   activity: {
     feedTitle: 'Recent activity',

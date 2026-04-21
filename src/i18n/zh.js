@@ -501,6 +501,7 @@ export const zh = {
     dismiss: '關閉',
     wallet: '卡冊',
     showcase: '展示',
+    couldBe: '可能是 {rare}、{epic}，甚至 {legendary}',
   },
   activity: {
     feedTitle: '近期動態',

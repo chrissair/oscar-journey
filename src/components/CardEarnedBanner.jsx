@@ -12,9 +12,15 @@ export default function CardEarnedBanner({ onOpen, onDismiss }) {
         <div className="card-earned-text">
           <div className="card-earned-title">{t('cards.earned')}</div>
           <div className="card-earned-sub">
-            Could be <span style={{ color: RARITIES.RARE.color }}>{t('cards.rarity.rare')}</span>,{' '}
-            <span style={{ color: RARITIES.EPIC.color }}>{t('cards.rarity.epic')}</span>, or even{' '}
-            <span style={{ color: RARITIES.LEGENDARY.color }}>{t('cards.rarity.legendary')}</span>
+            {(() => {
+              const sentence = t('cards.couldBe', { rare: '__R__', epic: '__E__', legendary: '__L__' });
+              return sentence.split(/(__R__|__E__|__L__)/).map((p, i) => {
+                if (p === '__R__') return <span key={i} style={{ color: RARITIES.RARE.color }}>{t('cards.rarity.rare')}</span>;
+                if (p === '__E__') return <span key={i} style={{ color: RARITIES.EPIC.color }}>{t('cards.rarity.epic')}</span>;
+                if (p === '__L__') return <span key={i} style={{ color: RARITIES.LEGENDARY.color }}>{t('cards.rarity.legendary')}</span>;
+                return <React.Fragment key={i}>{p}</React.Fragment>;
+              });
+            })()}
           </div>
         </div>
       </div>
