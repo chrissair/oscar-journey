@@ -286,7 +286,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                   <div className="metric-item metric-consensus">
                     <span className="metric-value">
                       {consensus.toFixed(1)}<span className="metric-value-sub">/10</span>
-                      <InfoTooltip text={CONSENSUS_TOOLTIP_TEXT} label="How Consensus is calculated" />
+                      <InfoTooltip text={CONSENSUS_TOOLTIP_TEXT} label={t('infoTooltip.howConsensus')} />
                     </span>
                     <span className="metric-label">{t('filmCard.consensusLabel')}</span>
                   </div>
