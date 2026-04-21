@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useT } from '../i18n';
 import { MOVIES } from '../data/movies';
 import { DEFAULT_FILTERS, CATEGORY_LABELS, GENRE_LABELS, SMART_LABELS,
          JOURNEY_YEAR_MIN, JOURNEY_YEAR_MAX, JOURNEY_RUNTIME_MIN, JOURNEY_RUNTIME_MAX } from './SettingsModal';
@@ -30,6 +31,7 @@ const MIN_SLIDER_TIER = 0;
 const MAX_SLIDER_TIER = 5;
 
 export default function JourneyControls({ filters, onFiltersChange, onReshuffle, eligibleCount, totalCount, profiles, currentProfileId, onSyncJourney, syncedWith, onUnsync }) {
+  const { t } = useT();
   const [syncTarget, setSyncTarget] = useState('');
   const [openSections, setOpenSections] = useState({ smart: false, years: false, categories: false, canon: false, genres: false, runtimes: false });
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -314,12 +316,12 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
       chips.push(`Runtime: ${lo}–${hi}`);
     }
 
-    if (currentFilters.oscarsOnly) chips.push('Oscars only');
-    if (currentFilters.essentialsOnly) chips.push('Essentials only');
+    if (currentFilters.oscarsOnly) chips.push(t('filters.oscarsOnly'));
+    if (currentFilters.essentialsOnly) chips.push(t('filters.essentialsOnly'));
     if (currentFilters.minTier > 0) chips.push(`Tier ≥${currentFilters.minTier}`);
 
     return chips;
-  }, [currentFilters]);
+  }, [currentFilters, t]);
 
   // Find synced profile name
   const syncedProfile = syncedWith ? profiles?.find(p => p.id === syncedWith) : null;
@@ -335,7 +337,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
             if (window.confirm('Stop following this journey? Your current position and progress will be kept, but you\'ll no longer sync with them.')) {
               onUnsync();
             }
-          }}>Unsync</button>
+          }}>{t('profile.unsync')}</button>
         </div>
       )}
 
@@ -343,7 +345,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
         <div className={`journey-filters-collapsible ${filtersOpen ? 'is-open' : 'is-closed'}`} style={{ flex: 1, minWidth: 0 }}>
           <button className="journey-filters-header" onClick={() => setFiltersOpen(o => !o)}>
             <span className="journey-filters-arrow">{filtersOpen ? '▾' : '▸'}</span>
-            <span className="journey-controls-header" style={{ margin: 0 }}>Filters</span>
+            <span className="journey-controls-header" style={{ margin: 0 }}>{t('filters.title')}</span>
             {eligibleCount > 0 && (
               <span className="journey-filter-count" title={`${eligibleCount} of ${totalCount} films in your catalog`}>
                 {eligibleCount} film{eligibleCount === 1 ? '' : 's'}
@@ -373,7 +375,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                 className="film-list-filter-reset"
                 role="button"
                 onClick={(e) => { e.stopPropagation(); resetFilters(); }}
-              >Reset</span>
+              >{t('filters.reset')}</span>
             )}
           </button>
           {filtersOpen && (
@@ -385,11 +387,11 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
               <div className="filter-section">
                 <button className="filter-section-toggle" onClick={() => toggleSection('canon')}>
                   <span className="filter-section-arrow">{openSections.canon ? '▾' : '▸'}</span>
-                  <span className="filter-section-label">Canon depth</span>
+                  <span className="filter-section-label">{t('filters.canonDepth')}</span>
                   {(() => {
                     const parts = [];
-                    if (currentFilters.oscarsOnly) parts.push('Oscars only');
-                    if (currentFilters.essentialsOnly) parts.push('Essentials only');
+                    if (currentFilters.oscarsOnly) parts.push(t('filters.oscarsOnly'));
+                    if (currentFilters.essentialsOnly) parts.push(t('filters.essentialsOnly'));
                     if (currentFilters.minTier > 0) parts.push(`tier ≥${currentFilters.minTier}`);
                     if (parts.length === 0) return null;
                     return <span className="filter-section-count">{parts.join(' · ')}</span>;
@@ -411,7 +413,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                     >
                       <span className="essentials-only-checkbox">{currentFilters.oscarsOnly ? '\u2713' : ''}</span>
                       <span className="essentials-only-label">
-                        <strong>Oscars only</strong>
+                        <strong>{t('filters.oscarsOnly')}</strong>
                         <span className="essentials-only-sub">
                           Hide canon-only essentials — show just BP nominees and Int/Anim winners.
                         </span>
@@ -430,7 +432,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                     >
                       <span className="essentials-only-checkbox">{currentFilters.essentialsOnly ? '\u2713' : ''}</span>
                       <span className="essentials-only-label">
-                        <strong>Essentials only</strong>
+                        <strong>{t('filters.essentialsOnly')}</strong>
                         <span className="essentials-only-sub">
                           Hide Oscar-eligible films — show just the non-Oscar canon.
                         </span>
@@ -475,14 +477,14 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                 )}
               </div>
 
-              {renderSection('cats', 'Categories', 'categories', CATEGORY_LABELS, categoryCounts)}
+              {renderSection('cats', t('filters.categories'), 'categories', CATEGORY_LABELS, categoryCounts)}
 
               {/* Years — dual-thumb range slider (JOURNEY_YEAR_MIN..current).
                   Mirrors the Film tab's Years slider for UI parity. */}
               <div className="filter-section">
                 <button className="filter-section-toggle" onClick={() => toggleSection('years')}>
                   <span className="filter-section-arrow">{openSections.years ? '▾' : '▸'}</span>
-                  <span className="filter-section-label">Years</span>
+                  <span className="filter-section-label">Years</span>{/* UNTRANSLATED: 'Years' — closest key is filters.yearRange='Year range' */}
                   {yearRangeActive && (
                     <span className="filter-section-count">
                       {currentFilters.yearRange.min}–{currentFilters.yearRange.max}
@@ -540,13 +542,13 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                 )}
               </div>
 
-              {renderSection('genres', 'Genres', 'genres', GENRE_LABELS, genreCounts)}
+              {renderSection('genres', t('filters.genres'), 'genres', GENRE_LABELS, genreCounts)}
 
               {/* Runtime — dual-thumb range slider. Open-ended at upper bound. */}
               <div className="filter-section">
                 <button className="filter-section-toggle" onClick={() => toggleSection('runtimes')}>
                   <span className="filter-section-arrow">{openSections.runtimes ? '▾' : '▸'}</span>
-                  <span className="filter-section-label">Runtime</span>
+                  <span className="filter-section-label">Runtime</span>{/* UNTRANSLATED: 'Runtime' — closest key is filters.runtimes='Runtimes' */}
                   {runtimeRangeActive && (
                     <span className="filter-section-count">
                       {formatRuntimeLabel(currentFilters.runtimeRange.min)}–
@@ -609,7 +611,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                 )}
               </div>
 
-              {renderSection('smart', 'Smart Filters', 'smart', SMART_LABELS)}
+              {renderSection('smart', 'Smart Filters', 'smart', SMART_LABELS)}{/* UNTRANSLATED: 'Smart Filters' — no key in dict */}
             </div>
           )}
         </div>
@@ -627,7 +629,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
             value={syncTarget}
             onChange={e => setSyncTarget(e.target.value)}
           >
-            <option value="">Sync with...</option>
+            <option value="">{t('profile.syncWith')}</option>
             {profiles.filter(p => p.id !== currentProfileId).map(p => (
               <option key={p.id} value={p.id}>{p.avatar} {p.displayName}</option>
             ))}
@@ -649,12 +651,12 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
               }
             }}
           >
-            Sync
+            {t('profile.sync')}
           </button>
         </>
       )}
       <button className="journey-reshuffle-btn" onClick={handleReshuffle}>
-        🔀 Reshuffle
+        🔀 {t('profile.reshuffle')}
       </button>
     </div>
     </>
