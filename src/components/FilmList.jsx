@@ -518,8 +518,8 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
     <div className="film-list-section">
       <p className="film-list-hint">
         {checklistMode
-          ? 'Tap any film to mark it as watched. Great for first-timers catching up on what they\'ve already seen.'
-          : `Browse all ${MOVIES.length} films — every Best Picture nominee (1970+), every International Feature winner (1956+), every Animated Feature winner, plus 330 essential non-Oscar canon films.`}
+          ? t('filmList.checklistHint')
+          : t('filmList.browseHint', { count: MOVIES.length })}
       </p>
 
       <input
@@ -859,11 +859,11 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
               )}
             </div>
 
-            {renderSection('Oscars Won', 'wins', WIN_LABELS)}
+            {renderSection(t('filmList.oscarsWon'), 'wins', WIN_LABELS)}
 
             {runtimeLoading && (
               <div className="film-list-runtime-status">
-                Loading runtimes… {totalKnownRuntime}/{MOVIES.length} films
+                {t('filmList.loadingRuntimes', { loaded: totalKnownRuntime, total: MOVIES.length })}
               </div>
             )}
           </div>

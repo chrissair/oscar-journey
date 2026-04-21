@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { getSeriesForFilm, getSeriesForTmdbId, tmdbPoster } from '../data/seriesCollections';
 import { MOVIES } from '../data/movies';
+import { useT } from '../i18n';
 
 // TMDB collection names often end in " Collection" — strip for display.
 function displayCollectionName(name) {
@@ -23,6 +24,7 @@ function displayCollectionName(name) {
 //                                               the appropriate watched/rating
 //                                               props threaded through.
 export default function SeriesSection({ filmId, currentTmdbId, onNavigate, onClickOutOfCatalog, watchedSet }) {
+  const { t } = useT();
   // Desktop click-drag scrolling. Tracks mouse deltas and translates them
   // into scrollLeft; also flags when a drag moved far enough to suppress
   // the click that fires on mouseup (otherwise a drag-to-scroll would
@@ -83,11 +85,11 @@ export default function SeriesSection({ filmId, currentTmdbId, onNavigate, onCli
       <div className="series-heading">
         <span className="series-name">{name}</span>
         <span className="series-sep">·</span>
-        <span className="series-meta-inline">Film {film.order} of {siblings.length}</span>
+        <span className="series-meta-inline">{t('series.filmOf', { order: film.order, total: siblings.length })}</span>
         {!allInCatalog && (
           <>
             <span className="series-sep">·</span>
-            <span className="series-meta-inline">{inCatalogCount} in canon</span>
+            <span className="series-meta-inline">{t('series.inCanon', { count: inCatalogCount })}</span>
           </>
         )}
       </div>
@@ -133,7 +135,7 @@ export default function SeriesSection({ filmId, currentTmdbId, onNavigate, onCli
               key={s.tmdbId}
               className={classes}
               onClick={onClick}
-              title={`${s.order}. ${s.title} (${s.year})${isCurrent ? ' — this film' : s.inCatalog ? '' : ' — not in canon'}`}
+              title={`${s.order}. ${s.title} (${s.year})${isCurrent ? ' — ' + t('series.thisFilm') : s.inCatalog ? '' : ' — ' + t('series.notInCanon')}`}
             >
               {poster ? (
                 <img
@@ -151,7 +153,7 @@ export default function SeriesSection({ filmId, currentTmdbId, onNavigate, onCli
                 <span className="series-strip-order">{s.order}</span>
               )}
               {isWatched && (
-                <span className="series-strip-watched" aria-label="Watched">✓</span>
+                <span className="series-strip-watched" aria-label={t('series.watchedAlt')}>✓</span>
               )}
             </li>
           );
