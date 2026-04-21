@@ -1,4 +1,5 @@
 import React, { useId } from 'react';
+import { useT } from '../i18n';
 
 // Returns 'winner' (BP won / INT / ANIM / alsoWon INT|ANIM),
 // 'nominee' (BP nom that didn't win), or null (essential / non-Oscar).
@@ -68,20 +69,21 @@ function StatuetteSVG() {
   );
 }
 
-const TITLES = {
-  'winner':  'Academy Award winner',
-  'nominee': 'Best Picture nominee',
-  'int':     'Best International Feature winner',
-  'anim':    'Best Animated Feature winner',
+const TITLE_KEYS = {
+  'winner':  'oscarIcons.bpWinner',
+  'nominee': 'oscarIcons.bpNominee',
+  'int':     'oscarIcons.intlWinner',
+  'anim':    'oscarIcons.animWinner',
 };
 
 export default function OscarIcon({ movie, kind, size = 'sm' }) {
+  const { t } = useT();
   // Back-compat: if no kind, derive the primary status (BP winner/nominee)
   // just like before — so existing callers that render one icon keep doing
   // exactly what they did. Multi-icon callers pass `kind` explicitly.
   const k = kind ?? getOscarStatus(movie);
   if (!k) return null;
-  const title = TITLES[k] || 'Academy Award';
+  const title = TITLE_KEYS[k] ? t(TITLE_KEYS[k]) : 'Academy Award';
   return (
     <span
       className={`oscar-icon oscar-icon-${size} oscar-icon-${k}`}
