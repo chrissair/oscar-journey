@@ -13,6 +13,7 @@ import CeremonyTooltip from './CeremonyTooltip';
 import ACTORS from '../data/actors.json';
 import DIRECTORS from '../data/directors.json';
 import SeriesSection from './SeriesSection';
+import DirectorFilmographyLink from './DirectorFilmographyLink';
 
 // Universal skip messages — safe for any film (Oscar or canon).
 const SKIP_MESSAGES_UNIVERSAL = [
@@ -254,7 +255,12 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, fading, ra
           // over-credits committees on some older / animated films).
           const director = DIRECTORS[movie.id] || omdbData?.director;
           if (!director) return null;
-          return <div className="film-director"><strong>Directed by</strong> {director}</div>;
+          return (
+            <div className="film-director">
+              <strong>Directed by</strong> {director}
+              <DirectorFilmographyLink movie={movie} onOpenDetail={onOpenDetail} />
+            </div>
+          );
         })()}
         {(() => {
           // Starring — top-billed from actors.json, fallback to OMDb. Middle
