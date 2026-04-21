@@ -488,6 +488,7 @@ export const zh = {
     logOut: '登出',
     logOutConfirm: '要登出嗎？你的資料會保留。',
     clearedCacheMessage: '已清除 {count} 筆快取的海報／資訊。',
+    confirmRestart: '要從頭開始嗎？你的已觀看清單會保留。',
   },
   errors: {
     signInFailed: '登入失敗，請再試一次。',
@@ -595,6 +596,25 @@ export const zh = {
   modal: {
     close: '關閉',
     learnMore: '了解更多',
+  },
+  whatsNew: {
+    badge: '新功能',
+    title: '最新消息',
+    canonHeading: '目錄更新 + 五層經典分級',
+    canonSub: '787 部電影，依 8 份權威名單評分，由「入選經典」到「巔峰」分級。',
+    tierApex: '巔峰',
+    tierLandmark: '里程碑',
+    tierAcclaimed: '公認佳作',
+    canonBody: '全部權威名單重新抓取（Sight & Sound、AFI、Criterion、IMDb、Letterboxd、Rotten Tomatoes、各大影展最高獎、National Film Registry）。手工挑選 16 部作品組成「巔峰」層——Godfather、Pulp Fiction、Parasite、Seven Samurai、Vertigo、2001、Citizen Kane、The Third Man 等頂級經典。點選任一部電影的金色圓點，即可查看它出現在哪些名單與等級。',
+    cardsHeading: '收藏卡片',
+    cardsSub: '進行電影對戰並獲得卡片',
+    cardsBody: '在兩兩對決中投票，即可獲得隨機電影卡片。卡冊最多可放 3 張，在個人檔案上展示你的珍藏。',
+    dailyHeading: '每日奧斯卡',
+    dailySub: '每天一道謎題',
+    dailyBody: '從模糊海報與一句台詞猜出電影。5 次機會，每次給更多線索。答對可獲得卡片——猜越少次，卡片越稀有。累積你的連勝。',
+    startBattling: '開始對戰',
+    playDaily: '玩每日奧斯卡',
+    exploreLater: '之後再探索',
   },
   info: {
     heroSub: '{count} 部必看電影的完整指南——涵蓋每一部重要奧斯卡作品，以及學院錯過的經典。',

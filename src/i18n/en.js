@@ -485,6 +485,7 @@ export const en = {
     logOut: 'Log Out',
     logOutConfirm: 'Log out? Your data is saved.',
     clearedCacheMessage: 'Cleared {count} cached poster/info entries.',
+    confirmRestart: 'Start from the beginning? Your watched list will be preserved.',
   },
   errors: {
     signInFailed: 'Sign in failed. Try again.',
@@ -592,6 +593,25 @@ export const en = {
   modal: {
     close: 'Close',
     learnMore: 'Learn more',
+  },
+  whatsNew: {
+    badge: 'NEW FEATURES',
+    title: 'What\'s New',
+    canonHeading: 'Catalog refresh + 5-tier Canon',
+    canonSub: '787 films, scored across 8 canon lists, bucketed Canonical → Apex',
+    tierApex: 'Apex',
+    tierLandmark: 'Landmark',
+    tierAcclaimed: 'Acclaimed',
+    canonBody: 'Fresh scrapes of all canon lists (Sight & Sound, AFI, Criterion, IMDb, Letterboxd, Rotten Tomatoes, festival grand prizes, National Film Registry). A curated 16-film Apex tier — Godfather, Pulp Fiction, Parasite, Seven Samurai, Vertigo, 2001, Citizen Kane, The Third Man and the rest of the summit canon. Tap any film\'s pips to see its canon lists and tier.',
+    cardsHeading: 'Collectible Cards',
+    cardsSub: 'Battle movies and earn cards',
+    cardsBody: 'Vote in head-to-head battles to earn random movie cards. Hold up to 3 in your wallet and feature your best on your profile.',
+    dailyHeading: 'Daily Oscar',
+    dailySub: 'One puzzle every day',
+    dailyBody: 'Guess the movie from a blurred poster and a quote. 5 guesses, progressive hints. Correct answers earn a card — fewer guesses, rarer the pull. Build your streak.',
+    startBattling: 'Start Battling',
+    playDaily: 'Play Daily Oscar',
+    exploreLater: 'I\'ll explore later',
   },
   info: {
     heroSub: 'Your guide to {count} must-watch films — every major Oscar + the canon the Academy overlooked',

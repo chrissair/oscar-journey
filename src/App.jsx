@@ -933,7 +933,7 @@ export default function App() {
 
   // --- Restart ---
   const handleRestart = useCallback(() => {
-    if (!window.confirm('Start from the beginning? Your watched list will be preserved.')) return;
+    if (!window.confirm(t('settings.confirmRestart'))) return;
     setCurrentIdx(0);
     firebaseSave('currentIdx', 0);
     setScreen('card');
@@ -1060,7 +1060,7 @@ export default function App() {
 
   const handleClearCache = useCallback(() => {
     const count = clearCache();
-    window.alert(`Cleared ${count} cached poster/info entries.`);
+    window.alert(t('settings.clearedCacheMessage', { count }));
     setSettingsOpen(false);
   }, []);
 
