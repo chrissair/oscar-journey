@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { getTierInfo, LIST_LABELS, LIST_SHORT_LABELS, MAX_TIER, TIER_LABELS, TIER_DESCRIPTIONS } from '../utils/tierInfo';
+import { useT } from '../i18n';
 
 // Visual signal of how many canon lists a film appears on.
 //  - `full`  (default): all MAX_TIER dots shown, filled up to tier
@@ -9,6 +10,7 @@ import { getTierInfo, LIST_LABELS, LIST_SHORT_LABELS, MAX_TIER, TIER_LABELS, TIE
 // `interactive={false}` disables the click (use for decorative pips in announcements).
 
 export default function TierPips({ movie, variant = 'full', showLabel = false, interactive = true }) {
+  const { t } = useT();
   const { tier, lists } = getTierInfo(movie);
   const [open, setOpen] = useState(false);
 
@@ -91,11 +93,11 @@ export default function TierPips({ movie, variant = 'full', showLabel = false, i
                 <span className="tier-pip-label">{tier}</span>
               </span>
               <h2 id="tier-pip-modal-title" className="tier-pip-modal-title">
-                {tierLabel} <span className="tier-pip-modal-tier-num">· Tier {tier} of {MAX_TIER}</span>
+                {tierLabel} <span className="tier-pip-modal-tier-num">· {t('tierPips.tierOfMax', { n: tier, max: MAX_TIER })}</span>
               </h2>
             </div>
             <p className="tier-pip-modal-sub">
-              <strong>{movie.title}</strong> appears on {lists.length} canon {lists.length === 1 ? 'list' : 'lists'}
+              <strong>{movie.title}</strong> {t(lists.length === 1 ? 'tierPips.appearsOn' : 'tierPips.appearsOnPlural', { n: lists.length })}
             </p>
             <p className="tier-pip-modal-desc">{TIER_DESCRIPTIONS[tier]}</p>
 
