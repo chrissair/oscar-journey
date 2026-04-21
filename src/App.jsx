@@ -11,6 +11,7 @@ import { loadProfile, saveProfileField, recordActivity, getRecentActivity } from
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './utils/firebase';
 import NavBar, { tabs } from './components/NavBar';
+import { useT } from './i18n';
 import ProgressBar from './components/ProgressBar';
 import StartScreen from './components/StartScreen';
 import FilmCard from './components/FilmCard';
@@ -217,6 +218,7 @@ const LS_THEME_KEY = 'oscars_theme';
 const LS_TAB_KEY = 'oscars_active_tab';
 
 export default function App() {
+  const { t } = useT();
   // --- Auth state ---
   const [profile, setProfile] = useState(null); // null = not logged in
   const [loading, setLoading] = useState(true); // initial profile load
@@ -1468,7 +1470,7 @@ export default function App() {
             onClick={() => handleTabChange(tab.id)}
           >
             <span className="mobile-tab-icon">{tab.icon}</span>
-            <span className="mobile-tab-label">{tab.shortLabel}</span>
+            <span className="mobile-tab-label">{t(`nav.${tab.navKey}`)}</span>
           </button>
         ))}
       </div>

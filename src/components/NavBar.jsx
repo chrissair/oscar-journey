@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useT } from '../i18n';
 import { AVATAR_EMOJIS } from '../data/avatars';
 
+// Tab metadata without labels — labels come from the i18n layer at
+// render time. The `navKey` maps to nav.<key> in the dictionary.
+// `id` stays stable ('list' for historical reasons, not 'films').
 export const tabs = [
-  { id: 'journey', label: '🎬 Journey', icon: '🎬', shortLabel: 'Journey' },
-  { id: 'list', label: '📋 Films', icon: '📋', shortLabel: 'Films' },
-  { id: 'battle', label: '⚔️ Battle', icon: '⚔️', shortLabel: 'Battle' },
-  { id: 'leaderboard', label: '👥 Profiles', icon: '👥', shortLabel: 'Profiles' },
+  { id: 'journey', navKey: 'journey', icon: '🎬' },
+  { id: 'list', navKey: 'films', icon: '📋' },
+  { id: 'battle', navKey: 'battle', icon: '⚔️' },
+  { id: 'leaderboard', navKey: 'profiles', icon: '👥' },
 ];
 
 export default function NavBar({ activeTab, onTabChange, profile, onToggleTheme, isDark, onOpenSettings, onOpenInfo, onAvatarChange, saving, onOpenProfile }) {
+  const { t } = useT();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 
   // Close emoji picker on outside click
@@ -61,7 +66,7 @@ export default function NavBar({ activeTab, onTabChange, profile, onToggleTheme,
               className={`nav-tab ${activeTab === tab.id ? 'active' : ''}`}
               onClick={() => onTabChange(tab.id)}
             >
-              {tab.label}
+              {tab.icon} {t(`nav.${tab.navKey}`)}
             </button>
           ))}
         </div>
@@ -74,11 +79,11 @@ export default function NavBar({ activeTab, onTabChange, profile, onToggleTheme,
               {profile.displayName}
             </span>
           )}
-          <button className="nav-icon-btn" onClick={onToggleTheme} title="Toggle theme">
+          <button className="nav-icon-btn" onClick={onToggleTheme} title={t('settings.theme')}>
             {isDark ? '☀️' : '🌙'}
           </button>
-          <button className="nav-icon-btn" onClick={onOpenInfo} title="What is this?">?</button>
-          <button className="nav-icon-btn" onClick={onOpenSettings} title="Settings">⚙️</button>
+          <button className="nav-icon-btn" onClick={onOpenInfo} title={t('modal.learnMore')}>?</button>
+          <button className="nav-icon-btn" onClick={onOpenSettings} title={t('settings.title')}>⚙️</button>
         </div>
       </nav>
 
