@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import { useT } from '../i18n';
 import { MOVIES, GENRE_LABELS } from '../data/movies';
 import { MovieBadges } from './Badges';
 import OscarIcon, { getOscarBadges } from './OscarIcon';
@@ -155,6 +156,7 @@ function formatRuntimeLabel(minutes) {
 
 
 export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, onToggleWatched, ratings, raters, filterPreset, onFilterPresetApplied, checklistMode = false }) {
+  const { t } = useT();
   const [query, setQuery] = useState('');
   // `watchMode` is a three-way enum: 'all' | 'watched' | 'unwatched'.
   // Watched-only and Unwatched-only are mutually exclusive — clicking one
@@ -523,7 +525,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
       <input
         className="list-search"
         type="search"
-        placeholder="Search films, directors, cast..."
+        placeholder={t('films.searchPlaceholder')}
         autoComplete="off"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
@@ -534,7 +536,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
           independent outer grouping modifier. */}
       <div className="film-list-sort-row">
         <div className="film-list-sort-group">
-          <span className="film-list-sort-label">Sort by</span>
+          <span className="film-list-sort-label">{t('films.sortBy')}</span>
           <div className="film-list-sort-chips">
             <button
               type="button"
@@ -581,11 +583,11 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
       <div className={`film-list-filters ${filtersOpen ? 'is-open' : 'is-closed'}`}>
         <button className="film-list-filters-header" onClick={() => setFiltersOpen(o => !o)}>
           <span className="film-list-filters-arrow">{filtersOpen ? '▾' : '▸'}</span>
-          <span className="journey-controls-header">Filters</span>
+          <span className="journey-controls-header">{t('filters.title')}</span>
           <span className="film-list-filters-match">
             <span className="film-list-filters-match-full">
               {filtered.length} film{filtered.length !== 1 ? 's' : ''}
-              {watchedCount > 0 && <span className="film-list-filters-watched"> · {watchedCount} watched</span>}
+              {watchedCount > 0 && <span className="film-list-filters-watched"> · {watchedCount} {t('films.watched')}</span>}
             </span>
             <span className="film-list-filters-match-short">
               {filtered.length}
@@ -593,14 +595,14 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
             </span>
           </span>
           {activeFilterCount > 0 && (
-            <span className="film-list-filters-count">{activeFilterCount} active</span>
+            <span className="film-list-filters-count">{t('filters.activeCount', { count: activeFilterCount })}</span>
           )}
           {activeFilterCount > 0 && (
             <span
               className="film-list-filter-reset"
               role="button"
               onClick={(e) => { e.stopPropagation(); resetFilters(); }}
-            >Reset</span>
+            >{t('filters.reset')}</span>
           )}
         </button>
 
@@ -611,25 +613,25 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                 className={`film-list-toggle mode-watched ${watchedOnly ? 'active' : ''}`}
                 onClick={() => setWatchMode(w => w === 'watched' ? 'all' : 'watched')}
               >
-                Watched
+                {t('films.watched')}
               </button>
               <button
                 className={`film-list-toggle mode-neutral ${unwatchedOnly ? 'active' : ''}`}
                 onClick={() => setWatchMode(w => w === 'unwatched' ? 'all' : 'unwatched')}
               >
-                Unwatched
+                {t('films.unwatched')}
               </button>
               <button
                 className={`film-list-toggle mode-saved ${savedOnly ? 'active' : ''}`}
                 onClick={() => setSavedMode(s => s === 'saved' ? 'all' : 'saved')}
               >
-                Saved
+                {t('films.saved')}
               </button>
               <button
                 className={`film-list-toggle mode-neutral ${unsavedOnly ? 'active' : ''}`}
                 onClick={() => setSavedMode(s => s === 'unsaved' ? 'all' : 'unsaved')}
               >
-                Unsaved
+                {t('films.unsaved')}
               </button>
             </div>
 
@@ -644,8 +646,8 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                 <span className="filter-section-label">Canon depth</span>
                 {(() => {
                   const parts = [];
-                  if (filters.oscarsOnly) parts.push('Oscars only');
-                  if (filters.essentialsOnly) parts.push('Essentials only');
+                  if (filters.oscarsOnly) parts.push(t('filters.oscarsOnly'));
+                  if (filters.essentialsOnly) parts.push(t('filters.essentialsOnly'));
                   if (filters.minTier > 0) parts.push(`tier ≥${filters.minTier}`);
                   if (parts.length === 0) return null;
                   return <span className="filter-section-count">{parts.join(' · ')}</span>;
@@ -663,7 +665,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                   >
                     <span className="essentials-only-checkbox">{filters.oscarsOnly ? '\u2713' : ''}</span>
                     <span className="essentials-only-label">
-                      <strong>Oscars only</strong>
+                      <strong>{t('filters.oscarsOnly')}</strong>
                       <span className="essentials-only-sub">
                         Hide canon-only essentials — show just BP nominees and Int/Anim winners.
                       </span>
@@ -678,7 +680,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                   >
                     <span className="essentials-only-checkbox">{filters.essentialsOnly ? '\u2713' : ''}</span>
                     <span className="essentials-only-label">
-                      <strong>Essentials only</strong>
+                      <strong>{t('filters.essentialsOnly')}</strong>
                       <span className="essentials-only-sub">
                         Hide Oscar-eligible films — show just the non-Oscar canon.
                       </span>
@@ -723,7 +725,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
               )}
             </div>
 
-            {renderSection('Categories', 'categories', CATEGORY_LABELS, categoryCounts)}
+            {renderSection(t('filters.categories'), 'categories', CATEGORY_LABELS, categoryCounts)}
 
             {/* Year range — dual-thumb slider (1920..2025). Mirrors the Length
                 slider pattern: two overlapping native ranges for mobile touch. */}
@@ -788,7 +790,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
               )}
             </div>
 
-            {renderSection('Genres', 'genres', GENRE_LABELS, genreCounts)}
+            {renderSection(t('filters.genres'), 'genres', GENRE_LABELS, genreCounts)}
 
             {/* Length — dual-thumb range slider (min, max) in minutes.
                 Two overlaid native <input type="range"> for mobile touch support.
@@ -870,7 +872,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
 
       <div>
         {filtered.length === 0 ? (
-          <p style={{ color: 'var(--cream-dim)', padding: '20px 0' }}>No films match your search.</p>
+          <p style={{ color: 'var(--cream-dim)', padding: '20px 0' }}>{t('films.noResults')}</p>
         ) : (
           Object.keys(groups).sort((a, b) => {
             // Sort depends on the active grouping mode. Tier grouping is
