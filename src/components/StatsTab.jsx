@@ -3,6 +3,8 @@ import { MOVIES, GENRE_LABELS } from '../data/movies';
 import { ratingKey } from '../utils/storage';
 import { getTierInfo, MAX_TIER, TIER_LABELS } from '../utils/tierInfo';
 import TierPips from './TierPips';
+// useT imported for future i18n; no matching keys exist yet for StatsTab strings
+import { useT } from '../i18n';
 
 export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, profileName, onNavigateToTier }) {
   const stats = useMemo(() => {
