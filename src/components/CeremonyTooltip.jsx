@@ -4,11 +4,30 @@ import { MOVIES } from '../data/movies';
 import TierPips from './TierPips';
 import { getAwardLink } from '../utils/awardLinks';
 import CEREMONIES from '../data/oscar-ceremonies.json';
+import { useT } from '../i18n';
 
-function ordinal(n) {
+function ordinalEn(n) {
   const s = ['th','st','nd','rd'];
   const v = n % 100;
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+// English writes "93rd Academy Awards"; Chinese reads "第 93 屆奧斯卡金像獎"
+// — the locale decides how to render the numeral and its ordinal suffix,
+// so we keep the number out of the translation string and let the template
+// place it naturally via {ordinal}.
+function ordinalForLocale(n, lang) {
+  return lang === 'zh' ? String(n) : ordinalEn(n);
+}
+
+// Pass a raw English category name through the dict; fall back to the
+// input if it's unknown (e.g., a legacy or custom category).
+function translateCategory(t, category) {
+  if (!category) return category;
+  const translated = t(`ceremony.categories.${category}`);
+  // t() returns the key literally when the path misses in both dicts — detect
+  // that by checking whether it starts with the namespace.
+  return translated && !translated.startsWith('ceremony.categories.') ? translated : category;
 }
 
 // Standard Academy order for the per-film nominations list (non-BP).
@@ -91,16 +110,18 @@ function formatPeople(s) {
   if (names.length === 2) return `${names[0]} & ${names[1]}`;
   return `${names.slice(0, -1).join(', ')} & ${names[names.length - 1]}`;
 }
-function formatLabel(n) {
-  if (n.detail) return `${n.category} — "${n.detail}"`;
-  if (n.nominee) return `${n.category} — ${formatPeople(n.nominee)}`;
-  return n.category;
+function formatLabel(n, t) {
+  const cat = translateCategory(t, n.category);
+  if (n.detail) return `${cat} — "${n.detail}"`;
+  if (n.nominee) return `${cat} — ${formatPeople(n.nominee)}`;
+  return cat;
 }
 
 // Wins render as gold acceptance-speech pills (same visual as the former
 // film-modal Oscars Won chips). For categories with known YouTube search
 // patterns (Actor/Actress/Director/Song/etc.) the chip becomes a link.
 function WinChip({ nomination, movie }) {
+  const { t } = useT();
   const award = { category: nomination.category, winner: nomination.nominee, detail: nomination.detail };
   // BP win gets a curated query — the generic awardLinks rules key off
   // movie.awards which doesn't carry BP, so supply it directly.
@@ -114,7 +135,7 @@ function WinChip({ nomination, movie }) {
   } else {
     link = getAwardLink(award, movie);
   }
-  const label = formatLabel(nomination);
+  const label = formatLabel(nomination, t);
   const content = (
     <>
       <span className="award-category">{label}</span>
@@ -132,7 +153,8 @@ function WinChip({ nomination, movie }) {
 }
 
 function NomChip({ nomination }) {
-  return <div className="award-item award-item-nomination">{formatLabel(nomination)}</div>;
+  const { t } = useT();
+  return <div className="award-item award-item-nomination">{formatLabel(nomination, t)}</div>;
 }
 
 // Wins list order: INT win first, then ANIM win, then standard Academy order.
@@ -145,6 +167,7 @@ function sortedLosses(losses) {
 }
 
 export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpenDetail, movie }) {
+  const { t, lang } = useT();
   const [showModal, setShowModal] = useState(false);
 
   const nominations = movie ? getNominations(movie) : [];
@@ -174,7 +197,9 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
   // it excludes BP. For BP losers / non-BP films, plain "Oscars Won"
   // already unambiguously includes every win.
   const bpWon = nominations.some(n => n.category === 'Best Picture' && n.won);
-  const winsHeading = bpWon ? `🏆 Other Oscars Won (${wins.length})` : `🏆 Oscars Won (${wins.length})`;
+  const winsHeading = bpWon
+    ? t('ceremony.otherOscarsWonHeading', { count: wins.length })
+    : t('ceremony.oscarsWonHeading', { count: wins.length });
 
   // BP section content (only if current film was BP-nominated). Shows all
   // catalog BP films from this ceremony + any phantom nominees from
@@ -220,10 +245,10 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
   if (nomCount > 0) {
     if (hasFullData) {
       summaryNode = winsCount > 0
-        ? <> · {winsCount} {unit('won')} / {nomCount} {unit('nom')}</>
-        : <> · {nomCount} {unit('nom')}</>;
+        ? <> · {winsCount} {unit(t('ceremony.unitWon'))} / {nomCount} {unit(t('ceremony.unitNom'))}</>
+        : <> · {nomCount} {unit(t('ceremony.unitNom'))}</>;
     } else if (winsCount > 0) {
-      summaryNode = <> · {winsCount} {unit('won')}</>;
+      summaryNode = <> · {winsCount} {unit(t('ceremony.unitWon'))}</>;
     }
   }
 
@@ -232,7 +257,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
       <div className={`ceremony-line ceremony-line-clickable${winsCount > 0 ? ' ceremony-line-winner' : ''}`}
         onClick={() => setShowModal(true)}
       >
-        {ordinal(effectiveCeremony)} Academy Awards{summaryNode}
+        {t('ceremony.ordinalAwards', { ordinal: ordinalForLocale(effectiveCeremony, lang) })}{summaryNode}
       </div>
 
       {showModal && createPortal(
@@ -247,9 +272,9 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
           <div className="modal ceremony-modal" onClick={(e) => e.stopPropagation()}>
             <button className="film-detail-close" onClick={(e) => { e.stopPropagation(); setShowModal(false); }}>✕</button>
             <h2 className="ceremony-modal-title">
-              {ordinal(effectiveCeremony)} Academy Awards
+              {t('ceremony.ordinalAwards', { ordinal: ordinalForLocale(effectiveCeremony, lang) })}
             </h2>
-            <p className="ceremony-modal-year">Honoring films of {year}</p>
+            <p className="ceremony-modal-year">{t('ceremony.honoringFilmsOf', { year })}</p>
 
             {/* 1. Best Picture section — shown only when the current film
                 itself was BP-nominated. For pre-1970 ceremonies the catalog
@@ -258,7 +283,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                 branch. */}
             {bpNominated && bpRows.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">Best Picture</h3>
+                <h3 className="ceremony-modal-category">{t('ceremony.bestPictureHeading')}</h3>
                 {bpRows.map((row) => {
                   const isCurrent = row.id === currentMovieId;
                   const className = `ceremony-modal-film${isCurrent ? ' is-current' : ''}${!row.inCatalog ? ' is-phantom' : ''}`;
@@ -313,7 +338,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                 reads as an achievement, not a ding. */}
             {losses.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">{((bpNominated && bpRows.length > 0) || wins.length > 0) ? 'Also Nominated For' : 'Nominated For'} ({losses.length})</h3>
+                <h3 className="ceremony-modal-category">{((bpNominated && bpRows.length > 0) || wins.length > 0) ? t('ceremony.alsoNominatedFor', { count: losses.length }) : t('ceremony.nominatedFor', { count: losses.length })}</h3>
                 <div className="ceremony-modal-awards-list">
                   {losses.map((n, i) => (
                     <NomChip key={`n-${i}`} nomination={n} />
@@ -327,7 +352,7 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                 a Time in Hollywood next to a 2019 Oscar film). */}
             {essentials.length > 0 && (
               <div className="ceremony-modal-section">
-                <h3 className="ceremony-modal-category">{year} Essentials (non-Oscar canon)</h3>
+                <h3 className="ceremony-modal-category">{t('ceremony.yearEssentialsHeading', { year })}</h3>
                 {essentials.map(m => (
                   <div key={m.id}
                     className={`ceremony-modal-film${m.id === currentMovieId ? ' is-current' : ''}`}
