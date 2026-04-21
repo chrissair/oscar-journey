@@ -257,6 +257,7 @@ export default function App() {
   const preFilterIdx = useRef(null); // Saved position before filter auto-skip
   const [watchedSet, setWatchedSet] = useState(new Set());
   const [watchlistSet, setWatchlistSet] = useState(new Set());
+  const [preFilterFilmId, setPreFilterFilmId] = useState(null);
   const [ratings, setRatings] = useState({});
   const [raters, setRaters] = useState(['Chris', 'Yvonne']);
   // One-shot filter preset for the Films tab. Set when a user drills in from
@@ -605,6 +606,12 @@ export default function App() {
     const rawWatchlist = Array.isArray(data.watchlist) ? data.watchlist : [];
     const watchlistKeys = new Set(rawWatchlist);
 
+    // preFilterFilmId — the film ID the user was on before a filter
+    // auto-skip. null means "no saved side-trip origin". Coerce non-string
+    // values to null so legacy profiles (or any corruption) get a safe
+    // default.
+    const rawPreFilter = typeof data.preFilterFilmId === 'string' ? data.preFilterFilmId : null;
+
     // Publish fully-mutated profile to React state now that every field
     // matches what's persisted in Firestore.
     setProfile(data);
@@ -612,6 +619,7 @@ export default function App() {
     setCurrentIdx(Math.min(idx, pl.length - 1));
     setWatchedSet(watchedKeys);
     setWatchlistSet(watchlistKeys);
+    setPreFilterFilmId(rawPreFilter);
     setRatings(migratedRatings);
     setRaters(ratersList);
 
@@ -644,6 +652,7 @@ export default function App() {
     setCurrentIdx(0);
     setWatchedSet(new Set());
     setWatchlistSet(new Set());
+    setPreFilterFilmId(null);
     setRatings({});
     setRaters(['Chris', 'Yvonne']);
     setActiveTab('journey');
