@@ -106,8 +106,8 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
       <div className="pack-modal">
         {phase === 'reveal' && (
           <>
-            <h2 className="pack-title">New Card!</h2>
-            <p className="pack-subtitle">Tap to reveal</p>
+            <h2 className="pack-title">{t('pack.newCard')}</h2>
+            <p className="pack-subtitle">{t('pack.tapToReveal')}</p>
           </>
         )}
         {phase === 'keep' && (
@@ -121,14 +121,14 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
         )}
         {phase === 'replace' && (
           <>
-            <h2 className="pack-title">Swap a Card</h2>
-            <p className="pack-subtitle">Tap a card in your wallet to replace it</p>
+            <h2 className="pack-title">{t('pack.swapCard')}</h2>
+            <p className="pack-subtitle">{t('pack.swapHint')}</p>
           </>
         )}
         {phase === 'done' && (
           <>
-            <h2 className="pack-title">Card Added!</h2>
-            <p className="pack-subtitle">{movie?.title} is now in your wallet</p>
+            <h2 className="pack-title">{t('pack.cardAdded')}</h2>
+            <p className="pack-subtitle">{t('pack.nowInWallet', { title: movie?.title })}</p>
           </>
         )}
 
@@ -172,14 +172,14 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
           <div className="pack-actions">
             {!walletFull ? (
               <button className="pack-close-btn" onClick={handleKeep}>
-                Add to Wallet ({wallet.length}/{maxWallet})
+                {t('pack.addToWallet', { n: wallet.length, max: maxWallet })}
               </button>
             ) : (
               <button className="pack-close-btn" onClick={() => setPhase('replace')}>
-                Swap into Wallet (Full)
+                {t('pack.swapIntoFull')}
               </button>
             )}
-            <button className="pack-discard-btn" onClick={onClose}>Discard</button>
+            <button className="pack-discard-btn" onClick={onClose}>{t('pack.discard')}</button>
           </div>
         )}
 
@@ -187,13 +187,13 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
         {phase === 'replace' && (
           <div className="pack-swap-section">
             <div className={`pack-swap-incoming ${swapping !== null ? 'pack-swap-dropping' : ''}`}>
-              <MiniCard card={card} label="NEW" />
+              <MiniCard card={card} label={t('pack.new')} />
               {swapping === null && (
                 <button className="pack-swap-discard-x" onClick={() => onClose()} title="Discard">✕</button>
               )}
             </div>
             <div className="pack-swap-arrow">⇅</div>
-            <div className="pack-done-wallet-label">Your Wallet ({wallet.length}/{maxWallet})</div>
+            <div className="pack-done-wallet-label">{t('pack.yourWallet')} ({wallet.length}/{maxWallet})</div>
             <div className="pack-swap-wallet">
               {wallet.map((existingCard, i) => (
                 <MiniCard
@@ -214,8 +214,8 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
         {phase === 'done' && (
           <>
             <div className="pack-done-wallet">
-              <div className="pack-done-wallet-label">Your Wallet ({finalWallet.length}/{maxWallet})</div>
-              <p className="pack-done-hint">Tap a card to feature it on your profile</p>
+              <div className="pack-done-wallet-label">{t('pack.yourWallet')} ({finalWallet.length}/{maxWallet})</div>
+              <p className="pack-done-hint">{t('pack.tapToFeatureProfile')}</p>
               <div className="pack-swap-wallet">
                 {finalWallet.map((wCard, i) => {
                   const isFeatured = currentShowcase?.some(s => s.movieId === wCard.movieId);
@@ -232,14 +232,14 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
                         }}
                         animClass={isFeatured ? 'pack-swap-featured' : ''}
                       />
-                      {isFeatured && <div className="pack-featured-badge">Featured</div>}
+                      {isFeatured && <div className="pack-featured-badge">{t('pack.featured')}</div>}
                     </div>
                   );
                 })}
               </div>
             </div>
             <div className="pack-actions">
-              <button className="pack-close-btn" onClick={onClose}>Done</button>
+              <button className="pack-close-btn" onClick={onClose}>{t('pack.done')}</button>
             </div>
           </>
         )}
