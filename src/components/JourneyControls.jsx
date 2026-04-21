@@ -454,7 +454,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                             className="tier-stepper-btn"
                             onClick={() => onFiltersChange({ ...currentFilters, minTier: Math.max(MIN_SLIDER_TIER, (currentFilters.minTier ?? 0) - 1) })}
                             disabled={currentFilters.minTier <= MIN_SLIDER_TIER}
-                            aria-label="Lower minimum tier"
+                            aria-label={t('filters.minimumTier')}
                           >−</button>
                           <span className="tier-stepper-value">
                             {currentFilters.minTier === MAX_SLIDER_TIER ? currentFilters.minTier : currentFilters.minTier === 0 ? '—' : `≥ ${currentFilters.minTier}`}
@@ -464,13 +464,13 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                             className="tier-stepper-btn"
                             onClick={() => onFiltersChange({ ...currentFilters, minTier: Math.min(MAX_SLIDER_TIER, (currentFilters.minTier ?? 0) + 1) })}
                             disabled={currentFilters.minTier >= MAX_SLIDER_TIER}
-                            aria-label="Raise minimum tier"
+                            aria-label={t('filters.minimumTier')}
                           >+</button>
                         </div>
                       </div>
                       <div className="tier-stepper-desc">
-                        <strong>{TIER_LEVELS[currentFilters.minTier]?.label}</strong>
-                        <span>{TIER_LEVELS[currentFilters.minTier]?.sub}</span>
+                        <strong>{t(`tiers.${currentFilters.minTier}.label`)}</strong>
+                        <span>{t(`tiers.${currentFilters.minTier}.sub`)}</span>
                       </div>
                     </div>
                   </div>

@@ -80,6 +80,14 @@ export const en = {
     subPitch: 'The journey mixes genres, decades, and categories so you never watch two similar films back-to-back. Rate every film, battle them head-to-head, and see how your taste compares with friends.',
     disclaimerItalic: 'Yes, there\'s a skip button. No, you shouldn\'t use it. The whole point is watching films you wouldn\'t normally pick. Trust the process.',
   },
+  tiers: {
+    0: { label: 'All films',  sub: 'No canon floor — every film in the catalog, including Oscar nominees with no canon-list endorsement.' },
+    1: { label: 'Canonical',  sub: 'Present in the canon — at least one curated endorsement.' },
+    2: { label: 'Acclaimed',  sub: 'Meets our multi-list entry threshold — validated by 2+ sources.' },
+    3: { label: 'Landmark',   sub: 'Broad recognition across critics, institutions, and audience lists.' },
+    4: { label: 'Masterwork', sub: 'Near-universal consensus across critical, institutional, and popular canon.' },
+    5: { label: 'Apex',       sub: 'Summit canon — curated top tier whose inclusion on any serious must-watch list is essentially unavoidable.' },
+  },
   filters: {
     title: 'Filters',
     reset: 'Reset',
