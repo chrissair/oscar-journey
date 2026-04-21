@@ -689,6 +689,15 @@ export default function App() {
     currentProfileId: profile?.id,
   }), [watchedSet, watchlistSet, allProfilesForSync, profile?.id]);
 
+  // Active profiles — anyone with at least one watched film. Used for the
+  // "Sync with..." dropdown so brand-new / dormant accounts don't clutter
+  // the list. Mirrors the rule the leaderboard already uses (see
+  // components/Leaderboard.jsx — filters on watchedCount > 0).
+  const activeProfilesForSync = useMemo(
+    () => allProfilesForSync.filter(p => Array.isArray(p.watched) && p.watched.length > 0),
+    [allProfilesForSync]
+  );
+
   // Check if a playlist index passes the current filters
   const idxPassesFilter = useCallback((idx) => {
     const movie = playlist[idx];
@@ -1389,7 +1398,7 @@ export default function App() {
               onReshuffle={handleReshuffle}
               eligibleCount={eligibleStats.total}
               totalCount={playlist.length}
-              profiles={allProfilesForSync}
+              profiles={activeProfilesForSync}
               currentProfileId={profile?.id}
               onSyncJourney={handleSyncJourney}
               syncedWith={profile?.syncedWith}
