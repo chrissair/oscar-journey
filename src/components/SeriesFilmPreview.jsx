@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useT } from '../i18n';
 import { createPortal } from 'react-dom';
 import { getSeriesForTmdbId, tmdbPoster } from '../data/seriesCollections';
 import { MOVIES, MOVIES_BY_ID } from '../data/movies';
@@ -42,6 +43,7 @@ export default function SeriesFilmPreview({
   onRatingChange,
   raters,
 }) {
+  const { t } = useT();
   const [currentFilm, setCurrentFilm] = useState(initialFilm);
 
   // Reset internal state when the parent opens a different preview
@@ -213,7 +215,7 @@ export default function SeriesFilmPreview({
                   <rect rx="4" ry="4" width="28" height="20" fill="#FF0000"/>
                   <polygon points="11,4 11,16 21,10" fill="#FFF"/>
                 </svg></span>
-                <span className="metric-label">Trailer</span>
+                <span className="metric-label">{t('filmCard.trailer')}</span>
               </a>
               <a className="metric-item metric-justwatch"
                 href={justWatchUrl(film.title)}
@@ -221,17 +223,17 @@ export default function SeriesFilmPreview({
                 onClick={(e) => e.stopPropagation()}
               >
                 <span className="metric-value">📺</span>
-                <span className="metric-label">Watch</span>
+                <span className="metric-label">{t('filmCard.where')}</span>
               </a>
             </div>
 
             {film.director && (
-              <div className="film-detail-director"><strong>Directed by</strong> {film.director}</div>
+              <div className="film-detail-director"><strong>{t('journey.directedBy')}</strong> {film.director}</div>
             )}
 
             {film.cast?.length > 0 && (
               <div className="film-detail-starring">
-                <strong>Starring</strong> {film.cast.map(s => String(s).trim()).filter(Boolean).join(' · ')}
+                <strong>{t('journey.starring')}</strong> {film.cast.map(s => String(s).trim()).filter(Boolean).join(' · ')}
               </div>
             )}
 
@@ -257,7 +259,7 @@ export default function SeriesFilmPreview({
                 <>
                   {isWatched ? (
                     <div className="rating-pickers">
-                      <div className="rating-pickers-label">Your Ratings</div>
+                      <div className="rating-pickers-label">{t('filmCard.yourRating')}</div>
                       {raters.map((name) => (
                         <StarPicker
                           key={name}
@@ -276,7 +278,7 @@ export default function SeriesFilmPreview({
                     style={{ marginTop: 'auto', justifyContent: 'center' }}
                   >
                     {isWatched && <span className="watched-icon">✓</span>}
-                    <span>{isWatched ? 'Watched' : 'Mark as Watched'}</span>
+                    <span>{isWatched ? t('journey.unmarkWatched') : t('journey.markWatched')}</span>
                   </button>
                 </>
               );
