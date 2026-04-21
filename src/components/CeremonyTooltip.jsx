@@ -5,6 +5,7 @@ import TierPips from './TierPips';
 import { getAwardLink } from '../utils/awardLinks';
 import CEREMONIES from '../data/oscar-ceremonies.json';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 function ordinalEn(n) {
   const s = ['th','st','nd','rd'];
@@ -292,6 +293,10 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                       <span className="ceremony-modal-film-title">
                         {row.won && <span className="ceremony-modal-trophy">🏆</span>}
                         {row.title}
+                        {lang === 'zh' && row.id && (() => {
+                          const zh = getChineseTitle(row.id);
+                          return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                        })()}
                       </span>
                     </>
                   );
@@ -363,7 +368,13 @@ export default function CeremonyTooltip({ ceremony, year, currentMovieId, onOpen
                       }
                     }}
                   >
-                    <span className="ceremony-modal-film-title">{m.title}</span>
+                    <span className="ceremony-modal-film-title">
+                      {m.title}
+                      {lang === 'zh' && (() => {
+                        const zh = getChineseTitle(m.id);
+                        return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                      })()}
+                    </span>
                     <TierPips movie={m} variant="compact" />
                   </div>
                 ))}

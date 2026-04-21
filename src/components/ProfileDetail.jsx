@@ -6,6 +6,7 @@ import { RARITIES, getCollectorScore, getMaxWallet } from '../utils/cards';
 import { resolveTmdbWatchedId, tmdbPoster } from '../data/seriesCollections';
 import StatsTab from './StatsTab';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 // Out-of-canon (tmdb:<id>) films don't live in MOVIES so they need their
 // own lightweight "movie-like" shape for the watched/ratings list. Flagged
@@ -252,7 +253,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
     return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }, [profileData]);
 
-  const { t } = useT();
+  const { t, lang } = useT();
 
   // Check if this is the viewer's own profile
   const isOwnProfile = currentProfile && currentProfile.id === profileData.id;
@@ -376,7 +377,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                 >
                   <FilmTilePoster movie={movie} />
                   <div className="pd-featured-overlay">
-                    <div className="pd-featured-title">{movie.title}</div>
+                    <div className="pd-featured-title">{(lang === 'zh' && getChineseTitle(movie.id)) || movie.title}</div>
                     <div className="pd-featured-rarity" style={{ color: rarity.color }}>{rarity.name}</div>
                   </div>
                   <div className="pd-featured-shine" />
@@ -498,7 +499,13 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                     )}
                   </div>
                   <div className="film-tile-info">
-                    <div className="film-tile-title">{movie.title}</div>
+                    <div className="film-tile-title">
+                      {movie.title}
+                      {lang === 'zh' && (() => {
+                        const zh = getChineseTitle(movie.id);
+                        return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                      })()}
+                    </div>
                     <div className="film-tile-year">{movie.year}</div>
                     <div className="film-tile-tmdb-tag">{t('filmCard.notInCanon')}</div>
                     <div className="film-tile-ratings">
@@ -531,7 +538,13 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                   {movie.won && movie.category === 'BP' && <span className="film-tile-winner">{t('profile.bpWinner')}</span>}
                 </div>
                 <div className="film-tile-info">
-                  <div className="film-tile-title">{movie.title}</div>
+                  <div className="film-tile-title">
+                    {movie.title}
+                    {lang === 'zh' && (() => {
+                      const zh = getChineseTitle(movie.id);
+                      return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                    })()}
+                  </div>
                   <div className="film-tile-year">{movie.year}</div>
                   <div className="film-tile-ratings">
                     {profileRaters.map(rater => {
@@ -572,7 +585,13 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                 <div className="profile-unwatched-row" key={movie.id}
                   onClick={() => onOpenDetail && onOpenDetail(movie)}
                   style={{ cursor: 'pointer' }}>
-                  <span>{movie.title}</span>
+                  <span>
+                    {movie.title}
+                    {lang === 'zh' && (() => {
+                      const zh = getChineseTitle(movie.id);
+                      return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                    })()}
+                  </span>
                   <span style={{ marginLeft: 'auto' }}>{movie.year}</span>
                 </div>
               ))}
@@ -593,7 +612,13 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
         <div>
           {unwatchedMovies.map(movie => (
             <div className="profile-unwatched-row" key={movie.id}>
-              <span>{movie.title}</span>
+              <span>
+                {movie.title}
+                {lang === 'zh' && (() => {
+                  const zh = getChineseTitle(movie.id);
+                  return zh ? <span className="film-row-title-zh"> · {zh}</span> : null;
+                })()}
+              </span>
               <span style={{ marginLeft: 'auto' }}>{movie.year}</span>
             </div>
           ))}

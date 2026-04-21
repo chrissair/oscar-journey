@@ -6,6 +6,7 @@ import { fetchOmdbData } from '../utils/omdb';
 import { RARITIES, getMaxWallet } from '../utils/cards';
 import PackOpening from './PackOpening';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 // Stable movie pool — uses MOVIES array (fixed order, fixed size) filtered to those with quotes
 const DAILY_POOL = MOVIES.filter(m => QUOTES[m.id]).map(m => m.id);
@@ -63,7 +64,7 @@ export function getDailyStreak() {
 }
 
 export default function DailyOscar({ onClose, onSaveProfile, profile }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const todayKey = getTodayKey();
   const savedKey = LS_KEY + todayKey;
 
@@ -312,7 +313,7 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
         )}
         {failed && (
           <div className="daily-result">
-            <div className="daily-result-text daily-result-lose">{t('daily.itWas', { title: movie.title, year: movie.year })}</div>
+            <div className="daily-result-text daily-result-lose">{t('daily.itWas', { title: (lang === 'zh' && getChineseTitle(movie.id)) || movie.title, year: movie.year })}</div>
             <p style={{ fontSize: '0.82rem', color: '#999' }}>{t('daily.betterLuck')}</p>
           </div>
         )}

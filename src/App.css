@@ -549,6 +549,16 @@ main {
   font-size: 0.95em;
 }
 
+/* Battle card Chinese title — small secondary line in the head-to-head
+   movie cards. Keeps the English title bold on top so the choice is
+   visually anchored, Chinese clarifies for zh-mode readers. */
+.battle-card-title-zh {
+  font-size: 0.88rem;
+  color: var(--cream-dim);
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
 .film-year {
   font-size: 0.85rem;
   color: var(--cream-dim);

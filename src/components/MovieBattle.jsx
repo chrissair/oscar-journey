@@ -10,6 +10,7 @@ import { recordActivity } from '../utils/firebaseStorage';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 // --- Smart Matchmaking ---
 
@@ -172,7 +173,7 @@ function getConfidenceKey(matchCount) {
 // --- Component ---
 
 export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetail, onSaveProfile, simpleBattle }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [movieA, setMovieA] = useState(null);
   const [movieB, setMovieB] = useState(null);
   const [posterA, setPosterA] = useState(null);
@@ -433,6 +434,10 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
               )}
               <div className="battle-card-info">
                 <div className="battle-card-title">{movieA.title}</div>
+                {lang === 'zh' && (() => {
+                  const zh = getChineseTitle(movieA.id);
+                  return zh ? <div className="battle-card-title-zh">{zh}</div> : null;
+                })()}
                 <div className="battle-card-year">{movieA.year}</div>
                 {eloChange && (
                   <div className={`battle-elo-change ${eloChange.winner === 'a' ? 'positive' : 'negative'}`}>
@@ -463,6 +468,10 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
               )}
               <div className="battle-card-info">
                 <div className="battle-card-title">{movieB.title}</div>
+                {lang === 'zh' && (() => {
+                  const zh = getChineseTitle(movieB.id);
+                  return zh ? <div className="battle-card-title-zh">{zh}</div> : null;
+                })()}
                 <div className="battle-card-year">{movieB.year}</div>
                 {eloChange && (
                   <div className={`battle-elo-change ${eloChange.winner === 'b' ? 'positive' : 'negative'}`}>
