@@ -162,14 +162,14 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
   return (
     <div className={embedded ? '' : 'film-list-section'}>
       <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)', marginBottom: '20px', fontSize: '1.1rem' }}>
-        {profileName ? `${profileName}'s Statistics` : 'Statistics'}
+        {profileName ? `${profileName}'s ${t('stats.heading')}` : t('stats.heading')}
       </h2>
 
       {/* Summary cards */}
       <div className="stats-grid">
         <div className="stat-card">
           <div className="stat-card-value">{stats.watchedCount} / {stats.totalFilms}</div>
-          <div className="stat-card-label">Films Watched</div>
+          <div className="stat-card-label">{t('stats.filmsWatched')}</div>
         </div>
         {raters.map(name => (
           <div className="stat-card" key={name}>
@@ -177,7 +177,7 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
               {stats.perRater[name]?.avg ? `${stats.perRater[name].avg}★` : '—'}
             </div>
             <div className="stat-card-label">
-              {name} Average{stats.perRater[name]?.ratings.length > 0 ? ` (${stats.perRater[name].ratings.length} films)` : ''}
+              {name} {t('stats.average')}{stats.perRater[name]?.ratings.length > 0 ? ` (${stats.perRater[name].ratings.length} ${t('stats.films')})` : ''}
             </div>
           </div>
         ))}
@@ -187,7 +187,7 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
               {stats.agreePct !== null ? `${stats.agreePct}%` : '—'}
             </div>
             <div className="stat-card-label">
-              Agreement{stats.allRated.length > 0 ? ` (${stats.allRated.length} films)` : ''}
+              {t('stats.agreement')}{stats.allRated.length > 0 ? ` (${stats.allRated.length} ${t('stats.films')})` : ''}
             </div>
           </div>
         )}
@@ -195,7 +195,7 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
 
       {/* Canon Score — weighted by tier */}
       <div className="stats-section canon-score-section">
-        <h3>Canon Score</h3>
+        <h3>{t('stats.canonScore')}</h3>
         <div className="canon-score-header">
           <div className="canon-score-big">
             <span className="canon-score-num">{stats.canonScore}</span>
@@ -214,7 +214,7 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
 
         <table className="stats-table canon-tier-table">
           <thead>
-            <tr><th>Tier</th><th>Watched</th><th>Total</th></tr>
+            <tr><th>{t('stats.tier')}</th><th>{t('stats.watched')}</th><th>{t('stats.total')}</th></tr>
           </thead>
           <tbody>
             {Array.from({ length: MAX_TIER }, (_, i) => MAX_TIER - i).map(t => {
@@ -257,9 +257,9 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
       {/* Top rated per rater */}
       {raters.map(name => (
         <div className="stats-section" key={name}>
-          <h3>Top 5 — {name}</h3>
+          <h3>{t('stats.top5')} — {name}</h3>
           {stats.perRater[name]?.top5.length === 0 ? (
-            <p className="stats-empty">No ratings yet</p>
+            <p className="stats-empty">{t('stats.noRatingsYet')}</p>
           ) : (
             <ol className="stats-top-list">
               {stats.perRater[name].top5.map((r, i) => (
@@ -273,16 +273,16 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
       {/* Biggest disagreements (only if 2+ raters) */}
       {raters.length >= 2 && (
         <div className="stats-section">
-          <h3>Biggest Disagreements</h3>
+          <h3>{t('stats.biggestDisagreements')}</h3>
           {stats.biggestDisagreements.length === 0 ? (
-            <p className="stats-empty">No films rated by everyone yet</p>
+            <p className="stats-empty">{t('stats.noRatingsYet')}</p>
           ) : (
             <table className="stats-table">
               <thead>
                 <tr>
-                  <th>Film</th>
+                  <th>{t('stats.film')}</th>
                   {raters.map(name => <th key={name}>{name}</th>)}
-                  <th>Diff</th>
+                  <th>{t('stats.diff')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -301,16 +301,16 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
 
       {/* Ratings by genre */}
       <div className="stats-section">
-        <h3>Ratings by Genre</h3>
+        <h3>{t('stats.ratingsByGenre')}</h3>
         {Object.keys(stats.genreStats).length === 0 ? (
-          <p className="stats-empty">No ratings yet</p>
+          <p className="stats-empty">{t('stats.noRatingsYet')}</p>
         ) : (
           <table className="stats-table">
             <thead>
               <tr>
-                <th>Genre</th>
-                {raters.map(name => <th key={name}>{name} Avg</th>)}
-                <th>Films</th>
+                <th>{t('stats.genre')}</th>
+                {raters.map(name => <th key={name}>{name} {t('stats.average')}</th>)}
+                <th>{t('stats.films')}</th>
               </tr>
             </thead>
             <tbody>
@@ -330,9 +330,9 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
 
       {/* Progress by decade */}
       <div className="stats-section">
-        <h3>Progress by Decade</h3>
+        <h3>{t('stats.progressByDecade')}</h3>
         <table className="stats-table">
-          <thead><tr><th>Decade</th><th>Watched</th><th>Total</th></tr></thead>
+          <thead><tr><th>{t('stats.decade')}</th><th>{t('stats.watched')}</th><th>{t('stats.total')}</th></tr></thead>
           <tbody>
             {stats.decadeProgress.map((d, i) => (
               <tr key={i}><td>{d.label}</td><td>{d.watched}</td><td>{d.total}</td></tr>
@@ -343,9 +343,9 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
 
       {/* Progress by category */}
       <div className="stats-section">
-        <h3>Progress by Category</h3>
+        <h3>{t('stats.progressByCategory')}</h3>
         <table className="stats-table">
-          <thead><tr><th>Category</th><th>Watched</th><th>Total</th></tr></thead>
+          <thead><tr><th>{t('stats.category')}</th><th>{t('stats.watched')}</th><th>{t('stats.total')}</th></tr></thead>
           <tbody>
             {stats.categoryProgress.map((c, i) => (
               <tr key={i}><td>{c.label}</td><td>{c.watched}</td><td>{c.total}</td></tr>
