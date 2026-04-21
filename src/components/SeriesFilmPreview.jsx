@@ -161,7 +161,7 @@ export default function SeriesFilmPreview({
 
           <div className="film-detail-body">
             <div className="series-preview-tag">
-              Not in the Oscar Journey canon
+              {t('filmCard.notInCanonLong')}
               {seriesName && <span> · {seriesName}</span>}
             </div>
 
@@ -270,7 +270,7 @@ export default function SeriesFilmPreview({
                       ))}
                     </div>
                   ) : (
-                    <div className="rating-locked">Mark as watched to rate this film</div>
+                    <div className="rating-locked">{t('filmCard.markAsWatchedToRate')}</div>
                   )}
                   <button
                     className={`watched-btn ${isWatched ? 'is-watched' : ''}`}
