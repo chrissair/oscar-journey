@@ -3573,6 +3573,16 @@ main {
   flex-wrap: wrap;
   animation: ratingsSlideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
+/* Single-rater variant: section label sits inline with the stars so the
+   whole thing reads as one row. The label no longer needs its usual
+   bottom margin (it has none here — it's a flex sibling). */
+.rating-pickers-inline {
+  align-items: center;
+  gap: 12px;
+}
+.rating-pickers-inline .rating-pickers-label {
+  margin-bottom: 0;
+}
 @keyframes ratingsSlideIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -3608,6 +3618,15 @@ main {
   color: var(--cream-dim);
   font-style: italic;
   min-width: 55px;
+}
+
+/* Mobile view has no room for the "Slide to rate" prompt next to the
+   stars — hide it until the user has actually picked a value. The rated
+   numeric display (.has-value) stays visible. */
+@media (max-width: 540px) {
+  .star-picker-value:not(.has-value) {
+    display: none;
+  }
 }
 
 .star-picker-value.has-value {

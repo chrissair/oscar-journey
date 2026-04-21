@@ -318,19 +318,35 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, fading, ra
           );
         })()}
 
-        {/* Rating pickers — only shown when film is marked as watched */}
+        {/* Rating pickers — only shown when film is marked as watched.
+            Single-rater profiles get an inline layout (label + stars on
+            one row, no redundant self-username). Multi-rater profiles
+            keep the stacked layout with per-rater name labels. */}
         {isWatched ? (
-          <div className="rating-pickers">
-            <div className="rating-pickers-label">Rate this film to continue</div>
-            {raters.map(name => (
+          raters.length === 1 ? (
+            <div className="rating-pickers rating-pickers-inline">
+              <div className="rating-pickers-label">Your rating</div>
               <StarPicker
-                key={name}
-                label={name}
-                value={movieRatings[name] ?? null}
-                onChange={(val) => onRatingChange(key, name, val)}
+                key={raters[0]}
+                label={raters[0]}
+                hideLabel
+                value={movieRatings[raters[0]] ?? null}
+                onChange={(val) => onRatingChange(key, raters[0], val)}
               />
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="rating-pickers">
+              <div className="rating-pickers-label">Your ratings</div>
+              {raters.map(name => (
+                <StarPicker
+                  key={name}
+                  label={name}
+                  value={movieRatings[name] ?? null}
+                  onChange={(val) => onRatingChange(key, name, val)}
+                />
+              ))}
+            </div>
+          )
         ) : (
           <div className="rating-locked">Mark as watched to rate this film</div>
         )}
