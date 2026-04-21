@@ -7,6 +7,7 @@ import ProfileDetail from './ProfileDetail';
 import StatsTab from './StatsTab';
 import { getCollectorScore, RARITIES } from '../utils/cards';
 import { fetchOmdbData } from '../utils/omdb';
+import { useT } from '../i18n';
 
 // Mini featured card for profile grid
 function MiniShowcase({ card }) {
@@ -35,6 +36,7 @@ async function getAllProfiles() {
 }
 
 export default function Leaderboard({ currentProfile, currentRatings, onOpenDetail, onOpenTmdbPreview, watchedTitleSet, ratings, raters, onSaveProfile, autoSelectProfileId, onClearAutoSelect, onNavigateToTier }) {
+  const { t } = useT();
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedProfile, setSelectedProfile] = useState(null);
@@ -259,7 +261,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
   return (
     <div className="leaderboard-section">
       {/* All Profiles */}
-      <h2>Profiles</h2>
+      <h2>{t('profile.tabTitle')}</h2>
       {profileStats.length === 0 ? (
         <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic' }}>No profiles found.</p>
       ) : (
@@ -296,7 +298,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                   <span className="pc-avatar">{p.avatar || (p.isVirtualRater ? '👥' : '👤')}</span>
                   <div className="pc-name-block">
                     <span className="pc-name">{p.displayName}</span>
-                    {p.isVirtualRater && <span className="pc-co-rater">with {p.parentDisplayName}</span>}
+                    {p.isVirtualRater && <span className="pc-co-rater">with {p.parentDisplayName}</span>}{/* UNTRANSLATED: "with {name}" — no key */}
                     {p.currentMovie && (
                       <span className="pc-watching"
                         onClick={(e) => { e.stopPropagation(); onOpenDetail(p.currentMovie); }}
@@ -309,20 +311,20 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                 <div className="pc-stats">
                   <div className="pc-stat">
                     <span className="pc-stat-value">{p.watchedCount}</span>
-                    <span className="pc-stat-label">Watched</span>
+                    <span className="pc-stat-label">{t('profile.watched')}</span>
                   </div>
                   <div className="pc-stat">
                     <span className="pc-stat-value">{p.avgRating || '—'}</span>
-                    <span className="pc-stat-label">Avg</span>
+                    <span className="pc-stat-label">{t('profile.avg')}</span>
                   </div>
                   <div className="pc-stat">
                     <span className="pc-stat-value">{p.ratingCount}</span>
-                    <span className="pc-stat-label">Rated</span>
+                    <span className="pc-stat-label">{t('profile.rated')}</span>
                   </div>
                   {!p.isVirtualRater && (
                     <div className="pc-stat">
                       <span className="pc-stat-value">{p.battleCount}</span>
-                      <span className="pc-stat-label">Battles</span>
+                      <span className="pc-stat-label">{t('profile.battles')}</span>
                     </div>
                   )}
                 </div>
@@ -334,7 +336,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                   ) : (
                     <div className="pc-showcase-empty">
                       <span className="pc-showcase-empty-icon">🃏</span>
-                      <span className="pc-showcase-empty-text">Battle to earn cards</span>
+                      <span className="pc-showcase-empty-text">{t('profile.battleToEarnCards')}</span>
                     </div>
                   )}
                 </div>
@@ -343,7 +345,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                 <div className="pc-footer">
                   {p.favGenre && <span className="pc-detail" title="Favourite genre">{p.favGenre.split(' / ')[0]}</span>}
                   {p.dailyStreak > 0 && (
-                    <span className="pc-detail pc-detail-streak" title="Daily Oscar streak">🎬 {p.dailyStreak} day{p.dailyStreak === 1 ? '' : 's'}</span>
+                    <span className="pc-detail pc-detail-streak" title="Daily Oscar streak">🎬 {p.dailyStreak === 1 ? t('profile.dayStreakSingular', { count: p.dailyStreak }) : t('profile.daysStreak', { count: p.dailyStreak })}</span>
                   )}
                 </div>
               </div>
