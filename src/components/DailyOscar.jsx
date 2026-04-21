@@ -233,14 +233,14 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
         <button className="daily-close" onClick={onClose}>✕</button>
 
         <h2 className="daily-title">{t('daily.title')}</h2>
-        {gameActive && <p className="daily-subtitle">Name the movie from the poster and quote</p>}
+        {gameActive && <p className="daily-subtitle">{t('daily.headerSubtitle')}</p>}
 
         {/* Poster */}
         {poster && (
           <div className="daily-poster-wrap">
-            <img className="daily-poster" src={poster} alt="Mystery movie"
+            <img className="daily-poster" src={poster} alt={t('daily.mysteryMovie')}
               style={{ filter: gameActive ? `blur(${20 - (wrongCount * 4)}px)` : 'none', transition: 'filter 0.5s' }} />
-            {isWatched && <div className="daily-watched-badge">✓ Watched</div>}
+            {isWatched && <div className="daily-watched-badge">{t('daily.watchedBadge')}</div>}
             {!gameActive && <div className="daily-poster-label">{movie.title} ({movie.year})</div>}
           </div>
         )}
@@ -283,7 +283,7 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
           <form className="daily-input-form" autoComplete="off" onSubmit={(e) => { e.preventDefault(); handleGuess(); }}>
             <input className="daily-input" type="search" value={guess}
               onChange={(e) => handleInput(e.target.value)}
-              placeholder={`Guess ${guesses.length + 1} of ${MAX_GUESSES}...`}
+              placeholder={t('daily.guessPlaceholder', { n: guesses.length + 1, max: MAX_GUESSES })}
               autoComplete="new-password" autoCorrect="off" autoCapitalize="off" spellCheck="false"
               name={`xmovie_${Date.now()}`} data-form-type="other" data-lpignore="true" />
             {suggestions.length > 0 && (
@@ -293,31 +293,31 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
                 ))}
               </div>
             )}
-            <div className="daily-remaining">{MAX_GUESSES - guesses.length} guess{MAX_GUESSES - guesses.length !== 1 ? 'es' : ''} left</div>
+            <div className="daily-remaining">{t((MAX_GUESSES - guesses.length) === 1 ? 'daily.guessesLeftSingular' : 'daily.guessesLeftPlural', { count: MAX_GUESSES - guesses.length })}</div>
           </form>
         )}
 
         {/* Results */}
         {solved && (
           <div className="daily-result">
-            <div className="daily-result-text daily-result-win">Got it in {guesses.length}!</div>
+            <div className="daily-result-text daily-result-win">{t('daily.gotItIn', { n: guesses.length })}</div>
             {streak > 0 && <div className="daily-streak">{t('daily.streak', { count: streak })}</div>}
             {rewardCard && !rewardClaimed && (
-              <button className="daily-reward-btn" onClick={() => setShowPack(true)}>Open your reward card</button>
+              <button className="daily-reward-btn" onClick={() => setShowPack(true)}>{t('daily.openReward')}</button>
             )}
             {rewardCard && rewardClaimed && (
-              <div className="daily-reward-claimed">{rewardKept ? 'Card collected!' : 'Card revealed'}</div>
+              <div className="daily-reward-claimed">{rewardKept ? t('daily.cardCollected') : t('daily.cardRevealed')}</div>
             )}
           </div>
         )}
         {failed && (
           <div className="daily-result">
-            <div className="daily-result-text daily-result-lose">It was {movie.title} ({movie.year})</div>
-            <p style={{ fontSize: '0.82rem', color: '#999' }}>Better luck tomorrow!</p>
+            <div className="daily-result-text daily-result-lose">{t('daily.itWas', { title: movie.title, year: movie.year })}</div>
+            <p style={{ fontSize: '0.82rem', color: '#999' }}>{t('daily.betterLuck')}</p>
           </div>
         )}
         {!gameActive && (
-          <div className="daily-timer">Next Daily Oscar in <strong>{countdown}</strong></div>
+          <div className="daily-timer">{t('daily.nextIn', { countdown })}</div>
         )}
       </div>
     </div>
