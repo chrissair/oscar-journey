@@ -1,4 +1,5 @@
 import React from 'react';
+import { useT } from '../i18n';
 
 // Compact icon-only bookmark toggle. Sits to the right of the
 // "Mark as Watched" button in the modal and Journey card action rows.
@@ -12,12 +13,13 @@ import React from 'react';
 //   saved+unwatched → filled gold glyph + gold border
 //   saved+watched   → filled green glyph + green border
 export default function WatchlistButton({ isBookmarked, isWatched, onToggle }) {
+  const { t } = useT();
   const stateClass = !isBookmarked
     ? 'is-off'
     : isWatched
       ? 'is-saved-watched'
       : 'is-saved';
-  const label = isBookmarked ? 'Remove from saved' : 'Save for later';
+  const label = isBookmarked ? t('journey.removeFromWatchlist') : t('journey.addToWatchlist');
   return (
     <button
       type="button"
