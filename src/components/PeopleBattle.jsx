@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { PEOPLE } from '../data/people';
 import { MOVIES_BY_ID } from '../data/movies';
 import { fetchOmdbData } from '../utils/omdb';
+import { useT } from '../i18n';
 
 const PEOPLE_LIST = Object.entries(PEOPLE).map(([id, p]) => ({ id, ...p }));
 
@@ -10,6 +11,7 @@ const ACTORS = PEOPLE_LIST.filter(p => p.categories.some(c => c.includes('Actor'
 const DIRECTORS = PEOPLE_LIST.filter(p => p.categories.includes('Director'));
 
 export default function PeopleBattle({ profile, onSaveProfile }) {
+  const { t } = useT();
   const [subMode, setSubMode] = useState('actors'); // 'actors' | 'directors'
   const [personA, setPersonA] = useState(null);
   const [personB, setPersonB] = useState(null);
@@ -63,9 +65,13 @@ export default function PeopleBattle({ profile, onSaveProfile }) {
     <div className="people-battle-section">
       <div className="people-battle-tabs">
         <button className={`people-tab ${subMode === 'actors' ? 'people-tab-active' : ''}`}
-          onClick={() => setSubMode('actors')}>Actors ({ACTORS.length})</button>
+          onClick={() => setSubMode('actors')}>
+          {t('battle.people.actors', { count: ACTORS.length })}
+        </button>
         <button className={`people-tab ${subMode === 'directors' ? 'people-tab-active' : ''}`}
-          onClick={() => setSubMode('directors')}>Directors ({DIRECTORS.length})</button>
+          onClick={() => setSubMode('directors')}>
+          {t('battle.people.directors', { count: DIRECTORS.length })}
+        </button>
       </div>
 
       <div className="people-battle-arena">
@@ -76,9 +82,10 @@ export default function PeopleBattle({ profile, onSaveProfile }) {
           isLoser={voted && winner !== 'a'}
           onClick={() => handleVote('a')}
           posterCache={posterCache}
+          t={t}
         />
 
-        <div className="people-battle-vs">VS</div>
+        <div className="people-battle-vs">{t('battle.vs')}</div>
 
         <PersonCard
           person={personB}
@@ -87,16 +94,17 @@ export default function PeopleBattle({ profile, onSaveProfile }) {
           isLoser={voted && winner !== 'b'}
           onClick={() => handleVote('b')}
           posterCache={posterCache}
+          t={t}
         />
       </div>
 
       <div className="people-battle-score">
-        {totalVotes} vote{totalVotes !== 1 ? 's' : ''} cast
+        {t('battle.people.votesCast', { count: totalVotes, s: totalVotes !== 1 ? 's' : '' })}
       </div>
 
       <div className="pack-progress">
         <div className="pack-progress-label">
-          {totalVotes} votes cast
+          {t('battle.people.votesCast', { count: totalVotes, s: totalVotes !== 1 ? 's' : '' })}
         </div>
         <div className="pack-progress-bar">
           <div className="pack-progress-fill" style={{ width: `${Math.min(100, ((totalVotes % 20) / 20) * 100)}%` }} />
@@ -106,7 +114,7 @@ export default function PeopleBattle({ profile, onSaveProfile }) {
   );
 }
 
-function PersonCard({ person, voted, isWinner, isLoser, onClick, posterCache }) {
+function PersonCard({ person, voted, isWinner, isLoser, onClick, posterCache, t }) {
   const topMovie = MOVIES_BY_ID[person.movieIds[0]];
   const poster = topMovie ? posterCache[person.movieIds[0]] : null;
 
@@ -126,7 +134,9 @@ function PersonCard({ person, voted, isWinner, isLoser, onClick, posterCache }) 
 
         <div className="people-card-oscars">
           <span className="people-card-oscar-icon">🏆</span>
-          <span className="people-card-oscar-count">{person.oscars.wins} Oscar{person.oscars.wins !== 1 ? 's' : ''}</span>
+          <span className="people-card-oscar-count">
+            {t('battle.people.oscars', { count: person.oscars.wins, s: person.oscars.wins !== 1 ? 's' : '' })}
+          </span>
         </div>
 
         <div className="people-card-films">
@@ -137,7 +147,9 @@ function PersonCard({ person, voted, isWinner, isLoser, onClick, posterCache }) 
             ) : null;
           })}
           {person.movieIds.length > 3 && (
-            <span className="people-card-more">+{person.movieIds.length - 3} more</span>
+            <span className="people-card-more">
+              {t('battle.people.more', { count: person.movieIds.length - 3 })}
+            </span>
           )}
         </div>
       </div>
