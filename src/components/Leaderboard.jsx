@@ -263,7 +263,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
       {/* All Profiles */}
       <h2>{t('profile.tabTitle')}</h2>
       {profileStats.length === 0 ? (
-        <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic' }}>No profiles found.</p>
+        <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic' }}>{t('profile.noProfiles')}</p>
       ) : (
         <div className="profile-grid">
           {profileStats.map(p => {
@@ -298,7 +298,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                   <span className="pc-avatar">{p.avatar || (p.isVirtualRater ? '👥' : '👤')}</span>
                   <div className="pc-name-block">
                     <span className="pc-name">{p.displayName}</span>
-                    {p.isVirtualRater && <span className="pc-co-rater">with {p.parentDisplayName}</span>}{/* UNTRANSLATED: "with {name}" — no key */}
+                    {p.isVirtualRater && <span className="pc-co-rater">{t('profile.withParent', { name: p.parentDisplayName })}</span>}
                     {p.currentMovie && (
                       <span className="pc-watching"
                         onClick={(e) => { e.stopPropagation(); onOpenDetail(p.currentMovie); }}
