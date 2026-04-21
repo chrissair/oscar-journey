@@ -254,7 +254,6 @@ export default function App() {
   // --- Core state ---
   const [playlist, setPlaylist] = useState([]);
   const [currentIdx, setCurrentIdx] = useState(0);
-  const preFilterIdx = useRef(null); // Saved position before filter auto-skip
   const [watchedSet, setWatchedSet] = useState(new Set());
   const [watchlistSet, setWatchlistSet] = useState(new Set());
   const [preFilterFilmId, setPreFilterFilmId] = useState(null);
@@ -1003,21 +1002,40 @@ export default function App() {
   }, []);
 
   // --- Auto-skip to next eligible film when current is filtered out ---
-  // Saves position before skipping so we can snap back when filters are removed.
-  // We DO persist the new currentIdx to Firestore (via firebaseSave) — otherwise
-  // the Profile view (which renders profile.playlistOrder[profile.currentIdx])
-  // desyncs from Journey (which renders playlist[currentIdx]) whenever a filter
-  // hides the current film. preFilterIdx is only a ref anyway (lost on refresh),
-  // so the old "don't save" logic was already not truly transient — persisting
-  // is strictly more consistent.
+  //
+  // Filters act as a temporary "side trip". When a filter hides the current
+  // film, we remember where the user was (by film ID, not index — indices
+  // drift on reshuffle) and walk them forward to the nearest eligible film.
+  // When the filter state changes such that the saved film passes again,
+  // we snap the user back to it. The saved ID lives on the profile doc so
+  // the side-trip memory survives refresh and crosses devices.
+  //
+  // We persist the auto-skipped currentIdx to Firestore too — the Profile
+  // view reads profile.currentIdx and would otherwise desync from Journey's
+  // playlist[currentIdx] whenever a filter hides the current film.
   useEffect(() => {
     if (screen !== 'card' || !playlist.length || eligibleStats.total === 0) return;
+
+    // Resolve the saved film ID to an index in the current playlist.
+    // -1 = saved film isn't in the playlist (stale / removed from catalog).
+    const savedIdx = preFilterFilmId
+      ? playlist.findIndex(m => m.id === preFilterFilmId)
+      : null;
+
     if (!idxPassesFilter(currentIdx)) {
-      // Save the original position if we haven't already
-      if (preFilterIdx.current === null) {
-        preFilterIdx.current = currentIdx;
+      // Case A: current film is filtered out. Auto-skip.
+      // Save the origin if we haven't already — first time only, so filter
+      // swaps (A → B) and forward nav under a filter both preserve the
+      // ORIGINAL pre-filter spot.
+      if (preFilterFilmId === null) {
+        const originId = playlist[currentIdx]?.id;
+        if (originId) {
+          setPreFilterFilmId(originId);
+          firebaseSave('preFilterFilmId', originId);
+          setProfile(prev => prev ? { ...prev, preFilterFilmId: originId } : prev);
+        }
       }
-      // Find next eligible film forward, or backward if none ahead
+      // Walk forward to the next eligible film; if none ahead, walk backward.
       let next = currentIdx + 1;
       while (next < playlist.length && !idxPassesFilter(next)) next++;
       if (next >= playlist.length) {
@@ -1028,15 +1046,49 @@ export default function App() {
         setCurrentIdx(next);
         firebaseSave('currentIdx', next);
       }
-    } else if (preFilterIdx.current !== null) {
-      // Filters changed and the saved position is now valid — snap back
-      if (idxPassesFilter(preFilterIdx.current) && preFilterIdx.current !== currentIdx) {
-        setCurrentIdx(preFilterIdx.current);
-        firebaseSave('currentIdx', preFilterIdx.current);
-      }
-      preFilterIdx.current = null;
+      return;
     }
-  }, [currentIdx, screen, playlist, idxPassesFilter, eligibleStats.total, firebaseSave]);
+
+    // Case B: current film passes the filter. Maybe it's time to snap back.
+    if (preFilterFilmId === null) return; // Nothing saved, nothing to do.
+
+    if (savedIdx === -1) {
+      // Stale: the saved film is no longer in the playlist. Clear.
+      setPreFilterFilmId(null);
+      firebaseSave('preFilterFilmId', null);
+      setProfile(prev => prev ? { ...prev, preFilterFilmId: null } : prev);
+      return;
+    }
+
+    if (savedIdx === currentIdx) {
+      // We're home. Clear the memory.
+      setPreFilterFilmId(null);
+      firebaseSave('preFilterFilmId', null);
+      setProfile(prev => prev ? { ...prev, preFilterFilmId: null } : prev);
+      return;
+    }
+
+    if (idxPassesFilter(savedIdx)) {
+      // Saved spot passes current filter → snap back.
+      setCurrentIdx(savedIdx);
+      firebaseSave('currentIdx', savedIdx);
+      setPreFilterFilmId(null);
+      firebaseSave('preFilterFilmId', null);
+      setProfile(prev => prev ? { ...prev, preFilterFilmId: null } : prev);
+      return;
+    }
+
+    // Otherwise the saved spot is still filtered out — leave preFilterFilmId
+    // in place and wait for a future filter change.
+  }, [
+    currentIdx,
+    screen,
+    playlist,
+    idxPassesFilter,
+    eligibleStats.total,
+    firebaseSave,
+    preFilterFilmId,
+  ]);
 
   // --- Keyboard shortcuts ---
   useEffect(() => {
