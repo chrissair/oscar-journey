@@ -1542,6 +1542,34 @@ html:not([data-theme="dark"]) .badge-cat-silent.badge-category-sm {
   font-weight: 600;
 }
 
+/* Settings language selector — two pills, active one highlighted. */
+.settings-lang-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+.settings-lang-option {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--cream-dim);
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.settings-lang-option:hover {
+  color: var(--cream);
+  border-color: var(--cream-dim);
+}
+.settings-lang-option.active {
+  background: var(--gold);
+  color: var(--bg);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
 /* Settings toggle switch */
 .settings-toggle-row {
   display: flex;

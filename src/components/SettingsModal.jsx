@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AVATAR_EMOJIS } from '../data/avatars';
 import { GENRE_LABELS } from '../data/movies';
+import { useT } from '../i18n';
 
 // Dual-thumb slider bounds for Journey filters — mirrors the Film tab's
 // ranges. Current year is recomputed at module load so the upper bound keeps
@@ -69,6 +70,7 @@ export { DEFAULT_FILTERS, GENRE_LABELS, CATEGORY_LABELS, SMART_LABELS };
 export { JOURNEY_YEAR_MIN, JOURNEY_YEAR_MAX, JOURNEY_RUNTIME_MIN, JOURNEY_RUNTIME_MAX };
 
 export default function SettingsModal({ raters, onRatersChange, avatar, onAvatarChange, allowSkip, onAllowSkipChange, simpleBattle, onSimpleBattleChange, checklistMode, onChecklistModeChange, hideDailyOscar, onHideDailyOscarChange, privateProfile, onPrivateProfileChange, onClose, onClearCache, profile, onLogout }) {
+  const { t, lang, setLang } = useT();
   const [editRaters, setEditRaters] = useState(raters);
   const [newName, setNewName] = useState('');
   const [showAvatarPicker, setShowAvatarPicker] = useState(false);
@@ -132,17 +134,17 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
     }}>
       <div className="modal settings-modal">
         <button className="settings-close" onClick={onClose}>✕</button>
-        <h2 className="settings-title">Settings</h2>
+        <h2 className="settings-title">{t('settings.title')}</h2>
 
         {/* ── Profile ── */}
         <div className="settings-group">
-          <div className="settings-group-heading">Profile</div>
+          <div className="settings-group-heading">{t('settings.profileSection')}</div>
 
           <div className="settings-item">
-            <label className="settings-label">Avatar</label>
+            <label className="settings-label">{t('settings.avatar')}</label>
             <div className="login-avatar-selected" onClick={() => setShowAvatarPicker(p => !p)}>
               <span className="login-avatar-emoji">{avatar}</span>
-              <span className="login-avatar-change">{showAvatarPicker ? 'Close' : 'Tap to change'}</span>
+              <span className="login-avatar-change">{showAvatarPicker ? t('settings.closePicker') : t('settings.tapToChange')}</span>
             </div>
             {showAvatarPicker && (
               <div className="login-avatar-grid" style={{ marginTop: '8px' }}>
@@ -156,8 +158,8 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
           </div>
 
           <div className="settings-item">
-            <label className="settings-label">Raters</label>
-            <p className="settings-hint">Add people who rate films with you. Each gets their own star rating.</p>
+            <label className="settings-label">{t('settings.raters')}</label>
+            <p className="settings-hint">{t('settings.ratersHint')}</p>
             <div className="settings-raters">
               {editRaters.map((name, i) => (
                 <div key={i} className="settings-rater">
@@ -168,67 +170,84 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
               ))}
               <div className="settings-rater-add">
                 <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && addRater()} placeholder="Add a name..."
+                  onKeyDown={(e) => e.key === 'Enter' && addRater()} placeholder={t('settings.raterAddPlaceholder')}
                   className="settings-rater-input" />
-                <button className="settings-rater-btn" onClick={addRater} disabled={!newName.trim()}>Add</button>
+                <button className="settings-rater-btn" onClick={addRater} disabled={!newName.trim()}>{t('settings.add')}</button>
               </div>
+            </div>
+          </div>
+
+          {/* Language selector — lives in the Profile group since it applies to the whole app. */}
+          <div className="settings-item">
+            <label className="settings-label">{t('settings.language')}</label>
+            <div className="settings-lang-row">
+              <button
+                type="button"
+                className={`settings-lang-option ${lang === 'en' ? 'active' : ''}`}
+                onClick={() => setLang('en')}
+              >English</button>
+              <button
+                type="button"
+                className={`settings-lang-option ${lang === 'zh' ? 'active' : ''}`}
+                onClick={() => setLang('zh')}
+              >繁體中文</button>
             </div>
           </div>
         </div>
 
         {/* ── Preferences ── */}
         <div className="settings-group">
-          <div className="settings-group-heading">Preferences</div>
+          <div className="settings-group-heading">{t('settings.preferences')}</div>
 
           <Toggle
             active={allowSkip}
             onChange={onAllowSkipChange}
-            label="Allow skipping films"
-            hint="Shows a skip button on the journey card. We don't recommend it. 😤"
+            label={t('settings.allowSkip')}
+            hint={t('settings.allowSkipHint')}
           />
           <Toggle
             active={hideDailyOscar}
             onChange={onHideDailyOscarChange}
-            label="Hide Daily Oscar banner"
-            hint="Removes the Daily Oscar quote-quiz banner from the journey page. You can still play it from elsewhere."
+            label={t('settings.hideDailyOscar')}
+            hint={t('settings.hideDailyOscarHint')}
           />
           <Toggle
             active={simpleBattle}
             onChange={onSimpleBattleChange}
-            label="Simple battle graphics"
-            hint="Removes animations for faster battles. Visual feedback still shown."
+            label={t('settings.simpleBattle')}
+            hint={t('settings.simpleBattleHint')}
           />
           <Toggle
             active={checklistMode}
             onChange={onChecklistModeChange}
-            label="Film tab checklist mode"
-            hint="Tap any film in the A–Z list to mark it watched — great for first-timers catching up."
+            label={t('settings.checklistMode')}
+            hint={t('settings.checklistModeHint')}
           />
           <Toggle
             active={privateProfile}
             onChange={onPrivateProfileChange}
-            label="Private profile"
-            hint="Hide your profile from the Profiles page. Others won't see your stats, watched films, or cards."
+            label={t('settings.privateProfile')}
+            hint={t('settings.privateProfileHint')}
           />
         </div>
 
         {/* ── Data ── */}
         <div className="settings-group">
-          <div className="settings-group-heading">Data</div>
+          <div className="settings-group-heading">{t('settings.data')}</div>
           <div className="settings-actions">
             {profile && (
               <button className="settings-action-btn" onClick={handleExportData}>
-                <span>📥</span> Download My Data
+                <span>📥</span> {t('settings.downloadData')}
               </button>
             )}
             <button className="settings-action-btn" onClick={onClearCache}>
-              <span>🔄</span> Clear Poster Cache
+              <span>🔄</span> {t('settings.clearPosterCache')}
             </button>
             {profile && onLogout && (
               <button className="settings-action-btn settings-logout" onClick={() => {
-                if (window.confirm('Log out? Your data is saved.')) onLogout();
+                if (window.confirm(t('settings.logOutConfirm'))) onLogout();
               }}>
-                Log Out
+                {t('settings.logOut')}
               </button>
             )}
           </div>
@@ -236,14 +255,14 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
 
         {/* ── About ── */}
         <div className="settings-group">
-          <div className="settings-group-heading">About</div>
+          <div className="settings-group-heading">{t('settings.about')}</div>
           <div className="settings-version">
             <div className="settings-version-row">
-              <span className="settings-version-label">Version</span>
+              <span className="settings-version-label">{t('settings.version')}</span>
               <span className="settings-version-num">v3.4.0</span>
             </div>
             <details className="settings-changelog">
-              <summary>Changelog</summary>
+              <summary>{t('settings.changelog')}</summary>
               <div className="settings-changelog-content">
               <p><strong>v3.4.0</strong> — Watchlist, multi-source ratings, authoritative Oscars, filter side-trip</p>
               <ul>
