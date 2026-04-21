@@ -292,10 +292,10 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
       }
     };
     if (yearRangeActive) {
-      chips.push(`Years: ${currentFilters.yearRange.min}–${currentFilters.yearRange.max}`);
+      chips.push(`${t('filters.chipYears')}: ${currentFilters.yearRange.min}–${currentFilters.yearRange.max}`);
     }
-    summarize('categories', CATEGORY_LABELS, 'Categories');
-    summarize('genres', GENRE_LABELS, 'Genres');
+    summarize('categories', CATEGORY_LABELS, t('filters.chipCategories'));
+    summarize('genres', GENRE_LABELS, t('filters.chipGenres'));
 
     // Exclusion chips — one per section that has any excluded rows.
     const summarizeExcluded = (excludeKey, labelMap, sectionLabel) => {
@@ -303,22 +303,22 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
         .filter(([, v]) => v)
         .map(([k]) => labelMap[k] || k);
       if (excluded.length === 0) return;
-      chips.push(`${sectionLabel} excl: ${excluded.join(', ')}`);
+      chips.push(`${sectionLabel} ${t('filters.excl')}: ${excluded.join(', ')}`);
     };
-    summarizeExcluded('categoriesExcluded', CATEGORY_LABELS, 'Categories');
-    summarizeExcluded('genresExcluded', GENRE_LABELS, 'Genres');
+    summarizeExcluded('categoriesExcluded', CATEGORY_LABELS, t('filters.chipCategories'));
+    summarizeExcluded('genresExcluded', GENRE_LABELS, t('filters.chipGenres'));
 
     if (runtimeRangeActive) {
       const lo = formatRuntimeLabel(currentFilters.runtimeRange.min);
       const hi = currentFilters.runtimeRange.max >= JOURNEY_RUNTIME_MAX
         ? `${formatRuntimeLabel(JOURNEY_RUNTIME_MAX)}+`
         : formatRuntimeLabel(currentFilters.runtimeRange.max);
-      chips.push(`Runtime: ${lo}–${hi}`);
+      chips.push(`${t('filters.chipRuntime')}: ${lo}–${hi}`);
     }
 
     if (currentFilters.oscarsOnly) chips.push(t('filters.oscarsOnly'));
     if (currentFilters.essentialsOnly) chips.push(t('filters.essentialsOnly'));
-    if (currentFilters.minTier > 0) chips.push(`Tier ≥${currentFilters.minTier}`);
+    if (currentFilters.minTier > 0) chips.push(t('filters.tierPrefix', { n: currentFilters.minTier }));
 
     return chips;
   }, [currentFilters, t]);
@@ -484,7 +484,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
               <div className="filter-section">
                 <button className="filter-section-toggle" onClick={() => toggleSection('years')}>
                   <span className="filter-section-arrow">{openSections.years ? '▾' : '▸'}</span>
-                  <span className="filter-section-label">Years</span>{/* UNTRANSLATED: 'Years' — closest key is filters.yearRange='Year range' */}
+                  <span className="filter-section-label">{t('filters.years')}</span>
                   {yearRangeActive && (
                     <span className="filter-section-count">
                       {currentFilters.yearRange.min}–{currentFilters.yearRange.max}
@@ -548,7 +548,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
               <div className="filter-section">
                 <button className="filter-section-toggle" onClick={() => toggleSection('runtimes')}>
                   <span className="filter-section-arrow">{openSections.runtimes ? '▾' : '▸'}</span>
-                  <span className="filter-section-label">Runtime</span>{/* UNTRANSLATED: 'Runtime' — closest key is filters.runtimes='Runtimes' */}
+                  <span className="filter-section-label">{t('filters.runtime')}</span>
                   {runtimeRangeActive && (
                     <span className="filter-section-count">
                       {formatRuntimeLabel(currentFilters.runtimeRange.min)}–
@@ -611,7 +611,7 @@ export default function JourneyControls({ filters, onFiltersChange, onReshuffle,
                 )}
               </div>
 
-              {renderSection('smart', 'Smart Filters', 'smart', SMART_LABELS)}{/* UNTRANSLATED: 'Smart Filters' — no key in dict */}
+              {renderSection('smart', t('filters.smartFilters'), 'smart', SMART_LABELS)}
             </div>
           )}
         </div>
