@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useT } from '../i18n';
 import { fetchOmdbData, readCachedOmdbData, tidyPlot } from '../utils/omdb';
 import { getConsensusScore, CONSENSUS_TOOLTIP_TEXT } from '../utils/ratings';
 import InfoTooltip from './InfoTooltip';
@@ -86,6 +87,7 @@ function pickSkipMessage(movie) {
 }
 
 export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmarked, onToggleWatchlist, fading, ratings, onRatingChange, raters, allowSkip, onSkip, allProfiles, currentProfileId, onOpenDetail, onOpenProfile, onOpenSeriesPreview, watchedSet }) {
+  const { t } = useT();
   const [omdbData, setOmdbData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -242,7 +244,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
               <rect rx="4" ry="4" width="28" height="20" fill="#FF0000"/>
               <polygon points="11,4 11,16 21,10" fill="#FFF"/>
             </svg></span>
-            <span className="metric-label">Trailer</span>
+            <span className="metric-label">{t('filmCard.trailer')}</span>
           </a>
           <a className="metric-item metric-justwatch"
             href={justWatchUrl(movie.title)}
@@ -250,7 +252,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
             onClick={(e) => e.stopPropagation()}
           >
             <span className="metric-value">📺</span>
-            <span className="metric-label">Watch</span>
+            <span className="metric-label">{t('filmCard.where')}</span>
           </a>
         </div>
         {(() => {
@@ -260,7 +262,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
           if (!director) return null;
           return (
             <div className="film-director">
-              <strong>Directed by</strong> {director}
+              <strong>{t('journey.directedBy')}</strong> {director}
               <DirectorFilmographyLink movie={movie} onOpenDetail={onOpenDetail} />
             </div>
           );
@@ -271,7 +273,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
           const actors = ACTORS[movie.id] || omdbData?.actors;
           if (!actors) return null;
           const pretty = actors.split(',').map(s => s.trim()).filter(Boolean).join(' · ');
-          return <div className="film-starring"><strong>Starring</strong> {pretty}</div>;
+          return <div className="film-starring"><strong>{t('journey.starring')}</strong> {pretty}</div>;
         })()}
         {omdbData?.plot && (
           <div className="film-plot">{tidyPlot(omdbData.plot)}</div>
@@ -328,7 +330,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
         {isWatched ? (
           raters.length === 1 ? (
             <div className="rating-pickers rating-pickers-inline">
-              <div className="rating-pickers-label">Your rating</div>
+              <div className="rating-pickers-label">{t('filmCard.yourRating')}</div>
               <StarPicker
                 key={raters[0]}
                 label={raters[0]}
@@ -339,7 +341,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
             </div>
           ) : (
             <div className="rating-pickers">
-              <div className="rating-pickers-label">Your ratings</div>
+              <div className="rating-pickers-label">{t('filmCard.yourRating')}</div>
               {raters.map(name => (
                 <StarPicker
                   key={name}
@@ -360,19 +362,19 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
             onClick={onToggleWatched}
           >
             {isWatched && <span className="watched-icon">✓</span>}
-            <span>{isWatched ? 'Watched' : 'Mark as Watched'}</span>
+            <span>{isWatched ? t('journey.unmarkWatched') : t('journey.markWatched')}</span>
           </button>
           {allowSkip && !isWatched && (
             <button
               className="skip-btn"
               onClick={() => {
                 const msg = pickSkipMessage(movie);
-                if (window.confirm(msg + '\n\nSkip this film?')) {
+                if (window.confirm(msg + '\n\n' + t('journey.skipConfirm'))) {
                   onSkip();
                 }
               }}
             >
-              Skip
+              {t('journey.skip')}
             </button>
           )}
           <WatchlistButton
