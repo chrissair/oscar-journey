@@ -9,6 +9,7 @@ import { HARD_PITY, RARITIES, generatePack, getMaxWallet, shouldDropCard, getDro
 import { recordActivity } from '../utils/firebaseStorage';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
+import { useT } from '../i18n';
 
 // --- Smart Matchmaking ---
 
@@ -143,7 +144,8 @@ function selectPair(watchedMovies, personalElo, recentMovies, pairHistory) {
   return pair;
 }
 
-function getMatchupLabel(movieA, movieB) {
+// Returns a translation key for the matchup label, or null
+function getMatchupLabelKey(movieA, movieB) {
   // Under multi-genre, a "Genre Clash" means the two films share NO genres at
   // all — primary or alt. If either film's altGenres contain the other's
   // primary (or vice versa), they're not really clashing on genre.
@@ -151,24 +153,26 @@ function getMatchupLabel(movieA, movieB) {
   const genresB = new Set([movieB.genre, ...(movieB.altGenres || [])]);
   const genreOverlap = [...genresA].some(g => genresB.has(g));
   const yearGap = Math.abs(movieA.year - movieB.year) > 20;
-  if (!genreOverlap && yearGap) return 'Cross-Era Clash';
-  if (!genreOverlap) return 'Genre Clash';
-  if (yearGap) return 'Decade Duel';
-  if (movieA.won && movieB.won) return 'Winner vs Winner';
-  if (movieA.won !== movieB.won) return 'Winner vs Nominee';
+  if (!genreOverlap && yearGap) return 'battle.movie.matchupCrossEraClash';
+  if (!genreOverlap) return 'battle.movie.matchupGenreClash';
+  if (yearGap) return 'battle.movie.matchupDecadeDuel';
+  if (movieA.won && movieB.won) return 'battle.movie.matchupWinnerVsWinner';
+  if (movieA.won !== movieB.won) return 'battle.movie.matchupWinnerVsNominee';
   return null;
 }
 
-function getConfidenceLabel(matchCount) {
-  if (matchCount <= 2) return { label: 'New', color: 'var(--cream-dim)' };
-  if (matchCount <= 8) return { label: 'Settling', color: 'var(--gold)' };
-  if (matchCount <= 20) return { label: 'Confident', color: '#5a9a5a' };
-  return { label: 'Locked In', color: '#4a9ade' };
+// Returns a confidence key for translation
+function getConfidenceKey(matchCount) {
+  if (matchCount <= 2) return { key: 'battle.movie.confidenceNew', color: 'var(--cream-dim)' };
+  if (matchCount <= 8) return { key: 'battle.movie.confidenceSettling', color: 'var(--gold)' };
+  if (matchCount <= 20) return { key: 'battle.movie.confidenceConfident', color: '#5a9a5a' };
+  return { key: 'battle.movie.confidenceLockedIn', color: '#4a9ade' };
 }
 
 // --- Component ---
 
 export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetail, onSaveProfile, simpleBattle }) {
+  const { t } = useT();
   const [movieA, setMovieA] = useState(null);
   const [movieB, setMovieB] = useState(null);
   const [posterA, setPosterA] = useState(null);
@@ -181,7 +185,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
   const [allProfiles, setAllProfiles] = useState([]);
   const [selectedProfileId, setSelectedProfileId] = useState(profile?.id || '');
   const [viewingElo, setViewingElo] = useState(profile?.personalElo || {});
-  const [matchupLabel, setMatchupLabel] = useState(null);
+  const [matchupLabelKey, setMatchupLabelKey] = useState(null);
   const [rankingsTab, setRankingsTab] = useState('personal');
   const [pendingPack, setPendingPack] = useState(null);
   const [battleCount, setBattleCount] = useState(profile?.battleCount || 0);
@@ -213,7 +217,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
     setMovieA(a);
     setMovieB(b);
     setEloChange(null);
-    setMatchupLabel(getMatchupLabel(a, b));
+    setMatchupLabelKey(getMatchupLabelKey(a, b));
 
     // Track recent movies and pair history
     recentMovies.current.push(ratingKey(a), ratingKey(b));
@@ -288,7 +292,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
           title = sepIdx > 0 ? key.substring(0, sepIdx) : key;
           year = sepIdx > 0 ? key.substring(sepIdx + 1) : '';
         }
-        const confidence = getConfidenceLabel(data.matchCount || 0);
+        const confidence = getConfidenceKey(data.matchCount || 0);
         return {
           id: key,
           title,
@@ -370,23 +374,23 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
   return (
     <div className="battle-section">
       <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)', marginBottom: '4px', textAlign: 'center' }}>
-        Movie Battle
+        {t('battle.movie.title')}
       </h2>
       <p style={{ color: 'var(--cream-dim)', fontSize: '0.88rem', textAlign: 'center', marginBottom: '24px' }}>
-        Which film is better? Click to vote.
+        {t('battle.movie.subtitle')}
       </p>
 
       {!hasEnough && (
         <div className="battle-empty" style={{ marginBottom: '32px' }}>
-          <h3>Almost There</h3>
-          <p>Watch <strong>{lockedRemaining} more film{lockedRemaining !== 1 ? 's' : ''}</strong> to unlock voting.</p>
+          <h3>{t('battle.movie.almostThere')}</h3>
+          <p dangerouslySetInnerHTML={{ __html: t('battle.movie.watchMore', { count: lockedRemaining, s: lockedRemaining !== 1 ? 's' : '' }) }} />
           <div style={{ margin: '20px auto', maxWidth: '240px' }}>
             <div style={{
               display: 'flex', justifyContent: 'space-between',
               fontSize: '0.78rem', color: 'var(--cream-dim)', marginBottom: '6px'
             }}>
-              <span>{lockedCount} watched</span>
-              <span>{MIN_FILMS} needed</span>
+              <span>{t('battle.movie.watched', { count: lockedCount })}</span>
+              <span>{t('battle.movie.needed', { count: MIN_FILMS })}</span>
             </div>
             <div style={{
               height: '6px', background: 'var(--bg3)',
@@ -400,15 +404,15 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
             </div>
           </div>
           <p style={{ fontSize: '0.82rem', color: 'var(--cream-dim)', fontStyle: 'italic' }}>
-            You need to see enough films before you can judge them. Fair's fair.
+            {t('battle.movie.fairsFair')}
           </p>
         </div>
       )}
 
       {movieA && movieB && (
         <>
-          {matchupLabel && (
-            <div className="battle-matchup-label">{matchupLabel}</div>
+          {matchupLabelKey && (
+            <div className="battle-matchup-label">{t(matchupLabelKey)}</div>
           )}
           <div className={`battle-arena${simpleBattle ? ' simple-battle' : ''}`}>
             {/* Movie A */}
@@ -439,7 +443,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
             </div>
 
             {/* VS divider */}
-            <div className="battle-vs">VS</div>
+            <div className="battle-vs">{t('battle.vs')}</div>
 
             {/* Movie B */}
             <div
@@ -472,7 +476,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
       )}
 
       <button className="battle-skip" onClick={() => !voting && pickPair()} disabled={voting}>
-        Skip (different pair)
+        {t('battle.movie.skip')}
       </button>
 
       {/* Card drop progress */}
@@ -537,19 +541,11 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
           if (!e.target.open) localStorage.setItem('oscars_battle_explainer_closed', 'true');
           else localStorage.removeItem('oscars_battle_explainer_closed');
         }}>
-        <summary>How does this work?</summary>
-        <p>
-          Pick the film you think is better. Each movie has an <strong>ELO rating</strong> (like chess rankings) that starts at 1500. When you vote, the winner gains points and the loser drops — but beating a highly-rated film earns more points than beating a low-rated one.
-        </p>
-        <p>
-          Matchups are chosen smartly — similar-rated films face off for tough choices, under-ranked films get more exposure, and the occasional wildcard keeps things interesting.
-        </p>
-        <p>
-          <strong>Global Rankings</strong> combine everyone's votes. <strong>Personal Rankings</strong> are yours alone — your own taste, your own ladder. You can only vote on films you've watched.
-        </p>
-        <p>
-          <strong>Cards</strong> — as you battle, you'll earn random movie cards. The more you battle, the higher your chances (guaranteed within {HARD_PITY}). Cards come in four rarities: <span style={{ color: RARITIES.COMMON.color }}>Common</span> (80%), <span style={{ color: RARITIES.RARE.color }}>Rare</span> (15%), <span style={{ color: RARITIES.EPIC.color }}>Epic</span> (4%), and <span style={{ color: RARITIES.LEGENDARY.color }}>Legendary</span> (1%). Your wallet holds up to 3 cards — feature your best pull on your profile.
-        </p>
+        <summary>{t('battle.movie.howToPlaySummary')}</summary>
+        <p dangerouslySetInnerHTML={{ __html: t('battle.movie.howToPlayP1') }} />
+        <p>{t('battle.movie.howToPlayP2')}</p>
+        <p dangerouslySetInnerHTML={{ __html: t('battle.movie.howToPlayP3') }} />
+        <p dangerouslySetInnerHTML={{ __html: t('battle.movie.howToPlayP4', { hardPity: HARD_PITY }) }} />
       </details>
 
       {/* Rankings tabs for mobile, side-by-side on desktop */}
@@ -557,30 +553,30 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
         <button
           className={`battle-rankings-tab ${rankingsTab === 'personal' ? 'active' : ''}`}
           onClick={() => setRankingsTab('personal')}
-        >My Rankings</button>
+        >{t('battle.movie.myRankings')}</button>
         <button
           className={`battle-rankings-tab ${rankingsTab === 'global' ? 'active' : ''}`}
           onClick={() => setRankingsTab('global')}
-        >Global Rankings</button>
+        >{t('battle.movie.globalRankingsTab')}</button>
       </div>
 
       <div className="battle-rankings-grid">
         {/* Global Leaderboard */}
         <div className={`battle-rankings-col battle-rankings-global ${rankingsTab !== 'global' ? 'battle-rankings-hidden' : ''}`}>
-          <div className="leaderboard-title battle-rankings-desktop-title">🌍 Global Rankings</div>
+          <div className="leaderboard-title battle-rankings-desktop-title">{t('battle.movie.globalRankings')}</div>
           {leaderboard.length === 0 ? (
             <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic', fontSize: '0.9rem' }}>
-              No rankings yet. Cast some votes!
+              {t('battle.movie.noGlobalRankings')}
             </p>
           ) : (
             <table className="leaderboard-table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Title</th>
-                  <th>Year</th>
-                  <th>ELO</th>
-                  <th>Matches</th>
+                  <th>{t('battle.movie.colTitle')}</th>
+                  <th>{t('battle.movie.colYear')}</th>
+                  <th>{t('battle.movie.colElo')}</th>
+                  <th>{t('battle.movie.colMatches')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -611,7 +607,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
               value={selectedProfileId}
               onChange={(e) => setSelectedProfileId(e.target.value)}
             >
-              {profile && <option value={profile.id}>My Rankings</option>}
+              {profile && <option value={profile.id}>{t('battle.movie.myRankings')}</option>}
               {allProfiles
                 .filter(p => p.id !== profile?.id)
                 .map(p => (
@@ -629,7 +625,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
               value={selectedProfileId}
               onChange={(e) => setSelectedProfileId(e.target.value)}
             >
-              {profile && <option value={profile.id}>My Rankings</option>}
+              {profile && <option value={profile.id}>{t('battle.movie.myRankings')}</option>}
               {allProfiles
                 .filter(p => p.id !== profile?.id)
                 .map(p => (
@@ -642,17 +638,17 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
           </div>
           {personalLeaderboard.length === 0 ? (
             <p style={{ color: 'var(--cream-dim)', fontStyle: 'italic', fontSize: '0.9rem' }}>
-              No personal rankings yet. Cast some votes!
+              {t('battle.movie.noPersonalRankings')}
             </p>
           ) : (
             <table className="leaderboard-table">
               <thead>
                 <tr>
                   <th>#</th>
-                  <th>Title</th>
-                  <th>Year</th>
-                  <th>ELO</th>
-                  <th style={{ minWidth: '60px' }}>Status</th>
+                  <th>{t('battle.movie.colTitle')}</th>
+                  <th>{t('battle.movie.colYear')}</th>
+                  <th>{t('battle.movie.colElo')}</th>
+                  <th style={{ minWidth: '60px' }}>{t('battle.movie.colStatus')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -665,7 +661,7 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
                       <td>{entry.title}</td>
                       <td>{entry.year}</td>
                       <td style={{ fontWeight: 'bold', color: 'var(--gold)' }}>{entry.elo}</td>
-                      <td style={{ color: entry.confidence.color, fontSize: '0.75rem' }}>{entry.confidence.label}</td>
+                      <td style={{ color: entry.confidence.color, fontSize: '0.75rem' }}>{t(entry.confidence.key)}</td>
                     </tr>
                   );
                 })}
