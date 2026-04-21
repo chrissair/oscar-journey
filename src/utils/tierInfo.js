@@ -41,6 +41,36 @@ export const LIST_SHORT_LABELS = {
 
 export const MAX_TIER = 5;
 
+// Canon Score weight per tier. Progressive (not linear) so Apex-chasers
+// clearly beat Canonical-only grinders in aggregate — see
+// `scripts/tier-curves.mjs` for the spot-check that chose this curve
+// (Apex-chaser 27.5% vs T1-grinder 21.4% at these weights, vs 20.2 / 27.5
+// under linear 1..5 which inverts the intended signal).
+export const TIER_SCORE_WEIGHTS = {
+  0: 0,
+  1: 1,
+  2: 2,
+  3: 4,
+  4: 7,
+  5: 11,
+};
+
+export function tierScore(tier) {
+  return TIER_SCORE_WEIGHTS[tier] ?? 0;
+}
+
+// Display ceiling for Canon Score. Internally we still accumulate raw
+// tier-weight points (ceiling ≈ 1405 at current weights/catalog), but
+// user-facing values are scaled into the 0..1000 range so the number is
+// easy to read and doesn't drift every time the catalog grows. The raw
+// ratio raw/rawMax is preserved — only the denominator is normalized.
+export const CANON_SCORE_MAX = 1000;
+
+export function normalizeCanonScore(raw, rawMax) {
+  if (!rawMax) return 0;
+  return Math.round((raw / rawMax) * CANON_SCORE_MAX);
+}
+
 export const TIER_LABELS = {
   0: 'All films',
   1: 'Canonical',

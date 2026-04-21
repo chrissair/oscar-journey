@@ -1,12 +1,13 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { MOVIES, GENRE_LABELS } from '../data/movies';
 import { ratingKey } from '../utils/storage';
-import { getTierInfo, MAX_TIER, TIER_LABELS } from '../utils/tierInfo';
+import { getTierInfo, MAX_TIER, TIER_LABELS, tierScore, normalizeCanonScore, CANON_SCORE_MAX } from '../utils/tierInfo';
 import TierPips from './TierPips';
-// useT imported for future i18n; no matching keys exist yet for StatsTab strings
 import { useT } from '../i18n';
+import ExpandableCaption from './ExpandableCaption';
 
 export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, profileName, onNavigateToTier }) {
+  const [genreSort, setGenreSort] = useState({ key: 'genre', dir: 'asc' });
   const stats = useMemo(() => {
     const totalFilms = MOVIES.length;
     const watchedCount = MOVIES.filter(m => watchedTitleSet.has(m.id)).length;
@@ -131,10 +132,11 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
     for (const m of MOVIES) {
       const { tier } = getTierInfo(m);
       if (tier === 0) continue;
-      canonScoreMax += tier;
+      const weight = tierScore(tier);
+      canonScoreMax += weight;
       tierBreakdown[tier].total++;
       if (watchedTitleSet.has(m.id)) {
-        canonScore += tier;
+        canonScore += weight;
         tierBreakdown[tier].watched++;
       } else {
         if (!unwatchedByTier[tier]) unwatchedByTier[tier] = [];
@@ -155,7 +157,9 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
     return {
       totalFilms, watchedCount, perRater, agreePct, allRated,
       biggestDisagreements, genreStats, decadeProgress, categoryProgress,
-      canonScore, canonScoreMax, tierBreakdown, nextUp,
+      canonScore: normalizeCanonScore(canonScore, canonScoreMax),
+      canonScoreMax: CANON_SCORE_MAX,
+      tierBreakdown, nextUp,
     };
   }, [watchedTitleSet, ratings, raters]);
 
@@ -165,23 +169,11 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
         {profileName ? `${profileName}'s ${t('stats.heading')}` : t('stats.heading')}
       </h2>
 
-      {/* Summary cards */}
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-card-value">{stats.watchedCount} / {stats.totalFilms}</div>
-          <div className="stat-card-label">{t('stats.filmsWatched')}</div>
-        </div>
-        {raters.map(name => (
-          <div className="stat-card" key={name}>
-            <div className="stat-card-value">
-              {stats.perRater[name]?.avg ? `${stats.perRater[name].avg}★` : '—'}
-            </div>
-            <div className="stat-card-label">
-              {name} {t('stats.average')}{stats.perRater[name]?.ratings.length > 0 ? ` (${stats.perRater[name].ratings.length} ${t('stats.films')})` : ''}
-            </div>
-          </div>
-        ))}
-        {raters.length >= 2 && (
+      {/* Summary cards — Films Watched + per-rater averages moved to the
+          profile header cards. Keep Agreement here since it's a
+          multi-rater-only stat that doesn't fit the per-profile header. */}
+      {raters.length >= 2 && (
+        <div className="stats-grid">
           <div className="stat-card">
             <div className="stat-card-value">
               {stats.agreePct !== null ? `${stats.agreePct}%` : '—'}
@@ -190,8 +182,8 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
               {t('stats.agreement')}{stats.allRated.length > 0 ? ` (${stats.allRated.length} ${t('stats.films')})` : ''}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Canon Score — weighted by tier */}
       <div className="stats-section canon-score-section">
@@ -207,9 +199,9 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
               style={{ width: `${stats.canonScoreMax > 0 ? (stats.canonScore / stats.canonScoreMax) * 100 : 0}%` }}
             />
           </div>
-          <div className="canon-score-caption">
-            Films bucket into {MAX_TIER} tiers (Canonical → Apex) based on canon-list coverage and Academy recognition. Watch the higher-tier films to climb fastest.
-          </div>
+          <ExpandableCaption className="canon-score-caption">
+            Score is calculated via a proprietary tier-weighted ratio that rewards higher-tier films progressively more than lower-tier ones.
+          </ExpandableCaption>
         </div>
 
         <table className="stats-table canon-tier-table">
@@ -241,7 +233,7 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
                         <span key={i} className={`tier-pip ${i < t ? 'filled' : 'empty'}`} />
                       ))}
                     </span>
-                    <span style={{ marginLeft: 8, color: 'var(--cream-dim)', fontSize: '0.85rem' }}>
+                    <span className="canon-tier-label">
                       {TIER_LABELS[t]}
                     </span>
                   </td>
@@ -304,28 +296,57 @@ export default function StatsTab({ watchedTitleSet, ratings, raters, embedded, p
         <h3>{t('stats.ratingsByGenre')}</h3>
         {Object.keys(stats.genreStats).length === 0 ? (
           <p className="stats-empty">{t('stats.noRatingsYet')}</p>
-        ) : (
-          <table className="stats-table">
-            <thead>
-              <tr>
-                <th>{t('stats.genre')}</th>
-                {raters.map(name => <th key={name}>{name} {t('stats.average')}</th>)}
-                <th>{t('stats.films')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.values(stats.genreStats).map((g, i) => (
-                <tr key={i}>
-                  <td>{g.label}</td>
+        ) : (() => {
+          const toggleSort = (key) => {
+            setGenreSort(prev => prev.key === key
+              ? { key, dir: prev.dir === 'asc' ? 'desc' : 'asc' }
+              : { key, dir: key === 'genre' ? 'asc' : 'desc' });
+          };
+          const arrow = (key) => genreSort.key === key ? (genreSort.dir === 'asc' ? ' ↑' : ' ↓') : '';
+          const avgFor = (g, name) => g.perRater[name]?.avg ? parseFloat(g.perRater[name].avg) : null;
+          const rowAvg = (g) => {
+            const vals = raters.map(n => avgFor(g, n)).filter(v => v != null);
+            return vals.length ? vals.reduce((s, v) => s + v, 0) / vals.length : null;
+          };
+          const filmsFor = (g) => Math.max(...raters.map(name => g.perRater[name]?.count || 0));
+          const rows = Object.values(stats.genreStats).slice().sort((a, b) => {
+            const dir = genreSort.dir === 'asc' ? 1 : -1;
+            if (genreSort.key === 'genre') return a.label.localeCompare(b.label) * dir;
+            if (genreSort.key === 'avg') {
+              const av = rowAvg(a), bv = rowAvg(b);
+              if (av == null && bv == null) return 0;
+              if (av == null) return 1;
+              if (bv == null) return -1;
+              return (av - bv) * dir;
+            }
+            if (genreSort.key === 'films') return (filmsFor(a) - filmsFor(b)) * dir;
+            return 0;
+          });
+          return (
+            <table className="stats-table stats-table-sortable">
+              <thead>
+                <tr>
+                  <th className="sortable" onClick={() => toggleSort('genre')}>{t('stats.genre')}{arrow('genre')}</th>
                   {raters.map(name => (
-                    <td key={name}>{g.perRater[name]?.avg ? `${g.perRater[name].avg}★` : '—'}</td>
+                    <th key={name} className="sortable" onClick={() => toggleSort('avg')}>{t('stats.average')}{arrow('avg')}</th>
                   ))}
-                  <td>{Math.max(...raters.map(name => g.perRater[name]?.count || 0))}</td>
+                  <th className="sortable" onClick={() => toggleSort('films')}>{t('stats.films')}{arrow('films')}</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+              </thead>
+              <tbody>
+                {rows.map((g, i) => (
+                  <tr key={i}>
+                    <td>{g.label}</td>
+                    {raters.map(name => (
+                      <td key={name}>{g.perRater[name]?.avg ? `${g.perRater[name].avg}★` : '—'}</td>
+                    ))}
+                    <td>{filmsFor(g)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          );
+        })()}
       </div>
 
       {/* Progress by decade */}

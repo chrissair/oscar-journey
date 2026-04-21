@@ -6,6 +6,7 @@ import { ratingKey } from '../utils/storage';
 import ProfileDetail from './ProfileDetail';
 import StatsTab from './StatsTab';
 import { getCollectorScore, RARITIES } from '../utils/cards';
+import { getTierInfo, tierScore, normalizeCanonScore } from '../utils/tierInfo';
 import { fetchOmdbData } from '../utils/omdb';
 import { useT } from '../i18n';
 import { getChineseTitle } from '../data/chineseMetadata';
@@ -95,6 +96,20 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
 
     for (const p of profiles) {
       const watchedCount = Array.isArray(p.watched) ? p.watched.length : 0;
+      // Canon Score — tier-weighted sum of watched canon films, normalized
+      // to the 0..1000 display range. Mirrors StatsTab / ProfileDetail so
+      // the leaderboard number matches what you see after clicking in.
+      const watchedIds = new Set(Array.isArray(p.watched) ? p.watched : []);
+      let rawScore = 0;
+      let rawMax = 0;
+      for (const m of MOVIES) {
+        const { tier } = getTierInfo(m);
+        if (tier === 0) continue;
+        const weight = tierScore(tier);
+        rawMax += weight;
+        if (watchedIds.has(m.id)) rawScore += weight;
+      }
+      const canonScore = normalizeCanonScore(rawScore, rawMax);
       const profileRatings = p.ratings || {};
       const profileRaters = p.raters || [];
 
@@ -160,6 +175,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
         watchedCount,
         avgRating,
         ratingCount,
+        canonScore,
         favGenre,
         memberSince,
         currentMovie,
@@ -216,6 +232,7 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
           watchedCount,
           avgRating: vCount > 0 ? (vTotal / vCount).toFixed(1) : null,
           ratingCount: vCount,
+          canonScore,
           favGenre: vFavGenre,
           memberSince,
           currentMovie,
@@ -319,8 +336,8 @@ export default function Leaderboard({ currentProfile, currentRatings, onOpenDeta
                     <span className="pc-stat-label">{t('profile.avg')}</span>
                   </div>
                   <div className="pc-stat">
-                    <span className="pc-stat-value">{p.ratingCount}</span>
-                    <span className="pc-stat-label">{t('profile.rated')}</span>
+                    <span className="pc-stat-value">{p.canonScore}</span>
+                    <span className="pc-stat-label">{t('profile.canon')}</span>
                   </div>
                   {!p.isVirtualRater && (
                     <div className="pc-stat">
