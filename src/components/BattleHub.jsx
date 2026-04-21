@@ -3,17 +3,33 @@ import MovieBattle from './MovieBattle';
 import QuoteBattle from './QuoteBattle';
 import QuoteTrivia from './QuoteTrivia';
 import PeopleBattle from './PeopleBattle';
+import { useT } from '../i18n';
 
 const MODES = [
-  { id: 'movie', icon: '⚔️', label: 'Movie Battle', sub: 'Which film is better? Click to vote.' },
-  { id: 'people', icon: '🎭', label: 'People Battle', sub: 'Who had the better career?' },
-  { id: 'quote', icon: '💬', label: 'Quote Battle', sub: 'Which quote hits harder?' },
-  { id: 'trivia', icon: '🧩', label: 'Quote Trivia', sub: 'Which movie is this quote from?' },
+  { id: 'movie', icon: '⚔️' },
+  { id: 'people', icon: '🎭' },
+  { id: 'quote', icon: '💬' },
+  { id: 'trivia', icon: '🧩' },
 ];
+
+// Map mode id to the translated label key in battle.*
+const MODE_LABEL_KEYS = {
+  movie: 'battle.movieBattle',
+  people: 'battle.peopleBattle',
+  quote: 'battle.quoteBattle',
+  trivia: 'battle.quoteTrivia',
+};
 
 export default function BattleHub({ profile, playlist, watchedSet, onOpenDetail, simpleBattle, onSaveProfile }) {
   const [mode, setMode] = useState('movie');
-  const current = MODES.find(m => m.id === mode);
+  const { t } = useT();
+
+  // Derive label and subtitle via t() so they update on language change
+  const modeLabel = t(MODE_LABEL_KEYS[mode]);
+  const modeSub = t(`battle.modeSub.${mode}`);
+
+  // First word of the label for the pill buttons
+  const modeFirstWord = (id) => t(MODE_LABEL_KEYS[id]).split(' ')[0];
 
   return (
     <div className="battle-hub">
@@ -25,14 +41,14 @@ export default function BattleHub({ profile, playlist, watchedSet, onOpenDetail,
             className={`battle-mode-btn ${mode === m.id ? 'battle-mode-active' : ''}`}
             onClick={() => setMode(m.id)}
           >
-            <span className="battle-mode-label">{m.icon} {m.label.split(' ')[0]}</span>
+            <span className="battle-mode-label">{m.icon} {modeFirstWord(m.id)}</span>
           </button>
         ))}
       </div>
 
       {/* Title + subtitle */}
-      <h2 className="battle-mode-title">{current.label}</h2>
-      <p className="battle-mode-sub">{current.sub}</p>
+      <h2 className="battle-mode-title">{modeLabel}</h2>
+      <p className="battle-mode-sub">{modeSub}</p>
 
       {mode === 'movie' && (
         <MovieBattle
