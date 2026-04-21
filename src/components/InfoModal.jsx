@@ -1,7 +1,9 @@
 import React from 'react';
 import { MOVIES } from '../data/movies';
+import { useT } from '../i18n';
 
 export default function InfoModal({ onClose }) {
+  const { t } = useT();
   return (
     <div className="modal-overlay open" onClick={(e) => {
       if (e.target === e.currentTarget) onClose();
@@ -11,76 +13,97 @@ export default function InfoModal({ onClose }) {
 
         <div className="info-hero">
           <span className="info-hero-icon">🏆</span>
-          <h2 className="info-hero-title">The Oscars Journey</h2>
-          <p className="info-hero-sub">Your guide to {MOVIES.length} must-watch films — every major Oscar + the canon the Academy overlooked</p>
+          <h2 className="info-hero-title">{t('start.title')}</h2>
+          <p className="info-hero-sub">{t('info.heroSub', { count: MOVIES.length })}</p>
         </div>
 
         <div className="info-section">
           <div className="info-section-icon">🎬</div>
           <div>
-            <h3>The Problem</h3>
-            <p>You spend 45 minutes scrolling Netflix, pick nothing, and rewatch The Office. Meanwhile, decades of incredible cinema sit unwatched.</p>
+            <h3>{t('info.problemHeading')}</h3>
+            <p>{t('info.problemBody')}</p>
           </div>
         </div>
 
         <div className="info-section">
           <div className="info-section-icon">✨</div>
           <div>
-            <h3>The Solution</h3>
-            <p>We took every <strong>Best Picture nominee (1970+)</strong>, every <strong>International Feature winner (1956+)</strong> and <strong>Animated Feature winner</strong>, and essential non-Oscar films curated across 8 canon lists (Sight &amp; Sound, Criterion, IMDb, Letterboxd, AFI, Rotten Tomatoes, festival grand prizes, National Film Registry) — <strong>{MOVIES.length} films</strong> total — and shuffled them into a randomized journey. No more choosing, just press play.</p>
+            <h3>{t('info.solutionHeading')}</h3>
+            <p>
+              {/* Rebuild the paragraph with <strong> spans so the visual
+                  emphasis survives translation. The i18n body holds {bp},
+                  {intl}, {anim}, {filmsTotal} placeholders that we replace
+                  with JSX nodes by splitting on those tokens. */}
+              {(() => {
+                const body = t('info.solutionBody', {
+                  bp: '__BP__',
+                  intl: '__INTL__',
+                  anim: '__ANIM__',
+                  filmsTotal: '__FILMS__',
+                });
+                const parts = body.split(/(__BP__|__INTL__|__ANIM__|__FILMS__)/);
+                return parts.map((part, i) => {
+                  if (part === '__BP__') return <strong key={i}>{t('info.solutionBoldBP')}</strong>;
+                  if (part === '__INTL__') return <strong key={i}>{t('info.solutionBoldINT')}</strong>;
+                  if (part === '__ANIM__') return <strong key={i}>{t('info.solutionBoldANIM')}</strong>;
+                  if (part === '__FILMS__') return <strong key={i}>{t('info.solutionBoldFilms', { count: MOVIES.length })}</strong>;
+                  return <React.Fragment key={i}>{part}</React.Fragment>;
+                });
+              })()}
+            </p>
           </div>
         </div>
 
         <div className="info-divider" />
 
         <div className="info-features">
-          <h3 className="info-features-title">What You Can Do</h3>
+          <h3 className="info-features-title">{t('info.featuresTitle')}</h3>
 
           <div className="info-feature">
             <span className="info-feature-emoji">🎬</span>
             <div>
-              <strong>Journey</strong>
-              <p>Your randomized film queue. Watch, rate, advance. Smart filters, genre-balanced order, sync with friends. Skip exists — with shame.</p>
+              <strong>{t('info.featureJourney')}</strong>
+              <p>{t('info.featureJourneyDesc')}</p>
             </div>
           </div>
 
           <div className="info-feature">
             <span className="info-feature-emoji">📋</span>
             <div>
-              <strong>Films</strong>
-              <p>Browse all {MOVIES.length} films A-Z. Checklist mode for quick marking. Every film has poster, plot, IMDb rating, director, runtime, and awards or canon list appearances.</p>
+              <strong>{t('info.featureFilms')}</strong>
+              <p>{t('info.featureFilmsDesc', { count: MOVIES.length })}</p>
             </div>
           </div>
 
           <div className="info-feature">
             <span className="info-feature-emoji">⚔️</span>
             <div>
-              <strong>Battle</strong>
-              <p>Head-to-head voting with ELO rankings. Smart matchmaking keeps it interesting. Earn collectible cards as you vote.</p>
+              <strong>{t('info.featureBattle')}</strong>
+              <p>{t('info.featureBattleDesc')}</p>
             </div>
           </div>
 
           <div className="info-feature">
             <span className="info-feature-emoji">🃏</span>
             <div>
-              <strong>Cards</strong>
-              <p>Earn random movie cards from battles, journey progress, and Daily Oscar. Four rarities: Common, Rare, Epic, and Legendary. Each movie+rarity combo is unique — only one person can hold it. Feature your best pull on your profile.</p>
+              <strong>{t('info.featureCards')}</strong>
+              <p>{t('info.featureCardsDesc')}</p>
             </div>
           </div>
 
           <div className="info-feature">
             <span className="info-feature-emoji">🧩</span>
             <div>
-              <strong>Daily Oscar</strong>
-              <p>One puzzle every day. Guess the movie from a blurred poster and a quote. Fewer guesses = rarer card reward. Build your streak.</p>
+              <strong>{t('info.featureDaily')}</strong>
+              <p>{t('info.featureDailyDesc')}</p>
             </div>
           </div>
 
           <div className="info-feature">
             <span className="info-feature-emoji">👥</span>
             <div>
-              <strong>Profiles</strong>
-              <p>Everyone's stats, watched films, ratings, and card collections are public. Click any name anywhere to see their profile.</p>
+              <strong>{t('info.featureProfiles')}</strong>
+              <p>{t('info.featureProfilesDesc')}</p>
             </div>
           </div>
         </div>
@@ -88,21 +111,21 @@ export default function InfoModal({ onClose }) {
         <div className="info-divider" />
 
         <details className="info-hidden">
-          <summary>Hidden Features</summary>
+          <summary>{t('info.hiddenFeaturesSummary')}</summary>
           <ul>
-            <li>Click the ceremony or "Canon film · YYYY" line to see every film from that year across categories</li>
-            <li>Click "Winner / Speech" to watch the acceptance speech</li>
-            <li>Tap the gold pips on any film to see which canon lists it's on</li>
-            <li>Swipe left/right on film detail modals (mobile)</li>
-            <li>Click anyone's name anywhere to view their profile</li>
-            <li>Arrow keys navigate between films in modals</li>
-            <li>Sync your journey with a friend's watch order</li>
-            <li>Download your data from Settings</li>
+            <li>{t('info.hidden1')}</li>
+            <li>{t('info.hidden2')}</li>
+            <li>{t('info.hidden3')}</li>
+            <li>{t('info.hidden4')}</li>
+            <li>{t('info.hidden5')}</li>
+            <li>{t('info.hidden6')}</li>
+            <li>{t('info.hidden7')}</li>
+            <li>{t('info.hidden8')}</li>
           </ul>
         </details>
 
         <div className="info-footer">
-          <p>The goal is simple: watch great films you'd never pick yourself, and have opinions about them.</p>
+          <p>{t('info.footerGoal')}</p>
         </div>
       </div>
     </div>
