@@ -5,6 +5,7 @@ import { fetchOmdbData } from '../utils/omdb';
 import { RARITIES, getCollectorScore, getMaxWallet } from '../utils/cards';
 import { resolveTmdbWatchedId, tmdbPoster } from '../data/seriesCollections';
 import StatsTab from './StatsTab';
+import { useT } from '../i18n';
 
 // Out-of-canon (tmdb:<id>) films don't live in MOVIES so they need their
 // own lightweight "movie-like" shape for the watched/ratings list. Flagged
@@ -251,6 +252,8 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
     return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
   }, [profileData]);
 
+  const { t } = useT();
+
   // Check if this is the viewer's own profile
   const isOwnProfile = currentProfile && currentProfile.id === profileData.id;
 
@@ -309,7 +312,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
           </div>
         )}
         {memberSince && (
-          <div className="profile-detail-joined">Member since {memberSince}</div>
+          <div className="profile-detail-joined">{t('profile.memberSince', { date: memberSince })}</div>
         )}
         {currentJourneyMovie && (
           <div className="profile-detail-current"
@@ -337,11 +340,11 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
             <div className="profile-summary-value" style={{ fontSize: stats.favGenre.length > 12 ? '1rem' : undefined }}>
               {stats.favGenre}
             </div>
-            <div className="profile-summary-label">Fav Genre</div>
+            <div className="profile-summary-label">{t('profile.favouriteGenre')}</div>
           </div>
           <div className="profile-summary-item">
             <div className="profile-summary-value">{profileData.battleCount || 0}</div>
-            <div className="profile-summary-label">Battles</div>
+            <div className="profile-summary-label">{t('profile.battles')}</div>
           </div>
         </div>
       </div>
@@ -497,7 +500,7 @@ export default function ProfileDetail({ profileData, onBack, currentProfile, cur
                   <div className="film-tile-info">
                     <div className="film-tile-title">{movie.title}</div>
                     <div className="film-tile-year">{movie.year}</div>
-                    <div className="film-tile-tmdb-tag">Not in canon</div>
+                    <div className="film-tile-tmdb-tag">{t('filmCard.notInCanon')}</div>
                     <div className="film-tile-ratings">
                       {profileRaters.map(rater => {
                         const val = movieRatings[rater];
