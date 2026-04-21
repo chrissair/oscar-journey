@@ -1,5 +1,6 @@
 import React from 'react';
 import { MOVIES_BY_ID } from '../data/movies';
+import { useT } from '../i18n';
 
 function timeAgo(timestamp) {
   if (!timestamp) return '';
@@ -14,11 +15,12 @@ function timeAgo(timestamp) {
 }
 
 export default function ActivityFeed({ activities, currentProfileId, onOpenDetail }) {
+  const { t } = useT();
   if (!activities || activities.length === 0) return null;
 
   return (
     <div className="activity-feed">
-      <div className="activity-feed-title">Recent Activity</div>
+      <div className="activity-feed-title">{t('activity.feedTitle')}</div>
       {activities.map(a => (
         <div key={a.id} className="activity-item">
           <span className="activity-avatar">{a.avatar || '\u{1F464}'}</span>
