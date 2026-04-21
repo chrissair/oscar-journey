@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MOVIES_BY_ID } from '../data/movies';
 import { RARITIES, getNearMiss } from '../utils/cards';
 import { fetchOmdbData } from '../utils/omdb';
+import { useT } from '../i18n';
 
 function CardBackDesign() {
   return (
@@ -53,6 +54,7 @@ function MiniCard({ card, onClick, label, animClass }) {
 }
 
 export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace, onSaveShowcase, currentShowcase, maxWallet = 3 }) {
+  const { t } = useT();
   const [revealed, setRevealed] = useState(false);
   const [shaking, setShaking] = useState(false);
   const [phase, setPhase] = useState('reveal'); // 'reveal' | 'keep' | 'replace' | 'done'
@@ -203,7 +205,7 @@ export default function PackOpening({ cards, wallet, onClose, onKeep, onReplace,
               ))}
             </div>
             <button className="pack-discard-btn" style={{ marginTop: '16px' }} onClick={() => setPhase('keep')}>
-              Cancel
+              {t('common.cancel')}
             </button>
           </div>
         )}
