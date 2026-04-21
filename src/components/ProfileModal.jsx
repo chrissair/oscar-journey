@@ -103,7 +103,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
         {loading ? (
           <div style={{ padding: '60px', textAlign: 'center' }}><div className="spinner" style={{ margin: '0 auto' }} /></div>
         ) : !p ? (
-          <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>Profile not found</div>
+          <div style={{ padding: '40px', textAlign: 'center', color: '#888' }}>{t('profile.profileNotFound')}</div>
         ) : (
           <>
             {/* Header banner */}
@@ -117,7 +117,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
               <div
                 className={`pm-avatar ${isOwn ? 'pm-avatar-editable' : ''}`}
                 onClick={() => { if (isOwn) setShowEmojiPicker(prev => !prev); }}
-                title={isOwn ? 'Change avatar' : undefined}
+                title={isOwn ? t('profile.changeAvatar') : undefined}
               >
                 {p.avatar || '👤'}
               </div>
@@ -144,11 +144,11 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
               <div className="pm-stats">
                 <div className="pm-stat">
                   <div className="pm-stat-value">{watchedCount}</div>
-                  <div className="pm-stat-label">Films</div>
+                  <div className="pm-stat-label">{t('profile.films')}</div>
                 </div>
                 <div className="pm-stat">
                   <div className="pm-stat-value">{ratingCount}</div>
-                  <div className="pm-stat-label">Ratings</div>
+                  <div className="pm-stat-label">{t('profile.ratings')}</div>
                 </div>
                 <div className="pm-stat">
                   <div className="pm-stat-value">{p.battleCount || 0}</div>
@@ -157,7 +157,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
                 {collectorScore > 0 && (
                   <div className="pm-stat pm-stat-featured">
                     <div className="pm-stat-value">{collectorScore}</div>
-                    <div className="pm-stat-label">Collector</div>
+                    <div className="pm-stat-label">{t('profile.collector')}</div>
                   </div>
                 )}
               </div>
@@ -165,7 +165,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
               {/* Featured card showcase */}
               {showcase && (
                 <div className="pm-showcase-section">
-                  <div className="pm-section-label">Featured Card</div>
+                  <div className="pm-section-label">{t('profile.featuredCard')}</div>
                   <div className="pm-showcase-wrapper">
                     <FeaturedCard card={showcase} />
                   </div>
@@ -175,7 +175,7 @@ export default function ProfileModal({ profileId, onClose, currentProfile, curre
               {/* Wallet — own profile only */}
               {isOwn && p.wallet?.length > 0 && (
                 <div className="pm-wallet-section">
-                  <div className="pm-section-label">Wallet ({p.wallet.length}/3)</div>
+                  <div className="pm-section-label">{t('profile.wallet', { n: p.wallet.length })}</div>
                   <div className="pm-wallet-row">
                     {p.wallet.map((card, i) => {
                       const movie = MOVIES_BY_ID[card.movieId];
