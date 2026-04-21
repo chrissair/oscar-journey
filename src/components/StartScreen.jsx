@@ -1,7 +1,9 @@
 import React from 'react';
 import { MOVIES, GENRE_LABELS } from '../data/movies';
+import { useT } from '../i18n';
 
 export default function StartScreen({ onStart }) {
+  const { t } = useT();
   const bpCount   = MOVIES.filter(m => m.category === 'BP').length;
   const intCount  = MOVIES.filter(m => m.category === 'INT').length;
   const animCount = MOVIES.filter(m => m.category === 'ANIM').length;
@@ -11,7 +13,7 @@ export default function StartScreen({ onStart }) {
     <div className="screen active">
       <div className="start-screen">
         <span className="big-trophy">🏆</span>
-        <h1>The Oscars Journey</h1>
+        <h1>{t('start.title')}</h1>
         <p>
           Stop scrolling Netflix for 45 minutes and watching nothing. We picked every Best Picture nominee since 1970, every International and Animated Feature winner, plus {essCount} essential films the Academy missed (curated across 8 canon lists — Sight &amp; Sound, Criterion, IMDb, Letterboxd, AFI, Rotten Tomatoes, festival grand prizes, National Film Registry) — {MOVIES.length} films total — and put them in a random order so you don't have to think. Just press play.
         </p>
@@ -29,7 +31,7 @@ export default function StartScreen({ onStart }) {
           <div className="stat-pill"><span>{essCount}</span> Essential</div>
           <div className="stat-pill"><span>{Object.keys(GENRE_LABELS).length}</span> Genres</div>
         </div>
-        <button className="btn-primary" onClick={onStart}>Begin Your Journey</button>
+        <button className="btn-primary" onClick={onStart}>{t('start.begin')}</button>
       </div>
     </div>
   );

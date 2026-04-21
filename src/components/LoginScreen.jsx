@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { createProfile, loginProfile } from '../utils/firebaseStorage';
 import { AVATAR_EMOJIS } from '../data/avatars';
+import { useT } from '../i18n';
 
 export default function LoginScreen({ onLogin }) {
+  const { t } = useT();
   const [mode, setMode] = useState('login');
   const [username, setUsername] = useState('');
   const [passcode, setPasscode] = useState('');
@@ -73,10 +75,10 @@ export default function LoginScreen({ onLogin }) {
     <div className="login-screen">
       <div className="login-brand">
         <span className="login-brand-icon">🏆</span>
-        <span className="login-brand-text">The Oscars Journey</span>
+        <span className="login-brand-text">{t('start.title')}</span>
       </div>
 
-      <h2>{mode === 'login' ? 'Welcome Back' : 'Create Profile'}</h2>
+      <h2>{mode === 'login' ? 'Welcome Back' : t('login.createProfile')}</h2>
       <p className="login-subtitle">
         {mode === 'login'
           ? 'Log in to continue your Oscars journey'
@@ -92,7 +94,7 @@ export default function LoginScreen({ onLogin }) {
             <label>Your Avatar</label>
             <div className="login-avatar-selected" onClick={() => setShowAvatarPicker(p => !p)}>
               <span className="login-avatar-emoji">{avatar}</span>
-              <span className="login-avatar-change">{showAvatarPicker ? 'Close' : 'Tap to change'}</span>
+              <span className="login-avatar-change">{showAvatarPicker ? t('common.close') : 'Tap to change'}</span>
             </div>
             {showAvatarPicker && (
               <div className="login-avatar-grid">
@@ -177,7 +179,7 @@ export default function LoginScreen({ onLogin }) {
         onClick={mode === 'login' ? handleLogin : handleCreate}
         disabled={loading}
       >
-        {loading ? 'Please wait...' : mode === 'login' ? 'Log In' : 'Create Profile'}
+        {loading ? 'Please wait...' : mode === 'login' ? 'Log In' : t('login.createProfile')}
       </button>
 
       <div className="login-toggle">
