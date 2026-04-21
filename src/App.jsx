@@ -1320,10 +1320,16 @@ export default function App() {
                   </div>
                 </div>
               )}
-              {/* Daily Oscar banner */}
-              {!profile?.hideDailyOscar && (() => {
+              {/* Daily Oscar banner — when hideDailyOscar is set, the banner
+                  still appears until today's quiz is played (solved or
+                  failed). Without this carve-out the toggle would silence
+                  the prompt before the user had a chance to play, turning
+                  "hide when done" into "hide forever". */}
+              {(() => {
                 const status = getDailyStatus();
                 const streak = getDailyStreak();
+                const isDone = !!(status?.solved || status?.failed);
+                if (profile?.hideDailyOscar && isDone) return null;
                 return (
                   <div className="daily-banner" onClick={() => setDailyOpen(true)}>
                     <div className="daily-banner-left">
