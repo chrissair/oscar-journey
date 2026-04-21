@@ -545,7 +545,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
               aria-pressed={sortPrimary === 'name'}
               title={sortPrimary === 'name' ? 'Tap again to reverse (Z → A)' : 'Sort A → Z'}
             >
-              Name
+              {t('profile.sortAZ')}
               {sortPrimary === 'name' && (
                 <span className="film-list-sort-dir" aria-hidden="true">
                   {sortDir === 'asc' ? '↓' : '↑'}
@@ -643,7 +643,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
             <div className="filter-section">
               <button className="filter-section-toggle" onClick={() => toggleSection('canon')}>
                 <span className="filter-section-arrow">{openSections.canon ? '▾' : '▸'}</span>
-                <span className="filter-section-label">Canon depth</span>
+                <span className="filter-section-label">{t('filters.canonDepth')}</span>
                 {(() => {
                   const parts = [];
                   if (filters.oscarsOnly) parts.push(t('filters.oscarsOnly'));
@@ -695,7 +695,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
                     : ''
                   }`}>
                     <div className="tier-stepper-header">
-                      <span className="tier-stepper-title">Minimum tier</span>
+                      <span className="tier-stepper-title">{t('filters.minimumTier')}</span>
                       <div className="tier-stepper-controls">
                         <button
                           type="button"
@@ -732,7 +732,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
             <div className="filter-section">
               <button className="filter-section-toggle" onClick={() => toggleSection('years')}>
                 <span className="filter-section-arrow">{openSections.years ? '▾' : '▸'}</span>
-                <span className="filter-section-label">Years</span>
+                <span className="filter-section-label">{t('filters.years')}</span>
                 {yearRangeActive && (
                   <span className="filter-section-count">
                     {filters.yearRange.min}–{filters.yearRange.max}
@@ -798,7 +798,7 @@ export default function FilmList({ watchedTitleSet, watchlistSet, onOpenDetail, 
             <div className="filter-section">
               <button className="filter-section-toggle" onClick={() => toggleSection('runtimes')}>
                 <span className="filter-section-arrow">{openSections.runtimes ? '▾' : '▸'}</span>
-                <span className="filter-section-label">Length</span>
+                <span className="filter-section-label">{t('filters.runtime')}</span>
                 {runtimeRangeActive && (
                   <span className="filter-section-count">
                     {formatRuntimeLabel(filters.runtimeRange.min)}–
