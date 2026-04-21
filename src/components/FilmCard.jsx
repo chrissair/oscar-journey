@@ -230,7 +230,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
                   {consensus.toFixed(1)}<span className="metric-value-sub">/10</span>
                   <InfoTooltip text={CONSENSUS_TOOLTIP_TEXT} label="How Consensus is calculated" />
                 </span>
-                <span className="metric-label">Consensus</span>
+                <span className="metric-label">{t('filmCard.consensusLabel')}</span>
               </div>
             );
           })()}
@@ -303,7 +303,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
           const userHasRated = Object.values(movieRatings).some(v => v != null);
           return (
             <div className="watched-by">
-              <span className="watched-by-label">{userHasRated ? 'Others\' ratings' : 'Watched by'}</span>
+              <span className="watched-by-label">{userHasRated ? t('filmCard.othersRatings') : t('filmCard.watchedBy')}</span>
               {others.map(p => {
                 const pRatings = p.ratings?.[key] || {};
                 const pRaters = p.raters || [p.displayName];
@@ -353,7 +353,7 @@ export default function FilmCard({ movie, isWatched, onToggleWatched, isBookmark
             </div>
           )
         ) : (
-          <div className="rating-locked">Watch and rate this film, or save it for later</div>
+          <div className="rating-locked">{t('filmCard.watchAndRateHint')}</div>
         )}
 
         <div className="film-card-actions">
