@@ -9252,3 +9252,62 @@ main {
   text-decoration: underline;
   text-underline-offset: 2px;
 }
+
+/* =====================================================
+   WATCHLIST ("Saved" feature)
+   ===================================================== */
+
+/* Poster corner-triangle badge. Positioned absolutely inside the
+   parent poster container (.film-detail-poster / .poster-col — both
+   already have position: relative). Gold by default (saved + not yet
+   watched); green modifier when also watched. Non-interactive — pure
+   status indicator; the toggle lives in WatchlistButton. */
+.watchlist-ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 52px;
+  height: 52px;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background: var(--gold);
+  pointer-events: none;
+  z-index: 3;
+}
+.watchlist-ribbon.is-watched {
+  background: #3fa96a;
+}
+
+/* Action-row bookmark toggle — compact icon-only button that sits
+   next to Mark as Watched / Skip. */
+.watchlist-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  padding: 0;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.1s;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+.watchlist-btn:hover {
+  background: var(--bg3);
+}
+.watchlist-btn:active {
+  transform: scale(0.94);
+}
+.watchlist-btn.is-off {
+  color: var(--cream-dim);
+  opacity: 0.75;
+}
+.watchlist-btn.is-saved {
+  color: var(--gold);
+  border-color: var(--gold);
+}
+.watchlist-btn.is-saved-watched {
+  color: #3fa96a;
+  border-color: #3fa96a;
+}

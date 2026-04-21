@@ -18,12 +18,14 @@ import CeremonyTooltip from './CeremonyTooltip';
 import { getAwardLink } from '../utils/awardLinks';
 import SeriesSection from './SeriesSection';
 import DirectorFilmographyLink from './DirectorFilmographyLink';
+import WatchlistButton from './WatchlistButton';
+import WatchlistRibbon from './WatchlistRibbon';
 
 import { RARITIES } from '../utils/cards';
 import { getCardOwner } from '../utils/cardRegistry';
 import { getGlobalRank, getPersonalRank } from '../utils/eloRanks';
 
-export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onClose, ratings, onRatingChange, raters, personalElo, movieList, onNavigate, onOpenProfile, wallet, onOpenSeriesPreview, watchedSet, seriesSiblings, onSeriesNavigate, openInstant, initialScrollTop }) {
+export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isBookmarked, onToggleWatchlist, onClose, ratings, onRatingChange, raters, personalElo, movieList, onNavigate, onOpenProfile, wallet, onOpenSeriesPreview, watchedSet, seriesSiblings, onSeriesNavigate, openInstant, initialScrollTop }) {
   const [omdbData, setOmdbData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [globalElo, setGlobalElo] = useState(null);
@@ -198,6 +200,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onC
         <button className="film-detail-close" onClick={onClose} aria-label="Close">✕</button>
         <div className="film-detail-inner">
           <div className="film-detail-poster">
+            <WatchlistRibbon isBookmarked={isBookmarked} isWatched={isWatched} />
             {loading ? (
               <div className="poster-loading"><div className="spinner" /></div>
             ) : omdbData?.poster && !posterError ? (
@@ -414,17 +417,24 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onC
                 </div>
               )
             ) : (
-              <div className="rating-locked">Mark as watched to rate this film</div>
+              <div className="rating-locked">Watch and rate this film, or save it for later</div>
             )}
 
-            <button
-              className={`watched-btn ${isWatched ? 'is-watched' : ''}`}
-              onClick={onToggleWatched}
-              style={{ marginTop: 'auto', justifyContent: 'center' }}
-            >
-              {isWatched && <span className="watched-icon">✓</span>}
-              <span>{isWatched ? 'Watched' : 'Mark as Watched'}</span>
-            </button>
+            <div className="film-detail-action-row" style={{ marginTop: 'auto', display: 'flex', gap: 8, alignItems: 'stretch' }}>
+              <button
+                className={`watched-btn ${isWatched ? 'is-watched' : ''}`}
+                onClick={onToggleWatched}
+                style={{ flex: 1, justifyContent: 'center' }}
+              >
+                {isWatched && <span className="watched-icon">✓</span>}
+                <span>{isWatched ? 'Watched' : 'Mark as Watched'}</span>
+              </button>
+              <WatchlistButton
+                isBookmarked={isBookmarked}
+                isWatched={isWatched}
+                onToggle={onToggleWatchlist}
+              />
+            </div>
           </div>
         </div>
       </div>
