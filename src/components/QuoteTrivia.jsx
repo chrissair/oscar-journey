@@ -7,6 +7,7 @@ import { db } from '../utils/firebase';
 import { generatePack, getMaxWallet } from '../utils/cards';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
+import { useT } from '../i18n';
 
 // Build pool
 const ALL_QUOTES = [];
@@ -33,6 +34,7 @@ function TriviaPoster({ movie }) {
 }
 
 export default function QuoteTrivia({ profile, onSaveProfile }) {
+  const { t } = useT();
   const [currentQuote, setCurrentQuote] = useState(null);
   const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(null);
@@ -172,25 +174,25 @@ export default function QuoteTrivia({ profile, onSaveProfile }) {
       <div className="trivia-stats">
         <div className="trivia-stat">
           <span className="trivia-stat-value">{streak}</span>
-          <span className="trivia-stat-label">Streak</span>
+          <span className="trivia-stat-label">{t('battle.trivia.streak')}</span>
         </div>
         <div className="trivia-stat">
           <span className="trivia-stat-value">{bestStreak}</span>
-          <span className="trivia-stat-label">Best</span>
+          <span className="trivia-stat-label">{t('battle.trivia.best')}</span>
         </div>
         <div className="trivia-stat">
           <span className="trivia-stat-value">{accuracy}%</span>
-          <span className="trivia-stat-label">Accuracy</span>
+          <span className="trivia-stat-label">{t('battle.trivia.accuracy')}</span>
         </div>
         <div className="trivia-stat">
           <span className="trivia-stat-value">{totalPlayed}</span>
-          <span className="trivia-stat-label">Played</span>
+          <span className="trivia-stat-label">{t('battle.trivia.played')}</span>
         </div>
       </div>
 
       <div className="pack-progress">
         <div className="pack-progress-label">
-          Next card: {(profile?.triviaSinceDrop || 0)} / 10 correct
+          {t('battle.trivia.nextCard', { current: profile?.triviaSinceDrop || 0, max: 10 })}
         </div>
         <div className="pack-progress-bar">
           <div className="pack-progress-fill" style={{ width: `${Math.min(100, ((profile?.triviaSinceDrop || 0) / 10) * 100)}%` }} />
@@ -199,7 +201,7 @@ export default function QuoteTrivia({ profile, onSaveProfile }) {
 
       {/* Leaderboard */}
       <button className="trivia-lb-toggle" onClick={() => setShowLeaderboard(p => !p)}>
-        {showLeaderboard ? 'Hide' : 'Show'} Leaderboard
+        {showLeaderboard ? t('battle.trivia.hideLeaderboard') : t('battle.trivia.showLeaderboard')}
       </button>
       {showLeaderboard && leaderboard.length > 0 && (
         <div className="trivia-leaderboard">
@@ -207,10 +209,10 @@ export default function QuoteTrivia({ profile, onSaveProfile }) {
             <thead>
               <tr>
                 <th>#</th>
-                <th>Player</th>
-                <th>Best Streak</th>
-                <th>Accuracy</th>
-                <th>Played</th>
+                <th>{t('battle.trivia.colPlayer')}</th>
+                <th>{t('battle.trivia.colBestStreak')}</th>
+                <th>{t('battle.trivia.colAccuracy')}</th>
+                <th>{t('battle.trivia.colPlayed')}</th>
               </tr>
             </thead>
             <tbody>
@@ -229,7 +231,7 @@ export default function QuoteTrivia({ profile, onSaveProfile }) {
       )}
       {showLeaderboard && leaderboard.length === 0 && (
         <p style={{ textAlign: 'center', color: 'var(--cream-dim)', fontSize: '0.82rem', marginTop: '8px' }}>
-          Play at least 5 rounds to appear on the leaderboard.
+          {t('battle.trivia.leaderboardEmpty')}
         </p>
       )}
 
