@@ -5,6 +5,7 @@ import { GENRE_LABELS } from '../data/movies';
 import { fetchOmdbData } from '../utils/omdb';
 import { RARITIES, getMaxWallet } from '../utils/cards';
 import PackOpening from './PackOpening';
+import { useT } from '../i18n';
 
 // Stable movie pool — uses MOVIES array (fixed order, fixed size) filtered to those with quotes
 const DAILY_POOL = MOVIES.filter(m => QUOTES[m.id]).map(m => m.id);
@@ -62,6 +63,7 @@ export function getDailyStreak() {
 }
 
 export default function DailyOscar({ onClose, onSaveProfile, profile }) {
+  const { t } = useT();
   const todayKey = getTodayKey();
   const savedKey = LS_KEY + todayKey;
 
@@ -230,7 +232,7 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
       <div className="daily-modal">
         <button className="daily-close" onClick={onClose}>✕</button>
 
-        <h2 className="daily-title">Daily Oscar</h2>
+        <h2 className="daily-title">{t('daily.title')}</h2>
         {gameActive && <p className="daily-subtitle">Name the movie from the poster and quote</p>}
 
         {/* Poster */}
@@ -299,7 +301,7 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
         {solved && (
           <div className="daily-result">
             <div className="daily-result-text daily-result-win">Got it in {guesses.length}!</div>
-            {streak > 0 && <div className="daily-streak">{streak} day streak</div>}
+            {streak > 0 && <div className="daily-streak">{t('daily.streak', { count: streak })}</div>}
             {rewardCard && !rewardClaimed && (
               <button className="daily-reward-btn" onClick={() => setShowPack(true)}>Open your reward card</button>
             )}
