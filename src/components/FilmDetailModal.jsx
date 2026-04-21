@@ -227,7 +227,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               onClick={() => onOpenProfile && onOpenProfile(legendaryOwner.id)}
             >
               <span className="card-owner-icon">✦</span>
-              {RARITIES[legendaryOwner.rarity]?.name} held by {legendaryOwner.avatar} {legendaryOwner.name}
+              {t('filmCard.rarityHeldBy', { rarity: RARITIES[legendaryOwner.rarity]?.name, names: `${legendaryOwner.avatar} ${legendaryOwner.name}` })}
             </div>
           )}
           <div className="film-detail-body">
@@ -265,7 +265,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
               {aggregateRating && (
                 <div className="metric-item metric-user-avg">
                   <span className="metric-value">★ {aggregateRating.avg}<span className="metric-value-sub"> ({aggregateRating.count})</span></span>
-                  <span className="metric-label">User Avg</span>
+                  <span className="metric-label">{t('filmCard.userAvgLabel')}</span>
                 </div>
               )}
               {omdbData?.metacritic && (
@@ -288,7 +288,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                       {consensus.toFixed(1)}<span className="metric-value-sub">/10</span>
                       <InfoTooltip text={CONSENSUS_TOOLTIP_TEXT} label="How Consensus is calculated" />
                     </span>
-                    <span className="metric-label">Consensus</span>
+                    <span className="metric-label">{t('filmCard.consensusLabel')}</span>
                   </div>
                 );
               })()}
@@ -419,7 +419,7 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, isB
                 </div>
               )
             ) : (
-              <div className="rating-locked">Watch and rate this film, or save it for later</div>
+              <div className="rating-locked">{t('filmCard.watchAndRateHint')}</div>
             )}
 
             <div className="film-detail-action-row" style={{ marginTop: 'auto', display: 'flex', gap: 8, alignItems: 'stretch' }}>
