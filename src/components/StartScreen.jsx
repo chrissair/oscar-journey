@@ -15,21 +15,21 @@ export default function StartScreen({ onStart }) {
         <span className="big-trophy">🏆</span>
         <h1>{t('start.title')}</h1>
         <p>
-          Stop scrolling Netflix for 45 minutes and watching nothing. We picked every Best Picture nominee since 1970, every International and Animated Feature winner, plus {essCount} essential films the Academy missed (curated across 8 canon lists — Sight &amp; Sound, Criterion, IMDb, Letterboxd, AFI, Rotten Tomatoes, festival grand prizes, National Film Registry) — {MOVIES.length} films total — and put them in a random order so you don't have to think. Just press play.
+          {t('start.pitchParagraph', { total: MOVIES.length, essCount })}
         </p>
         <p style={{ fontSize: '0.9rem', color: 'var(--cream-dim)', marginBottom: '6px' }}>
-          The journey mixes genres, decades, and categories so you never watch two similar films back-to-back. Rate every film, battle them head-to-head, and see how your taste compares with friends.
+          {t('start.subPitch')}
         </p>
         <p style={{ fontSize: '0.82rem', color: 'var(--cream-dim)', fontStyle: 'italic' }}>
-          Yes, there's a skip button. No, you shouldn't use it. The whole point is watching films you wouldn't normally pick. Trust the process.
+          {t('start.disclaimerItalic')}
         </p>
         <div className="stat-pills">
-          <div className="stat-pill"><span>{MOVIES.length}</span> Films</div>
-          <div className="stat-pill"><span>{bpCount}</span> Best Picture</div>
-          <div className="stat-pill"><span>{intCount}</span> International</div>
-          <div className="stat-pill"><span>{animCount}</span> Animated</div>
-          <div className="stat-pill"><span>{essCount}</span> Essential</div>
-          <div className="stat-pill"><span>{Object.keys(GENRE_LABELS).length}</span> Genres</div>
+          <div className="stat-pill"><span>{MOVIES.length}</span> {t('start.statFilms')}</div>
+          <div className="stat-pill"><span>{bpCount}</span> {t('start.statBestPicture')}</div>
+          <div className="stat-pill"><span>{intCount}</span> {t('start.statInternational')}</div>
+          <div className="stat-pill"><span>{animCount}</span> {t('start.statAnimated')}</div>
+          <div className="stat-pill"><span>{essCount}</span> {t('start.statEssential')}</div>
+          <div className="stat-pill"><span>{Object.keys(GENRE_LABELS).length}</span> {t('start.statGenres')}</div>
         </div>
         <button className="btn-primary" onClick={onStart}>{t('start.begin')}</button>
       </div>

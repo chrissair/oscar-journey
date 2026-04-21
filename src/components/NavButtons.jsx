@@ -12,7 +12,7 @@ export default function NavButtons({ currentIdx, total, onPrev, onNext, canAdvan
         ← {t('common.previous')}
       </button>
       <button className="btn-next" onClick={onNext} disabled={!canAdvance}>
-        {!canAdvance ? '🔒 Watch & Rate to Continue' : isLast ? '★ Complete Journey' : 'Next Film →'}
+        {!canAdvance ? t('navButtons.lockedBeforeRate') : isLast ? t('navButtons.completeJourney') : t('navButtons.nextFilm')}
       </button>
     </div>
   );

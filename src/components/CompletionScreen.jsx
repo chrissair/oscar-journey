@@ -9,7 +9,7 @@ export default function CompletionScreen({ total, onRestart }) {
         <span className="big-icon">🎬</span>
         <h1>{t('completion.title')}</h1>
         <p>
-          You've revealed all {total} films in your journey. Incredible dedication to cinema!
+          {t('completion.subtitleWithTotal', { total })}
         </p>
         <button className="btn-primary" onClick={onRestart}>
           {t('completion.restart')}

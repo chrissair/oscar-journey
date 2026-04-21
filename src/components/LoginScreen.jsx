@@ -25,7 +25,7 @@ export default function LoginScreen({ onLogin }) {
   const handleLogin = async () => {
     setError('');
     if (!username.trim() || !passcode.trim()) {
-      setError('Please fill in all fields');
+      setError(t('login.errors.fillAllFields'));
       return;
     }
     setLoading(true);
@@ -42,15 +42,15 @@ export default function LoginScreen({ onLogin }) {
   const handleCreate = async () => {
     setError('');
     if (!displayName.trim() || !username.trim() || !passcode.trim()) {
-      setError('Please fill in all fields');
+      setError(t('login.errors.fillAllFields'));
       return;
     }
     if (passcode.length !== 4 || !/^\d{4}$/.test(passcode)) {
-      setError('Passcode must be exactly 4 digits');
+      setError(t('login.errors.passcodeFourDigits'));
       return;
     }
     if (passcode !== confirmPasscode) {
-      setError('Passcodes do not match');
+      setError(t('login.errors.passcodesMismatch'));
       return;
     }
     setLoading(true);
@@ -78,11 +78,11 @@ export default function LoginScreen({ onLogin }) {
         <span className="login-brand-text">{t('start.title')}</span>
       </div>
 
-      <h2>{mode === 'login' ? 'Welcome Back' : t('login.createProfile')}</h2>
+      <h2>{mode === 'login' ? t('login.welcomeBack') : t('login.createProfile')}</h2>
       <p className="login-subtitle">
         {mode === 'login'
-          ? 'Log in to continue your Oscars journey'
-          : 'Set up your profile to start tracking films'}
+          ? t('login.subtitleSignIn')
+          : t('login.subtitleSignUp')}
       </p>
 
       {error && <div className="login-error">{error}</div>}
@@ -91,10 +91,10 @@ export default function LoginScreen({ onLogin }) {
         <>
           {/* Avatar picker — tap to expand */}
           <div className="login-field">
-            <label>Your Avatar</label>
+            <label>{t('login.yourAvatar')}</label>
             <div className="login-avatar-selected" onClick={() => setShowAvatarPicker(p => !p)}>
               <span className="login-avatar-emoji">{avatar}</span>
-              <span className="login-avatar-change">{showAvatarPicker ? t('common.close') : 'Tap to change'}</span>
+              <span className="login-avatar-change">{showAvatarPicker ? t('common.close') : t('login.tapToChange')}</span>
             </div>
             {showAvatarPicker && (
               <div className="login-avatar-grid">
@@ -113,7 +113,7 @@ export default function LoginScreen({ onLogin }) {
           </div>
 
           <div className="login-field">
-            <label>Display Name</label>
+            <label>{t('login.displayName')}</label>
             <input
               type="text"
               name="oscars_display"
@@ -128,7 +128,7 @@ export default function LoginScreen({ onLogin }) {
       )}
 
       <div className="login-field">
-        <label>Username</label>
+        <label>{t('login.username')}</label>
         <input
           type="text"
           name="oscars_user"
@@ -141,7 +141,7 @@ export default function LoginScreen({ onLogin }) {
       </div>
 
       <div className="login-field">
-        <label>4-Digit Passcode</label>
+        <label>{t('login.passcode')}</label>
         <input
           type="tel"
           name="oscars_pass"
@@ -158,7 +158,7 @@ export default function LoginScreen({ onLogin }) {
 
       {mode === 'create' && (
         <div className="login-field">
-          <label>Confirm Passcode</label>
+          <label>{t('login.confirmPasscode')}</label>
           <input
             type="tel"
             name="oscars_confirm"
@@ -179,14 +179,14 @@ export default function LoginScreen({ onLogin }) {
         onClick={mode === 'login' ? handleLogin : handleCreate}
         disabled={loading}
       >
-        {loading ? 'Please wait...' : mode === 'login' ? 'Log In' : t('login.createProfile')}
+        {loading ? t('login.pleaseWait') : mode === 'login' ? t('login.logIn') : t('login.createProfile')}
       </button>
 
       <div className="login-toggle">
         {mode === 'login' ? (
-          <>Don't have a profile? <a onClick={() => { setMode('create'); setError(''); }}>Create one</a></>
+          <>{t('login.dontHaveProfile')} <a onClick={() => { setMode('create'); setError(''); }}>{t('login.createOne')}</a></>
         ) : (
-          <>Already have a profile? <a onClick={() => { setMode('login'); setError(''); }}>Log in</a></>
+          <>{t('login.alreadyHaveProfile')} <a onClick={() => { setMode('login'); setError(''); }}>{t('login.logIn')}</a></>
         )}
       </div>
     </div>
