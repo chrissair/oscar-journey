@@ -108,7 +108,7 @@ FilmCard / FilmDetailModal
 Manual verification on the branch:
 
 1. **Single-director case.** Open *The Shining* → expect `(7 more)` next to "Directed by Stanley Kubrick". Click → modal titled "More by Stanley Kubrick", 8 films chronological, *The Shining* marked `is-current` and non-clickable.
-2. **Co-director case.** Open *Fargo* → expect a double-digit count next to "Directed by Joel Coen, Ethan Coen". Click → modal titled "More by Joel Coen or Ethan Coen", listing every film with either Coen.
-3. **Single-film director.** Open a film like *A Touch of Class* (Melvin Frank — exactly 1 catalog credit) → no parenthesis rendered.
+2. **Co-director case.** Open *Fargo* → expect a `(N more)` next to "Directed by Joel Coen, Ethan Coen" with N equal to the union of both Coens' catalog films minus *Fargo*. Click → modal titled "More by Joel Coen or Ethan Coen", listing every film crediting either Coen.
+3. **Single-film director.** Open any catalog film whose director has exactly one credit in `directors.json` → no parenthesis rendered.
 4. **Journey card parity.** Same three cases open the same modal when the link is clicked from the Journey mode preview card.
 5. **Row navigation.** Click a non-current row → modal closes, film detail swaps to the clicked film. The new film's own Directed-by line shows its own `(N more)` link, chained navigation works.
