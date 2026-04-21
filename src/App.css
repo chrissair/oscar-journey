@@ -4917,7 +4917,7 @@ html:not([data-theme="dark"]) .tier-stepper-apex .tier-stepper-btn:not(:disabled
   .expandable-caption-toggle:hover { color: var(--cream); }
 }
 .pd-collector-score {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--cream-dim);
 }
 .pd-collector-score strong {
