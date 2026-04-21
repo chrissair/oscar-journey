@@ -6,6 +6,7 @@ import { generatePack, getMaxWallet } from '../utils/cards';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
 import { useT } from '../i18n';
+import { getChineseTitle } from '../data/chineseMetadata';
 
 // Build pool of all quotes with movie info
 const ALL_QUOTES = [];
@@ -27,7 +28,7 @@ function QuotePoster({ movie }) {
 }
 
 export default function QuoteBattle({ profile, onSaveProfile }) {
-  const { t } = useT();
+  const { t, lang } = useT();
   const [quoteA, setQuoteA] = useState(null);
   const [quoteB, setQuoteB] = useState(null);
   const [voted, setVoted] = useState(false);
@@ -91,7 +92,7 @@ export default function QuoteBattle({ profile, onSaveProfile }) {
             <div className="quote-battle-reveal">
               <QuotePoster movie={quoteA.movie} />
               <div>
-                <span className="quote-battle-movie">{quoteA.movie.title}</span>
+                <span className="quote-battle-movie">{(lang === 'zh' && getChineseTitle(quoteA.movie.id)) || quoteA.movie.title}</span>
                 <span className="quote-battle-year">{quoteA.movie.year}</span>
               </div>
             </div>
@@ -109,7 +110,7 @@ export default function QuoteBattle({ profile, onSaveProfile }) {
             <div className="quote-battle-reveal">
               <QuotePoster movie={quoteB.movie} />
               <div>
-                <span className="quote-battle-movie">{quoteB.movie.title}</span>
+                <span className="quote-battle-movie">{(lang === 'zh' && getChineseTitle(quoteB.movie.id)) || quoteB.movie.title}</span>
                 <span className="quote-battle-year">{quoteB.movie.year}</span>
               </div>
             </div>

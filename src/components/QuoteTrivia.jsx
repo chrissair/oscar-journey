@@ -164,7 +164,7 @@ export default function QuoteTrivia({ profile, onSaveProfile }) {
               onClick={() => handleSelect(movie)}
               disabled={selected !== null}
             >
-              <span className="trivia-option-title">{movie.title}</span>
+              <span className="trivia-option-title">{(lang === 'zh' && getChineseTitle(movie.id)) || movie.title}</span>
               <span className="trivia-option-year">{movie.year}</span>
             </button>
           );
