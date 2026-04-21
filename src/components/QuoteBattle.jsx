@@ -5,6 +5,7 @@ import { fetchOmdbData } from '../utils/omdb';
 import { generatePack, getMaxWallet } from '../utils/cards';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
+import { useT } from '../i18n';
 
 // Build pool of all quotes with movie info
 const ALL_QUOTES = [];
@@ -26,6 +27,7 @@ function QuotePoster({ movie }) {
 }
 
 export default function QuoteBattle({ profile, onSaveProfile }) {
+  const { t } = useT();
   const [quoteA, setQuoteA] = useState(null);
   const [quoteB, setQuoteB] = useState(null);
   const [voted, setVoted] = useState(false);
@@ -96,7 +98,7 @@ export default function QuoteBattle({ profile, onSaveProfile }) {
           )}
         </div>
 
-        <div className="quote-battle-vs">VS</div>
+        <div className="quote-battle-vs">{t('battle.vs')}</div>
 
         <div
           className={`quote-battle-card ${voted && winner === 'b' ? 'quote-card-winner' : ''} ${voted && winner === 'a' ? 'quote-card-loser' : ''}`}
@@ -116,12 +118,12 @@ export default function QuoteBattle({ profile, onSaveProfile }) {
       </div>
 
       <div className="quote-battle-score">
-        {score} vote{score !== 1 ? 's' : ''} cast
+        {t('battle.quote.votesCast', { count: score, s: score !== 1 ? 's' : '' })}
       </div>
 
       <div className="pack-progress">
         <div className="pack-progress-label">
-          Next card: {(profile?.quoteBattlesSinceDrop || 0)} / 15 votes
+          {t('battle.quote.nextCard', { current: profile?.quoteBattlesSinceDrop || 0, max: 15 })}
         </div>
         <div className="pack-progress-bar">
           <div className="pack-progress-fill" style={{ width: `${Math.min(100, ((profile?.quoteBattlesSinceDrop || 0) / 15) * 100)}%` }} />
