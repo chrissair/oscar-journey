@@ -17,6 +17,7 @@ import { db } from '../utils/firebase';
 import CeremonyTooltip from './CeremonyTooltip';
 import { getAwardLink } from '../utils/awardLinks';
 import SeriesSection from './SeriesSection';
+import DirectorFilmographyLink from './DirectorFilmographyLink';
 
 import { RARITIES } from '../utils/cards';
 import { getCardOwner } from '../utils/cardRegistry';
@@ -314,7 +315,12 @@ export default function FilmDetailModal({ movie, isWatched, onToggleWatched, onC
               // fallback for anything missing from the bake).
               const director = DIRECTORS[movie.id] || omdbData?.director;
               if (!director) return null;
-              return <div className="film-detail-director"><strong>Directed by</strong> {director}</div>;
+              return (
+                <div className="film-detail-director">
+                  <strong>Directed by</strong> {director}
+                  <DirectorFilmographyLink movie={movie} onOpenDetail={onNavigate} />
+                </div>
+              );
             })()}
             {(() => {
               // Static actors.json is the primary source (always hydrated);
