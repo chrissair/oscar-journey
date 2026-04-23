@@ -10,11 +10,16 @@ const FIRESTORE_RELOAD_FLAG = 'firestoreAssertionReloadAt';
 function handleFirestoreAssertion(message) {
   if (typeof message !== 'string') return false;
   if (!/FIRESTORE.*INTERNAL ASSERTION/i.test(message)) return false;
+  // Persist the reload timestamp across the reload itself; if sessionStorage
+  // is unavailable we cannot guard against loops, so do nothing rather than
+  // risk reloading forever.
   try {
     const last = Number(sessionStorage.getItem(FIRESTORE_RELOAD_FLAG) || 0);
-    if (Date.now() - last < 30000) return false; // guard against reload loops
+    if (Date.now() - last < 30000) return false;
     sessionStorage.setItem(FIRESTORE_RELOAD_FLAG, String(Date.now()));
-  } catch {}
+  } catch {
+    return false;
+  }
   window.location.reload();
   return true;
 }
