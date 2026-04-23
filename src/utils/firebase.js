@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBbJhYf0RZfptRjkyBoGDXp_uOw_CF2HUg",
@@ -11,4 +11,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+
+// experimentalAutoDetectLongPolling mitigates Firestore WebChannel state
+// corruption after long tab dormancy (assertion IDs b815 / ca9).
+export const db = initializeFirestore(app, {
+  experimentalAutoDetectLongPolling: true,
+});
