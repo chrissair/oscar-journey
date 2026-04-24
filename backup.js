@@ -1,5 +1,5 @@
 // Backup all Firestore data to a local JSON file
-// Run with: node backup.js
+// Run with: node --env-file=.env backup.js
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
@@ -11,8 +11,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const backupsDir = join(__dirname, 'backups');
 
 const app = initializeApp({
-  apiKey: 'AIzaSyBbJhYf0RZfptRjkyBoGDXp_uOw_CF2HUg',
-  projectId: 'oscar-journey',
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
 });
 const db = getFirestore(app);
 
