@@ -10,9 +10,9 @@
 // out-of-canon watched entries from SeriesFilmPreview.
 //
 // Usage:
-//   node scripts/purge-orphan-watched.mjs              # dry run — report only
-//   node scripts/purge-orphan-watched.mjs --apply      # write back changes
-//   node scripts/purge-orphan-watched.mjs --profile mayo [--apply]
+//   node --env-file=.env scripts/purge-orphan-watched.mjs              # dry run — report only
+//   node --env-file=.env scripts/purge-orphan-watched.mjs --apply      # write back changes
+//   node --env-file=.env scripts/purge-orphan-watched.mjs --profile mayo [--apply]
 
 import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, doc, updateDoc } from 'firebase/firestore';
@@ -33,8 +33,8 @@ const catalogIds = new Set(MOVIES.map(m => m.id));
 console.log(`Catalog has ${catalogIds.size} films.`);
 
 const app = initializeApp({
-  apiKey: 'AIzaSyBbJhYf0RZfptRjkyBoGDXp_uOw_CF2HUg',
-  projectId: 'oscar-journey',
+  apiKey: process.env.VITE_FIREBASE_API_KEY,
+  projectId: process.env.VITE_FIREBASE_PROJECT_ID,
 });
 const db = getFirestore(app);
 
