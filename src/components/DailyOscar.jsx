@@ -57,8 +57,34 @@ export function getDailyStatus() {
   return loadSaved(LS_KEY + getTodayKey());
 }
 
+// Day-difference between two yyyy-mm-dd keys (today minus then). Positive means
+// `then` is in the past. UTC-anchored so it ignores time-of-day and DST shifts.
+function daysSince(thenKey) {
+  const [ty, tm, td] = thenKey.split('-').map(Number);
+  const todayKey = getTodayKey();
+  const [cy, cm, cd] = todayKey.split('-').map(Number);
+  const then = Date.UTC(ty, tm - 1, td);
+  const today = Date.UTC(cy, cm - 1, cd);
+  return Math.round((today - then) / 86400000);
+}
+
 export function getDailyStreak() {
-  return parseInt(localStorage.getItem('oscars_daily_streak') || '0', 10);
+  const raw = parseInt(localStorage.getItem('oscars_daily_streak') || '0', 10);
+  if (!raw) return 0;
+  const lastDate = localStorage.getItem('oscars_daily_streak_date');
+  // Legacy data with no date stamp — backfill from today's status if solved,
+  // otherwise leave the count as-is (next solve will start stamping correctly).
+  if (!lastDate) {
+    const status = loadSaved(LS_KEY + getTodayKey());
+    if (status?.solved) localStorage.setItem('oscars_daily_streak_date', getTodayKey());
+    return raw;
+  }
+  // Streak stays alive while the last solve is today or yesterday. Two or more
+  // days without a solve breaks it — clear so the banner stops lying.
+  if (daysSince(lastDate) <= 1) return raw;
+  localStorage.setItem('oscars_daily_streak', '0');
+  localStorage.removeItem('oscars_daily_streak_date');
+  return 0;
 }
 
 export default function DailyOscar({ onClose, onSaveProfile, profile }) {
@@ -173,6 +199,8 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
       setSolved(true);
       const s = getDailyStreak() + 1;
       localStorage.setItem('oscars_daily_streak', String(s));
+      // Stamp today as the last-solved day so a missed tomorrow can break the streak.
+      localStorage.setItem('oscars_daily_streak_date', getTodayKey());
       // Persist to Firestore so other profiles (Leaderboard / profile tiles) can display it.
       if (onSaveProfile) onSaveProfile('dailyStreak', s);
       const rarity = rollDailyRarity(newGuesses.length);
@@ -181,6 +209,7 @@ export default function DailyOscar({ onClose, onSaveProfile, profile }) {
     } else if (newGuesses.length >= MAX_GUESSES) {
       setFailed(true);
       localStorage.setItem('oscars_daily_streak', '0');
+      localStorage.removeItem('oscars_daily_streak_date');
       if (onSaveProfile) onSaveProfile('dailyStreak', 0);
     }
   };

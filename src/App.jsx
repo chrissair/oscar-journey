@@ -7,7 +7,7 @@ import { mulberry32, diversityShuffle, enforceSeriesOrder } from './utils/shuffl
 import {
   ratingKey, clearCache,
 } from './utils/storage';
-import { loadProfile, saveProfileField, recordActivity, getRecentActivity } from './utils/firebaseStorage';
+import { loadProfile, saveProfileField } from './utils/firebaseStorage';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from './utils/firebase';
 import NavBar, { tabs } from './components/NavBar';
@@ -24,7 +24,6 @@ import LoginScreen from './components/LoginScreen';
 import MovieBattle from './components/MovieBattle';
 import Leaderboard from './components/Leaderboard';
 import JourneyControls from './components/JourneyControls';
-import ActivityFeed from './components/ActivityFeed';
 import { SkeletonCard } from './components/Skeleton';
 import InfoModal from './components/InfoModal';
 import ProfileModal from './components/ProfileModal';
@@ -317,9 +316,6 @@ export default function App() {
   // Sync journey
   const [allProfilesForSync, setAllProfilesForSync] = useState([]);
 
-  // Activity feed
-  const [activityFeed, setActivityFeed] = useState([]);
-
   // --- Helper: generate playlist from seed ---
   const generatePlaylist = useCallback((seed) => {
     const rng = mulberry32(seed);
@@ -417,15 +413,28 @@ export default function App() {
     }).catch(() => {});
   }, []);
 
-  // --- Load activity feed on mount and refresh periodically ---
+  // --- Sync broken streak to Firebase ---
+  // Skipping a day breaks the Daily Oscar streak. The localStorage-side check
+  // in getDailyStreak self-heals on read, but profile.dailyStreak (which feeds
+  // the Leaderboard) only resets on a failed solve — so a stale value can
+  // linger after a missed day. On profile load, recompute the canonical streak
+  // from the dailyOscar history map and push 0 if it's broken.
   useEffect(() => {
-    const loadActivity = () => {
-      getRecentActivity(15).then(setActivityFeed).catch(() => {});
-    };
-    loadActivity();
-    const interval = setInterval(loadActivity, 30000);
-    return () => clearInterval(interval);
-  }, []);
+    if (!profile) return;
+    const dailyMap = profile.dailyOscar || {};
+    const solvedDates = Object.keys(dailyMap).filter(k => dailyMap[k]?.solved).sort();
+    const last = solvedDates[solvedDates.length - 1];
+    if (!last) return;
+    const [ty, tm, td] = last.split('-').map(Number);
+    const now = new Date();
+    const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+    const lastUtc = Date.UTC(ty, tm - 1, td);
+    const dayDiff = Math.round((today - lastUtc) / 86400000);
+    if (dayDiff > 1 && (profile.dailyStreak || 0) > 0) {
+      saveProfileField(profile.id, 'dailyStreak', 0).catch(() => {});
+      setProfile(prev => prev ? { ...prev, dailyStreak: 0 } : prev);
+    }
+  }, [profile?.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // --- Initialize all state from a loaded profile ---
   // Mutate `data` with every post-write value (playlistOrder, seed, currentIdx,
@@ -809,21 +818,13 @@ export default function App() {
         clearRatingsForMovie(currentMovie);
       } else {
         next.add(key);
-        // Record activity — this is a journey watch
-        if (profile) {
-          recordActivity(profile, currentMovie).catch(() => {});
-          // Refresh activity feed after a short delay
-          setTimeout(() => {
-            getRecentActivity(15).then(setActivityFeed).catch(() => {});
-          }, 1000);
-        }
       }
       const nextArr = [...next];
       firebaseSave('watched', nextArr);
       setProfile(prev => prev ? { ...prev, watched: nextArr } : prev);
       return next;
     });
-  }, [currentMovie, firebaseSave, profile, clearRatingsForMovie]);
+  }, [currentMovie, firebaseSave, clearRatingsForMovie]);
 
   const toggleWatchedForMovie = useCallback((movie) => {
     const key = movieKey(movie);
@@ -1399,7 +1400,6 @@ export default function App() {
               <div className="journey-tagline">
                 {currentTagline}
               </div>
-              <ActivityFeed activities={activityFeed} currentProfileId={profile?.id} onOpenDetail={setDetailMovie} />
             </>
           )}
           {/* JourneyControls renders for both the has-films and all-filtered-out
