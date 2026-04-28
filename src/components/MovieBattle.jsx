@@ -6,7 +6,6 @@ import { db } from '../utils/firebase';
 import { fetchOmdbData } from '../utils/omdb';
 import { ratingKey } from '../utils/storage';
 import { HARD_PITY, RARITIES, generatePack, getMaxWallet, shouldDropCard, getDropProgressLabel } from '../utils/cards';
-import { recordActivity } from '../utils/firebaseStorage';
 import { getTakenCards, registerCard, releaseCard } from '../utils/cardRegistry';
 import PackOpening from './PackOpening';
 
@@ -502,15 +501,6 @@ export default function MovieBattle({ profile, playlist, watchedSet, onOpenDetai
             const wallet = [...(profile?.wallet || []), card];
             if (onSaveProfile) onSaveProfile('wallet', wallet);
             try { await registerCard(card.movieId, card.rarity, profile.id); } catch {}
-            if (card.rarity !== 'COMMON' && profile) {
-              const movie = MOVIES_BY_ID[card.movieId];
-              if (movie) {
-                recordActivity(
-                  { ...profile, cardPull: true },
-                  { ...movie, id: movie.id, cardRarity: card.rarity }
-                ).catch(() => {});
-              }
-            }
           }}
           onReplace={async (card, replaceIdx) => {
             const wallet = [...(profile?.wallet || [])];
