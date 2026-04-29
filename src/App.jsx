@@ -698,13 +698,20 @@ export default function App() {
   // --- Filter helpers ---
   const activeFilters = profile?.filters || null;
 
-  // Smart filter context
-  const smartContext = useMemo(() => ({
-    watchedSet,
-    watchlistSet,
-    allProfiles: allProfilesForSync,
-    currentProfileId: profile?.id,
-  }), [watchedSet, watchlistSet, allProfilesForSync, profile?.id]);
+  // Smart filter context — when synced to another profile, the personal-state
+  // smart filters (skipWatched, watchlistOnly, unwatchedByAll) resolve against
+  // the *target's* watched/watchlist/profile-id rather than ours, so the
+  // synced journey mirrors what the target would see. Snapshot is frozen at
+  // sync time (see handleSyncJourney → syncedSmart).
+  const smartContext = useMemo(() => {
+    const synced = profile?.syncedWith ? profile?.syncedSmart : null;
+    return {
+      watchedSet: synced ? new Set(synced.watched || []) : watchedSet,
+      watchlistSet: synced ? new Set(synced.watchlist || []) : watchlistSet,
+      allProfiles: allProfilesForSync,
+      currentProfileId: synced ? synced.id : profile?.id,
+    };
+  }, [watchedSet, watchlistSet, allProfilesForSync, profile?.id, profile?.syncedWith, profile?.syncedSmart]);
 
   // Active profiles — anyone with at least one watched film. Used for the
   // "Sync with..." dropdown so brand-new / dormant accounts don't clutter
@@ -931,7 +938,7 @@ export default function App() {
         seed: profile?.seed,
         playlistOrder: playlist.map(m => m.id),
         currentIdx,
-        skipWatched: currentFilters?.smart?.skipWatched || false,
+        filters: currentFilters,
       };
 
       const newOrder = targetData.playlistOrder;
@@ -940,26 +947,35 @@ export default function App() {
       // Jump to where the target profile actually is, not the beginning
       const targetIdx = targetData.currentIdx || 0;
 
-      // Temporarily disable skipWatched so we land on their film
-      // even if we haven't seen the ones before it
-      if (currentFilters?.smart?.skipWatched) {
-        const newFilters = {
-          ...currentFilters,
-          smart: { ...currentFilters.smart, skipWatched: false },
-        };
-        setProfile(prev => prev ? { ...prev, filters: newFilters } : prev);
-        firebaseSave('filters', newFilters);
+      // Adopt the target's filters as-is. Personal-state smart filters
+      // (skipWatched, watchlistOnly) carry over too — they resolve against
+      // syncedSmart below so they reflect the *target's* watched/watchlist,
+      // mirroring what the target would see on their own journey.
+      const targetFilters = targetData.filters || null;
+      if (targetFilters) {
+        setProfile(prev => prev ? { ...prev, filters: targetFilters } : prev);
+        firebaseSave('filters', targetFilters);
       }
+
+      // Snapshot the target's personal state so smart filters resolve
+      // against their watched/watchlist sets, not ours, while synced. Frozen
+      // at sync time — won't update if the target watches new films later.
+      const syncedSmart = {
+        watched: Array.isArray(targetData.watched) ? targetData.watched : [],
+        watchlist: Array.isArray(targetData.watchlist) ? targetData.watchlist : [],
+        id: targetProfileId,
+      };
 
       setPlaylist(newPlaylist);
       setCurrentIdx(targetIdx);
-      setProfile(prev => prev ? { ...prev, syncedWith: targetProfileId, preSyncData } : prev);
+      setProfile(prev => prev ? { ...prev, syncedWith: targetProfileId, preSyncData, syncedSmart } : prev);
 
       firebaseSave('playlistOrder', newOrder);
       firebaseSave('seed', newSeed);
       firebaseSave('currentIdx', targetIdx);
       firebaseSave('syncedWith', targetProfileId);
       firebaseSave('preSyncData', preSyncData);
+      firebaseSave('syncedSmart', syncedSmart);
     } catch (e) {
       console.error('Sync failed:', e);
       alert('Sync failed. Try again.');
@@ -975,8 +991,13 @@ export default function App() {
       const restoredPlaylist = saved.playlistOrder.map(id => MOVIES_BY_ID[id]).filter(Boolean);
       const restoredIdx = saved.currentIdx || 0;
 
-      // Restore skipWatched if it was on before sync
-      if (saved.skipWatched) {
+      // Restore filters. New shape stashes the full filter object; old shape
+      // only stashed `skipWatched: bool`. Handle both so profiles synced
+      // under the previous code still unsync cleanly.
+      if (saved.filters) {
+        setProfile(prev => prev ? { ...prev, filters: saved.filters } : prev);
+        firebaseSave('filters', saved.filters);
+      } else if (saved.skipWatched) {
         const currentFilters = profile?.filters || {};
         const restoredFilters = {
           ...currentFilters,
@@ -988,10 +1009,11 @@ export default function App() {
 
       setPlaylist(restoredPlaylist);
       setCurrentIdx(restoredIdx);
-      setProfile(prev => prev ? { ...prev, syncedWith: null, preSyncData: null } : prev);
+      setProfile(prev => prev ? { ...prev, syncedWith: null, preSyncData: null, syncedSmart: null } : prev);
 
       firebaseSave('syncedWith', null);
       firebaseSave('preSyncData', null);
+      firebaseSave('syncedSmart', null);
       firebaseSave('seed', saved.seed);
       firebaseSave('playlistOrder', saved.playlistOrder);
       firebaseSave('currentIdx', restoredIdx);
@@ -1003,10 +1025,11 @@ export default function App() {
 
       setPlaylist(newPlaylist);
       setCurrentIdx(0);
-      setProfile(prev => prev ? { ...prev, syncedWith: null, preSyncData: null } : prev);
+      setProfile(prev => prev ? { ...prev, syncedWith: null, preSyncData: null, syncedSmart: null } : prev);
 
       firebaseSave('syncedWith', null);
       firebaseSave('preSyncData', null);
+      firebaseSave('syncedSmart', null);
       firebaseSave('seed', newSeed);
       firebaseSave('playlistOrder', orderIds);
       firebaseSave('currentIdx', 0);
