@@ -240,11 +240,16 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
           <div className="settings-version">
             <div className="settings-version-row">
               <span className="settings-version-label">Version</span>
-              <span className="settings-version-num">v3.4.0</span>
+              <span className="settings-version-num">v3.4.1</span>
             </div>
             <details className="settings-changelog">
               <summary>Changelog</summary>
               <div className="settings-changelog-content">
+              <p><strong>v3.4.1</strong> — Sync mirrors the other person's journey</p>
+              <ul>
+                <li><strong>Sync now shows you exactly what they see.</strong> When you sync to another profile, you adopt their filters <em>and</em> their personal context — "Only saved films" resolves against their bookmarks, "Skip watched" resolves against their watched list, and walking forward follows their journey, not yours. Previously your own filters could push you onto a different film than the one they were on.</li>
+                <li>Unsync restores your full filter setup (year range, genres, smart filters, all of it) — not just the one toggle that used to flip back.</li>
+              </ul>
               <p><strong>v3.4.0</strong> — Watchlist, multi-source ratings, authoritative Oscars, filter side-trip</p>
               <ul>
                 <li><strong>Personal watchlist.</strong> Bookmark films with the new ribbon on any card, then filter your journey to "saved films only" to pivot from the random shuffle to your own picks.</li>

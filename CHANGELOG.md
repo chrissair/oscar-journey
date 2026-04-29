@@ -1,5 +1,24 @@
 # Changelog
 
+## 3.4.1 — 2026-04-29
+
+### Sync mirrors the target's journey
+- **Sync now copies the target's full filters AND resolves their personal-state
+  smart filters against the target's own watched/watchlist sets.** Previously,
+  sync only copied playlist/seed/currentIdx — your own filters stayed in
+  place and could hide the target's current film, auto-skipping you onto a
+  different one. Now `watchlistOnly` checks the target's bookmarks,
+  `skipWatched` checks the target's watched list, and `unwatchedByAll`
+  excludes the target's profile from the "everyone" check (matching what
+  they see on their own journey).
+- Snapshot of the target's `watched` + `watchlist` is stored on your profile
+  as `syncedSmart` while `syncedWith` is set. Frozen at sync time — won't
+  reflect new bookmarks the target makes mid-sync.
+- **Unsync restores your full filters**, not just `skipWatched` like before.
+  `preSyncData.filters` stashes the entire filter object on sync; legacy
+  shape (`preSyncData.skipWatched: bool` from older syncs) still unsync
+  cleanly via the backward-compat branch.
+
 ## 3.4.0 — 2026-04-21
 
 ### Journey filter side-trip
