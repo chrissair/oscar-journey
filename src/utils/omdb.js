@@ -296,7 +296,7 @@ export async function fetchOmdbData(movie) {
       return { poster: manualPoster || null, plot: null, rating: null, director: null, runtime: applyRuntimeOverride(movie, null), metacritic: null };
     }
 
-    return storeAndReturn(movie, data, posterKey, plotKey, ratingKey, directorKey, runtimeKey);
+    return storeAndReturn(movie, data, posterKey, plotKey, ratingKey, directorKey, runtimeKey, manualPoster);
   } catch (e) {
     // Network error — don't cache, will retry next time
     return { poster: manualPoster || null, plot: null, rating: null, director: null, runtime: applyRuntimeOverride(movie, null), metacritic: null };
@@ -304,7 +304,11 @@ export async function fetchOmdbData(movie) {
 }
 
 function storeAndReturn(movie, data, posterKey, plotKey, ratingKey, directorKey, runtimeKey, manualPoster) {
-  const poster   = manualPoster || (data.Poster && data.Poster !== 'N/A' ? data.Poster : null);
+  // Cache the raw OMDb poster (or NOT_FOUND) — manualPoster is layered on at
+  // return time, never written into the cache. This keeps the cache "pure
+  // OMDb" so removing a POSTER_OVERRIDE later cleanly falls back to OMDb's
+  // value without a stale local-path entry sitting in localStorage.
+  const omdbPoster = data.Poster && data.Poster !== 'N/A' ? data.Poster : null;
   const plot     = data.Plot   && data.Plot   !== 'N/A' ? data.Plot   : null;
   const rating   = data.imdbRating && data.imdbRating !== 'N/A' ? data.imdbRating : null;
   const director = data.Director && data.Director !== 'N/A' ? data.Director : null;
@@ -321,7 +325,7 @@ function storeAndReturn(movie, data, posterKey, plotKey, ratingKey, directorKey,
     const mc = data.Ratings.find(r => r?.Source === 'Metacritic');
     if (mc?.Value) metacritic = String(mc.Value).split('/')[0]; // "90/100" → "90"
   }
-  localStorage.setItem(posterKey,     poster     || NOT_FOUND);
+  localStorage.setItem(posterKey,     omdbPoster || NOT_FOUND);
   localStorage.setItem(plotKey,       plot       || NOT_FOUND);
   localStorage.setItem(ratingKey,     rating     || NOT_FOUND);
   localStorage.setItem(directorKey,   director   || NOT_FOUND);
@@ -332,7 +336,7 @@ function storeAndReturn(movie, data, posterKey, plotKey, ratingKey, directorKey,
   localStorage.setItem(omdbCacheKey('country', movie),  country  || NOT_FOUND);
   localStorage.setItem(omdbCacheKey('actors', movie),   actors   || NOT_FOUND);
 
-  return { poster, plot, rating, director, runtime: applyRuntimeOverride(movie, runtime), metacritic, awards, language, country, actors };
+  return { poster: manualPoster || omdbPoster, plot, rating, director, runtime: applyRuntimeOverride(movie, runtime), metacritic, awards, language, country, actors };
 }
 
 // Parse "Won 2 Oscars. Another 159 wins & 164 nominations." → 2
