@@ -48,7 +48,41 @@ export default function InfoModal({ onClose }) {
             <span className="info-feature-emoji">📋</span>
             <div>
               <strong>Films</strong>
-              <p>Browse all {MOVIES.length} films A-Z. Checklist mode for quick marking. Every film has poster, plot, IMDb rating, director, runtime, and awards or canon list appearances.</p>
+              <p>Browse all {MOVIES.length} films A–Z. Each carries IMDb, Letterboxd, Metacritic, and site Consensus ratings. Checklist mode for quick marking.</p>
+            </div>
+          </div>
+
+          <div className="info-feature">
+            <span className="info-feature-emoji">✦</span>
+            <div>
+              <strong>Canon Tiers</strong>
+              <p>The gold pips on every film show how canonical it is — scored across 8 lists and bucketed into five tiers, Canonical up to Apex. Tap any film's pips to see the lists it's on.</p>
+              <div className="info-tier-row">
+                <span className="tier-pips tier-5">
+                  {Array.from({ length: 5 }, (_, i) => <span key={i} className="tier-pip filled" />)}
+                  <span className="tier-pip-label">Apex</span>
+                </span>
+                <span className="tier-pips tier-4">
+                  {Array.from({ length: 4 }, (_, i) => <span key={i} className="tier-pip filled" />)}
+                  <span className="tier-pip-label">Masterwork</span>
+                </span>
+                <span className="tier-pips tier-3">
+                  {Array.from({ length: 3 }, (_, i) => <span key={i} className="tier-pip filled" />)}
+                  <span className="tier-pip-label">Landmark</span>
+                </span>
+                <span className="tier-pips tier-2">
+                  {Array.from({ length: 2 }, (_, i) => <span key={i} className="tier-pip filled" />)}
+                  <span className="tier-pip-label">Acclaimed</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="info-feature">
+            <span className="info-feature-emoji">🔖</span>
+            <div>
+              <strong>Watchlist</strong>
+              <p>Bookmark films with the ribbon. Flip Watchlist only on Journey to focus on saved picks — turn it off and you snap back where you were.</p>
             </div>
           </div>
 
@@ -80,7 +114,7 @@ export default function InfoModal({ onClose }) {
             <span className="info-feature-emoji">👥</span>
             <div>
               <strong>Profiles</strong>
-              <p>Everyone's stats, watched films, ratings, and card collections are public. Click any name anywhere to see their profile.</p>
+              <p>Everyone's stats, watched films, ratings, and cards are public. Each profile shows a Canon Score (0–1000), tier-weighted so Apex pulls count more than Canonical ones. Click any name to see their profile.</p>
             </div>
           </div>
         </div>
@@ -92,11 +126,11 @@ export default function InfoModal({ onClose }) {
           <ul>
             <li>Click the ceremony or "Canon film · YYYY" line to see every film from that year across categories</li>
             <li>Click "Winner / Speech" to watch the acceptance speech</li>
-            <li>Tap the gold pips on any film to see which canon lists it's on</li>
-            <li>Swipe left/right on film detail modals (mobile)</li>
+            <li>Tap the gold pips on any film to see its canon lists, tier, and a "Focus on Tier ≥ N" shortcut</li>
+            <li>Click a director's name on a film modal to see every film by them in the catalog</li>
+            <li>Swipe left/right on film detail modals (mobile); arrow keys navigate them on desktop</li>
             <li>Click anyone's name anywhere to view their profile</li>
-            <li>Arrow keys navigate between films in modals</li>
-            <li>Sync your journey with a friend's watch order</li>
+            <li>Sync your journey with a friend — their filters and watched/watchlist context come along, and unsync restores yours</li>
             <li>Download your data from Settings</li>
           </ul>
         </details>

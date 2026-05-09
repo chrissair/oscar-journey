@@ -1595,27 +1595,12 @@ html:not([data-theme="dark"]) .badge-cat-silent.badge-category-sm {
   max-width: 640px;
   padding: 0;
   position: relative;
-  /* Themed scrollbar — the browser default (especially on Windows) was a
-   * chunky gray bar that broke the modal's pop-out feel. Thin + low-contrast
-   * track + a gold-tinted thumb so it reads as part of the design. */
-  scrollbar-width: thin;
-  scrollbar-color: var(--gold-dim, rgba(201, 168, 76, 0.4)) transparent;
+  /* Hide scrollbar — even themed, it cut across the modal's rounded
+   * corners and looked broken. Wheel / touch / keyboard scrolling still work. */
+  scrollbar-width: none;
 }
 .settings-modal::-webkit-scrollbar {
-  width: 8px;
-}
-.settings-modal::-webkit-scrollbar-track {
-  background: transparent;
-}
-.settings-modal::-webkit-scrollbar-thumb {
-  background: rgba(201, 168, 76, 0.35);
-  border-radius: 4px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.settings-modal::-webkit-scrollbar-thumb:hover {
-  background: rgba(201, 168, 76, 0.6);
-  background-clip: padding-box;
+  display: none;
 }
 .settings-close {
   position: absolute;
@@ -8949,10 +8934,16 @@ html:not([data-theme="dark"]) .tier-stepper-apex .tier-stepper-btn:not(:disabled
    INFO MODAL
    ===================================================== */
 .info-modal {
-  max-width: 520px;
+  max-width: 640px;
   padding: 0;
   overflow-y: auto;
   position: relative;
+  /* Hide scrollbar — it cuts across the modal's rounded corners and looks
+   * broken. Wheel / touch / keyboard scrolling still work. */
+  scrollbar-width: none;
+}
+.info-modal::-webkit-scrollbar {
+  display: none;
 }
 .info-modal-close {
   position: absolute;
@@ -9040,6 +9031,9 @@ html:not([data-theme="dark"]) .tier-stepper-apex .tier-stepper-btn:not(:disabled
   font-size: 1.2rem;
   flex-shrink: 0;
   margin-top: 1px;
+  width: 1.5em;
+  text-align: center;
+  display: inline-block;
 }
 .info-feature strong {
   font-size: 0.85rem;
@@ -9052,6 +9046,28 @@ html:not([data-theme="dark"]) .tier-stepper-apex .tier-stepper-btn:not(:disabled
   color: var(--cream-dim);
   line-height: 1.5;
   margin: 0;
+}
+.info-feature p strong,
+.info-feature p em {
+  display: inline;
+  font-size: inherit;
+  color: var(--cream);
+  margin: 0;
+}
+.info-feature p em {
+  font-style: italic;
+  color: var(--cream-dim);
+}
+.info-tier-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+.info-tier-row .tier-pips {
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  cursor: default;
 }
 
 .info-hidden {
