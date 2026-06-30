@@ -24,6 +24,7 @@ export const LIST_LABELS = {
   NFR: 'National Film Registry',
   CRIT: 'Criterion Collection',
   RT: 'Rotten Tomatoes Top 300',
+  TSPDT: "They Shoot Pictures, Don't They? 1,000 Greatest",
 };
 
 export const LIST_SHORT_LABELS = {
@@ -37,6 +38,7 @@ export const LIST_SHORT_LABELS = {
   NFR: 'Nat. Film Reg.',
   CRIT: 'Criterion',
   RT: 'Rotten Tomatoes',
+  TSPDT: 'TSPDT 1,000',
 };
 
 export const MAX_TIER = 5;
