@@ -240,11 +240,17 @@ export default function SettingsModal({ raters, onRatersChange, avatar, onAvatar
           <div className="settings-version">
             <div className="settings-version-row">
               <span className="settings-version-label">Version</span>
-              <span className="settings-version-num">v3.4.1</span>
+              <span className="settings-version-num">v3.5.0</span>
             </div>
             <details className="settings-changelog">
               <summary>Changelog</summary>
               <div className="settings-changelog-content">
+              <p><strong>v3.5.0</strong> — Catalog expansion: +68 Essentials</p>
+              <ul>
+                <li><strong>+68 classic-Hollywood &amp; festival Essentials</strong> — the catalog grows from 787 to 855 films, deepening pre-1970 world cinema, classic Hollywood, and silent-era coverage.</li>
+                <li>Added <em>They Shoot Pictures, Don't They?</em> 1,000 Greatest Films (2025) as a 9th canon list, plus a wider festival list that now counts secondary jury prizes at Cannes, Venice, and Berlin (Grand Prix, Jury Prize, Silver Lion, Silver Bear).</li>
+                <li>Entry-gate only — every one of the 787 pre-existing films keeps its original tier; nothing was re-ranked.</li>
+              </ul>
               <p><strong>v3.4.1</strong> — Sync mirrors the other person's journey</p>
               <ul>
                 <li><strong>Sync now shows you exactly what they see.</strong> When you sync to another profile, you adopt their filters <em>and</em> their personal context — "Only saved films" resolves against their bookmarks, "Skip watched" resolves against their watched list, and walking forward follows their journey, not yours. Previously your own filters could push you onto a different film than the one they were on.</li>
