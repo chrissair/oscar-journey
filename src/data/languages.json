@@ -926,5 +926,69 @@
   "blue-is-the-warmest-colour-2013": {
     "lang": "French",
     "country": "France"
+  },
+  "battleship-potemkin-1925": {
+    "lang": "Russian",
+    "country": "Soviet Union"
+  },
+  "napoleon-1927": {
+    "lang": "French",
+    "country": "France"
+  },
+  "the-passion-of-joan-of-arc-1928": {
+    "lang": "French",
+    "country": "France"
+  },
+  "vampyr-1932": {
+    "lang": "German",
+    "country": "Germany"
+  },
+  "paisan-1946": {
+    "lang": "Italian",
+    "country": "Italy"
+  },
+  "i-vitelloni-1953": {
+    "lang": "Italian",
+    "country": "Italy"
+  },
+  "journey-to-italy-1954": {
+    "lang": "Italian",
+    "country": "Italy"
+  },
+  "night-and-fog-1955": {
+    "lang": "French",
+    "country": "France"
+  },
+  "hiroshima-mon-amour-1959": {
+    "lang": "French",
+    "country": "France"
+  },
+  "vivre-sa-vie-1962": {
+    "lang": "French",
+    "country": "France"
+  },
+  "leclisse-1962": {
+    "lang": "Italian",
+    "country": "Italy"
+  },
+  "the-exterminating-angel-1962": {
+    "lang": "Spanish",
+    "country": "Mexico"
+  },
+  "an-autumn-afternoon-1962": {
+    "lang": "Japanese",
+    "country": "Japan"
+  },
+  "charulata-1964": {
+    "lang": "Bengali",
+    "country": "India"
+  },
+  "le-bonheur-1965": {
+    "lang": "French",
+    "country": "France"
+  },
+  "simon-of-the-desert-1965": {
+    "lang": "Spanish",
+    "country": "Mexico"
   }
 }
