@@ -5,7 +5,7 @@
 // / "Silent" / "Black & White" catch every film with that property across
 // all Oscar categories and Essentials.
 
-import LANGUAGES from '../data/languages.json';
+import LANGUAGES from '../data/languages.json' with { type: 'json' };
 
 // International = non-English spoken language. Covers Oscar INT winners, any
 // film with a non-English entry in languages.json (which is populated only
@@ -96,6 +96,9 @@ const DOC_IDS = new Set([
   'the-fog-of-war-2003',
   'faces-places-2017',
   'minding-the-gap-2018',
+  'night-and-fog-1955',
+  'salesman-1969',
+  'tongues-untied-1989',
 ]);
 export function isDocumentary(movie) {
   return DOC_IDS.has(movie.id);
@@ -109,6 +112,9 @@ const SILENT_POST_1928_IDS = new Set([
   'modern-times-1936',        // Chaplin again, partial dialogue but mostly silent
   'the-artist-2011',          // intentional silent-film revival
   'flow-2024',                // dialogue-less animated feature
+  'the-crowd-1928',
+  'the-passion-of-joan-of-arc-1928',
+  'the-cameraman-1928',
 ]);
 export function isSilent(movie) {
   if (movie.year < 1928) return true;
@@ -133,6 +139,11 @@ const COLOR_PRE_1955_IDS = new Set([
   'singin-in-the-rain-1952',
   'an-american-in-paris-1951',
   'a-matter-of-life-and-death-1946', // Technicolor + B&W mix, leaning color
+  'meet-me-in-st-louis-1944',
+  'the-river-1951',
+  'the-quiet-man-1952',
+  'johnny-guitar-1954',
+  'a-star-is-born-1954',
 ]);
 const BW_POST_1955_IDS = new Set([
   'psycho-1960',
@@ -199,6 +210,23 @@ const BW_POST_1955_IDS = new Set([
   'werckmeister-harmonies-2000',
   'mank-2020',
   'belfast-2021',
+  'kiss-me-deadly-1955',
+  'aparajito-1956',
+  'throne-of-blood-1957',
+  'pickpocket-1959',
+  'hiroshima-mon-amour-1959',
+  'apur-sansar-1959',
+  'vivre-sa-vie-1962',
+  'leclisse-1962',
+  'cleo-from-5-to-7-1962',
+  'the-exterminating-angel-1962',
+  'charulata-1964',
+  'i-am-cuba-1964',
+  'woman-in-the-dunes-1964',
+  'simon-of-the-desert-1965',
+  'au-hasard-balthazar-1966',
+  'in-cold-blood-1967',
+  'salesman-1969',
 ]);
 export function isBlackAndWhite(movie) {
   if (BW_POST_1955_IDS.has(movie.id)) return true;

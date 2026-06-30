@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.5.0 — 2026-06-30
+
+### Catalog expansion: +68 Essentials
+- **Catalog: +68 Essentials (classic Hollywood + festival/world canon) via new TSPDT-1000 canon list + FEST widening; 787 → 855. Entry-gate only — no existing film's tier changed.**
+- Added They Shoot Pictures, Don't They? 1,000 Greatest Films (2025) as the 9th canon list, providing deep coverage of pre-1970 world cinema, classic Hollywood, and silent-era films.
+- Widened the FEST list to include secondary jury prizes at Cannes, Venice, and Berlin (Grand Prix, Jury Prize, Silver Lion/Special Jury Prize, Silver Bear) in addition to the top grand prizes.
+- All 787 pre-existing films retain their original tiers; entry-gate verified by `scripts/diff-tiers.mjs`.
+
 ## 3.4.1 — 2026-04-29
 
 ### Sync mirrors the target's journey

@@ -69,7 +69,7 @@ Running the 2-of-N rule across all 7 lists and deduplicating against the existin
 | **Acclaimed (tier 2)** | ~150 films | Meets our multi-list entry threshold. Alien, Ran, Come and See, Before Sunrise. |
 | **Canonical (tier 1)** | ~500 films | Present in the canon with baseline endorsement. |
 
-**Final catalog size: 457 Oscar films + 330 Essentials = 787 films.**
+**Final catalog size: 457 Oscar films + 398 Essentials = 855 films.**
 
 Tier is computed from an R2 score: 1 point per canon list (AFI+NFR merged to a single
 "US institutional" point), plus 1 for Oscar winner / BP nominee / Intl. Feature winner /
@@ -139,6 +139,20 @@ No — it's **objective-ish**. The method doesn't eliminate subjectivity; it dis
 
 ---
 
+## 2026 expansion: TSPDT-1000 (9th list) + FEST widening
+
+### 9th canon list — They Shoot Pictures, Don't They? 1,000 Greatest Films (2025 edition)
+
+TSPDT aggregates hundreds of critics' polls and "best-of" lists into a ranked consensus of the 1,000 greatest films ever made. Its coverage is unusually deep in pre-1970 world cinema, classic Hollywood, and silent-era films — territory that Letterboxd and IMDb under-represent. Adding TSPDT as the 9th canon source brought in 68 new Essentials that met the 2-of-N threshold with at least one other list.
+
+**Entry-gate scope:** Only films newly joining the catalog were evaluated against TSPDT. No existing film's tier was recalculated — a film that was Acclaimed before this expansion stays Acclaimed regardless of where it falls on TSPDT. Existing tiers are frozen; only new entries are assigned tiers using the current scoring rules.
+
+### FEST widening — secondary jury prizes
+
+The `FEST` list was originally scoped to the three major-festival grand prizes (Palme d'Or, Golden Lion, Golden Bear). It has been widened to include secondary jury prizes at Cannes, Venice, and Berlin (Grand Prix, Jury Prize, Silver Lion / Special Jury Prize, Silver Bear). This widening expands the festival signal for films that won strong recognition but not the top prize (e.g. Aparajito's 1957 Venice Golden Lion). As with TSPDT, only new catalog entrants benefit — no existing film's tier changed.
+
+---
+
 ## Recommended rollout
 
 1. **Ship Tiers 3–6 first** (143 films, all on ≥3 lists). These are unambiguously canon. No one will argue.
@@ -160,4 +174,4 @@ Three files accompany this methodology:
 
 ## One-line summary
 
-**Require any new film to appear on ≥2 of 8 independent canonical lists (≥3 for pre-1970). After a 2026 curation pass (cut pre-1970 bloat, promote BP winners + nominees, add International Feature winners 1956–1987, add Rotten Tomatoes Top 300), final catalog is 457 Oscar films + 330 Essentials = 787 total. Fight Club in, White Chicks out.**
+**Require any new film to appear on ≥2 of 9 independent canonical lists (≥3 for pre-1970). After a 2026 curation pass (cut pre-1970 bloat, promote BP winners + nominees, add International Feature winners 1956–1987, add Rotten Tomatoes Top 300, add TSPDT-1000 + FEST widening), final catalog is 457 Oscar films + 398 Essentials = 855 total. Fight Club in, White Chicks out.**

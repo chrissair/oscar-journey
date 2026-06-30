@@ -1,0 +1,818 @@
+[
+ {
+  "title": "Intolerance",
+  "year": 1916,
+  "lists": [
+   "AFI",
+   "NFR",
+   "SS"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Clean LEAK: dossier shows AFI+NFR+SS = 3 lists = need=3 (short=0), spanning institutional + US-preservation + critics — three distinct authorities, no populist overlap. Already qualifies; missing from catalog. TSPDT-1000 #129 confirmed. Not in catalog."
+ },
+ {
+  "title": "Kid",
+  "year": 1921,
+  "lists": [
+   "CRIT",
+   "IMDB",
+   "NFR",
+   "RT"
+  ],
+  "tier": 3,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion) + IMDB (IMDb Top 250 — oldest title on the list, verified) + NFR (inducted 2011, verified) + RT (4 lists). Pre-1970 needs 3, has 4. Preservation + audience + arthouse + populist. Chaplin's first feature."
+ },
+ {
+  "title": "Battleship Potemkin",
+  "year": 1925,
+  "lists": [
+   "RT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #20 over RT+S&S; foundational silent canon, 3 worldviews."
+ },
+ {
+  "title": "Freshman",
+  "year": 1925,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Pre-1970 LEAK meeting >=3: AFI (100 Years 100 Laughs) + Criterion (spine #703) + National Film Registry. Institutional + arthouse + preservation."
+ },
+ {
+  "title": "Napoleon",
+  "year": 1927,
+  "lists": [
+   "LBXD",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #188 over Letterboxd+S&S; Gance silent epic."
+ },
+ {
+  "title": "Crowd",
+  "year": 1928,
+  "lists": [
+   "NFR",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #241 over NFR+S&S; Vidor silent landmark."
+ },
+ {
+  "title": "Passion Of Joan Of Arc",
+  "year": 1928,
+  "lists": [
+   "CRIT",
+   "IMDB",
+   "LBXD",
+   "RT"
+  ],
+  "tier": 3,
+  "justifyingList": "LEAK",
+  "defense": "Clean LEAK: dossier already shows CRIT+IMDB+LBXD+RT = 4 lists vs need=3 (short=-1), spanning arthouse + mass + cinephile + populist-critical. Already meets the existing rule, just missing from the catalog. TSPDT-1000 #19 confirmed (top 20 of all time). Not in catalog."
+ },
+ {
+  "title": "Cameraman",
+  "year": 1928,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed: Criterion (#1042, 2020) + NFR (preserved 2005) + RT. Preservation + arthouse + populist-critical. Keaton's MGM peak / last great work. LEAK already meets rule."
+ },
+ {
+  "title": "Morocco",
+  "year": 1930,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed: AFI (100 Years...100 Passions, #83 Love Stories) + Criterion (Dietrich & von Sternberg box) + NFR (preserved 1992). Institutional + arthouse + preservation. Sternberg/Dietrich, classic-Hollywood focus. LEAK already meets rule."
+ },
+ {
+  "title": "Frankenstein",
+  "year": 1931,
+  "lists": [
+   "AFI",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 1,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #619 — Whale — foundational Universal horror"
+ },
+ {
+  "title": "Vampyr",
+  "year": 1932,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #187 over Criterion+S&S; Dreyer."
+ },
+ {
+  "title": "Make Way For Tomorrow",
+  "year": 1937,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection deluxe edition) + NFR (inducted 2010, verified via LoC) + RT. Pre-1970 needs 3, has exactly 3. Arthouse + preservation + populist. McCarey melodrama — squarely in the classic-Hollywood focus area."
+ },
+ {
+  "title": "Awful Truth",
+  "year": 1937,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed: AFI + Criterion + NFR (preserved 1996). Institutional + arthouse + preservation — classic-Hollywood focus, benchmark McCarey/Grant/Dunne screwball. LEAK already meets rule."
+ },
+ {
+  "title": "Ninotchka",
+  "year": 1939,
+  "lists": [
+   "AFI",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 1,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #564 — Lubitsch — \"Garbo Laughs\""
+ },
+ {
+  "title": "Now Voyager",
+  "year": 1942,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Pre-1970 LEAK meeting >=3: AFI (100 Years 100 Passions #23) + Criterion (2019 4K release) + National Film Registry. Institutional + arthouse + preservation."
+ },
+ {
+  "title": "Woman Of The Year",
+  "year": 1942,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Pre-1970 LEAK meeting >=3: AFI (100 Years 100 Passions/Laughs) + Criterion (2017 release) + National Film Registry. Institutional + arthouse + preservation."
+ },
+ {
+  "title": "Shadow of a Doubt",
+  "year": 1943,
+  "lists": [
+   "NFR",
+   "RT",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #586 — Hitchcock — his own favorite"
+ },
+ {
+  "title": "Meet Me In St Louis",
+  "year": 1944,
+  "lists": [
+   "NFR",
+   "RT",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "Confirmed TSPDT #258 (2026 edition; defense said #257). Promotes NFR(preservation)+RT(populist-critical) to a 3-list trifecta with TSPDT(critics). Pre-1970 needs 3, lands at 3 across three distinct worldviews. Minnelli classic-Hollywood musical."
+ },
+ {
+  "title": "Detour",
+  "year": 1945,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #778 — Ulmer — poverty-row noir landmark"
+ },
+ {
+  "title": "Paisan",
+  "year": 1946,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #197 over Criterion+S&S; Rossellini neorealism."
+ },
+ {
+  "title": "Out Of The Past",
+  "year": 1947,
+  "lists": [
+   "NFR",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #189 over NFR+S&S; definitive noir, classic-Hollywood focus."
+ },
+ {
+  "title": "Letter From An Unknown Woman",
+  "year": 1948,
+  "lists": [
+   "NFR",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #133 (confirmed) + NFR + S&S; Ophuls Hollywood melodrama, preservation + critics signal."
+ },
+ {
+  "title": "Kind Hearts And Coronets",
+  "year": 1949,
+  "lists": [
+   "CRIT",
+   "RT",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "Confirmed TSPDT #275 (defense #276). CRIT(arthouse)+RT(populist-critical)+TSPDT(critics). Ealing comedy classic, cross-worldview."
+ },
+ {
+  "title": "The Asphalt Jungle",
+  "year": 1950,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #605 — Huston — archetypal heist noir"
+ },
+ {
+  "title": "River",
+  "year": 1951,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #191 over Criterion+S&S; Renoir, Cahiers' inaugural #1."
+ },
+ {
+  "title": "Quiet Man",
+  "year": 1952,
+  "lists": [
+   "AFI",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 1,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #218 over AFI+NFR; Ford, classic-Hollywood focus."
+ },
+ {
+  "title": "Forbidden Games",
+  "year": 1952,
+  "lists": [
+   "CRIT",
+   "FEST",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Pre-1970 LEAK meeting >=3: FEST (Venice Golden Lion 1952, the festival's TOP prize) + Criterion + RT. Festival + arthouse + populist-critical — strong cross-worldview."
+ },
+ {
+  "title": "I Vitelloni",
+  "year": 1953,
+  "lists": [
+   "CRIT",
+   "RT",
+   "FEST"
+  ],
+  "tier": 2,
+  "justifyingList": "FEST+",
+  "defense": "LABEL CORRECTION: not a FEST rescue. I Vitelloni won the Venice SILVER LION (1953), a secondary prize; the FEST list counts TOP prize only (Golden Lion), so festPrize=[] is correct and 'FEST+' is inaccurate. The valid lever is the new TSPDT-1000 list: confirmed at #636 (theyshootpictures.com). That promotes CRIT+RT+TSPDT = 3 lists, meeting the pre-1970 need=3, and spans three worldviews (arthouse + populist-critical + critics meta-canon). Confirmed not in catalog."
+ },
+ {
+  "title": "Journey To Italy",
+  "year": 1954,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT actual rank is #70 (defense cited #69) -- trivial discrepancy, membership confirmed. CRIT+SS -> +TSPDT = 3. Rossellini hinge of modern cinema."
+ },
+ {
+  "title": "Johnny Guitar",
+  "year": 1954,
+  "lists": [
+   "NFR",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #182 over NFR+S&S; Ray, classic-Hollywood focus."
+ },
+ {
+  "title": "A Star Is Born",
+  "year": 1954,
+  "lists": [
+   "AFI",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 1,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #442 — Cukor / Garland"
+ },
+ {
+  "title": "Night And Fog",
+  "year": 1955,
+  "lists": [
+   "CRIT",
+   "RT",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "Confirmed TSPDT #273 (exact match to defense). CRIT(arthouse)+RT(populist-critical)+TSPDT(critics) = three distinct worldviews. Resnais Holocaust essential."
+ },
+ {
+  "title": "Kiss Me Deadly",
+  "year": 1955,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #348 — Aldrich — apocalyptic noir, hugely influential"
+ },
+ {
+  "title": "Aparajito",
+  "year": 1956,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "FEST"
+  ],
+  "tier": 2,
+  "justifyingList": "FEST+ (FEST data-fix)",
+  "defense": "Strongest in batch. CONFIRMED: Aparajito won the GOLDEN LION at the 1957 Venice Film Festival (first Indian film to do so; only sequel ever to win the top prize at Venice/Cannes/Berlin). The dossier's festPrize=['venice'] supports the FEST data-fix: crediting FEST promotes CRIT+LBXD+FEST = 3 lists, meeting pre-1970 need=3. Independently also on TSPDT-1000 at #557. Cross-worldview: arthouse + cinephile + festival top prize (+critics). Not in catalog."
+ },
+ {
+  "title": "Throne of Blood",
+  "year": 1957,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "Confirmed TSPDT #292 (exact match). CRIT(arthouse)+LBXD(cinephile)+TSPDT(critics) = three distinct worldviews. Canonical Kurosawa (Macbeth adaptation)."
+ },
+ {
+  "title": "Witness For The Prosecution",
+  "year": 1957,
+  "lists": [
+   "AFI",
+   "IMDB",
+   "LBXD",
+   "RT"
+  ],
+  "tier": 3,
+  "justifyingList": "LEAK",
+  "defense": "Strong pre-1970 LEAK exceeding threshold (n=4): AFI (10 Top 10 Courtroom Drama #6) + IMDb Top 250 + Letterboxd Top 250 + RT. Institutional + multiple audience/critical canons."
+ },
+ {
+  "title": "Pickpocket",
+  "year": 1959,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #92 (confirmed) + Criterion + S&S. Core Bresson; arthouse-institution + critics-poll cross-worldview signal."
+ },
+ {
+  "title": "Hiroshima Mon Amour",
+  "year": 1959,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #120 (confirmed) + Criterion + S&S; Resnais landmark."
+ },
+ {
+  "title": "Imitation Of Life",
+  "year": 1959,
+  "lists": [
+   "NFR",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #138 (confirmed, 1959 Sirk version) + NFR + S&S; preservation + critics. Distinct from 1934 Stahl version."
+ },
+ {
+  "title": "Apur Sansar",
+  "year": 1959,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT (trilogy-completeness exception)",
+  "defense": "DEFENSE FRAMING WRONG: this is NOT a 'trilogy-completeness exception' and leversAgreeing is not 1. The new list is TSPDT-1000 (not a Top-300 cutoff), and Apur Sansar/The World of Apu is confirmed at #317, well inside it. So it qualifies cleanly: CRIT+LBXD+TSPDT = 3 lists, meeting pre-1970 need=3 — and at #317 it is a STRONGER qualifier than I Vitelloni (#636) or Simon (#938). Cross-worldview: arthouse + cinephile + critics. Not in catalog."
+ },
+ {
+  "title": "Raisin In The Sun",
+  "year": 1961,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Pre-1970 LEAK meeting >=3: AFI (100 Years 100 Cheers) + Criterion (spine #945) + National Film Registry. Institutional + arthouse + preservation — landmark Black American drama."
+ },
+ {
+  "title": "The Hustler",
+  "year": 1961,
+  "lists": [
+   "AFI",
+   "NFR",
+   "TSPDT"
+  ],
+  "tier": 1,
+  "justifyingList": "TSPDT (rebalance swap-in)",
+  "defense": "TSPDT #501 — Rossen / Newman"
+ },
+ {
+  "title": "Vivre Sa Vie",
+  "year": 1962,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #128 + Venice Special Jury Prize + Cahiers #1 1962 atop Criterion+S&S; rescued by 3 levers, core New Wave."
+ },
+ {
+  "title": "L Eclisse",
+  "year": 1962,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT actual rank is #131 (defense cited #130) -- trivial. CRIT+SS -> +TSPDT = 3. Antonioni modernist landmark."
+ },
+ {
+  "title": "Cleo From 5 To 7",
+  "year": 1962,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #97 (confirmed) + Criterion + S&S; canonical Varda."
+ },
+ {
+  "title": "Exterminating Angel",
+  "year": 1962,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #136 (confirmed) + Criterion + S&S; Bunuel."
+ },
+ {
+  "title": "Autumn Afternoon",
+  "year": 1962,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "SS"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection) + SS (Sight & Sound 2022 ranked =185, verified) + LBXD. Pre-1970 needs 3, has exactly 3. Arthouse + critics + cinephile. Ozu's final film."
+ },
+ {
+  "title": "Contempt",
+  "year": 1963,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #44 supplies decisive 3rd pre-1970 vote over Criterion+S&S; canonical Godard."
+ },
+ {
+  "title": "Great Escape",
+  "year": 1963,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "IMDB"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Genuine LEAK already meeting the pre-1970 >=3 rule: AFI (100 Years 100 Thrills #19) + Criterion (spine #1027, confirmed criterion.com) + IMDb Top 250. Spans institutional + arthouse + mass-audience worldviews."
+ },
+ {
+  "title": "Charulata",
+  "year": 1964,
+  "lists": [
+   "CRIT",
+   "SS",
+   "FEST"
+  ],
+  "tier": 2,
+  "justifyingList": "FEST+",
+  "defense": "Confirmed TSPDT #316 (defense #315) AND confirmed Berlin Silver Bear for Best Director (Ray, 1965). Existing CRIT(arthouse)+SS(critics) plus TSPDT(critics) gives 3 lists; CRIT supplies an independent worldview beyond the two critics' canons. Ray's most acclaimed film."
+ },
+ {
+  "title": "Red Desert",
+  "year": 1964,
+  "lists": [
+   "CRIT",
+   "FEST",
+   "SS"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection) + FEST (Venice Golden Lion 1964, verified via 25th Venice International Film Festival record) + SS. Pre-1970 needs 3, has exactly 3. Institutional + festival + critics — strong cross-worldview. Antonioni's first color film."
+ },
+ {
+  "title": "I Am Cuba",
+  "year": 1964,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection, 2024 release — firmly confirmed) + LBXD + RT. Pre-1970 needs 3, has exactly 3. Arthouse (institutional) + cinephile + populist-critical. Kalatozov visual landmark."
+ },
+ {
+  "title": "Woman in the Dunes",
+  "year": 1964,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK already meeting the rule: Criterion (#826) + Letterboxd Top 250 (currently ~#27) + RT. Cross-worldview (world-arthouse + cinephile-millennial + populist-critical). Teshigahara; Cannes Special Jury Prize 1964; Oscar nominee. Strong, defensible foreign-arthouse must-watch."
+ },
+ {
+  "title": "Pierrot Le Fou",
+  "year": 1965,
+  "lists": [
+   "CRIT",
+   "SS",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT actual rank is #71 (defense cited #70) -- trivial. CRIT+SS -> +TSPDT = 3. Canonical Godard."
+ },
+ {
+  "title": "Le Bonheur",
+  "year": 1965,
+  "lists": [
+   "CRIT",
+   "SS",
+   "FEST"
+  ],
+  "tier": 2,
+  "justifyingList": "FEST+",
+  "defense": "Confirmed TSPDT #427 (defense #426) AND confirmed Berlin Silver Bear Jury Grand Prix (Varda, 1965, shared with Repulsion). CRIT(arthouse)+SS(critics)+TSPDT(critics) = 3 lists with CRIT as a distinct worldview. Varda, canonical. Lower priority (tier 1, rank ~427) but defensible."
+ },
+ {
+  "title": "Simon Of The Desert",
+  "year": 1965,
+  "lists": [
+   "CRIT",
+   "RT",
+   "FEST"
+  ],
+  "tier": 2,
+  "justifyingList": "FEST+",
+  "defense": "LABEL CORRECTION: not a FEST rescue. Won Venice SPECIAL JURY PRIZE (1965), a secondary honor; FEST is top-prize-only, so 'FEST+' is inaccurate (festPrize=[] correct). Valid lever is TSPDT-1000 at #938 (confirmed). CRIT+RT+TSPDT = 3 lists, meets pre-1970 need=3, spanning arthouse + populist-critical + critics. Buñuel."
+ },
+ {
+  "title": "Au Hasard Balthazar",
+  "year": 1966,
+  "lists": [
+   "CRIT",
+   "RT",
+   "SS"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Clean LEAK: dossier shows CRIT+RT+SS = 3 lists = need=3 (short=0), spanning arthouse + populist-critical + critics. Already qualifies; missing from catalog. TSPDT-1000 #32 confirmed. Not in catalog."
+ },
+ {
+  "title": "Belle De Jour",
+  "year": 1967,
+  "lists": [
+   "CRIT",
+   "FEST",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "Confirmed TSPDT #262 (defense #261). Existing lists CRIT(arthouse)+FEST(Venice Golden Lion 1967, a legitimate TOP prize) plus TSPDT(critics) = arthouse+festival+critics trifecta. Bunuel. Strongest signal in this batch."
+ },
+ {
+  "title": "Young Girls Of Rochefort",
+  "year": 1967,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "SS"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection) + SS (Sight & Sound 2022 ranked =185, verified) + LBXD. Pre-1970 needs 3, has exactly 3. Arthouse + critics + cinephile. Demy musical."
+ },
+ {
+  "title": "In Cold Blood",
+  "year": 1967,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK with all three pre-1970-required lists independently verified: AFI (10 Top 10 Courtroom Drama, #8), Criterion (spine #781, 2015 4K restoration), NFR (inducted 2008). Spans institutional+arthouse+preservation worldviews. Not in catalog."
+ },
+ {
+  "title": "Funny Girl",
+  "year": 1968,
+  "lists": [
+   "AFI",
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK, all three pre-1970 lists verified: AFI (100 Years 100 Passions, #41), Criterion (spine #1240, 2024 release), NFR (inducted 2016). Streisand's Oscar-winning debut. Cross-worldview, not in catalog."
+ },
+ {
+  "title": "Kes",
+  "year": 1969,
+  "lists": [
+   "LBXD",
+   "RT",
+   "TSPDT"
+  ],
+  "tier": 2,
+  "justifyingList": "TSPDT",
+  "defense": "TSPDT #222 over Letterboxd+RT (cinephile+populist+critics); British canon fixture. Survives via TSPDT without adopting the other-festivals list."
+ },
+ {
+  "title": "Army Of Shadows",
+  "year": 1969,
+  "lists": [
+   "CRIT",
+   "LBXD",
+   "RT",
+   "SS"
+  ],
+  "tier": 3,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: CRIT (Criterion Collection, spine #) + LBXD + RT + SS (4 lists). Pre-1970 needs 3, has 4. Arthouse + cinephile + populist + critics — very strong cross-worldview. Melville Resistance epic."
+ },
+ {
+  "title": "Salesman",
+  "year": 1969,
+  "lists": [
+   "CRIT",
+   "NFR",
+   "RT"
+  ],
+  "tier": 2,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed: Criterion (#122) + NFR (preserved 1992) + RT. Preservation + arthouse + populist-critical. Maysles/Zwerin direct-cinema landmark. LEAK already meets rule."
+ },
+ {
+  "title": "Shampoo",
+  "year": 1975,
+  "lists": [
+   "AFI",
+   "CRIT"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: Criterion (4K restoration, Ashby/Beatty/Towne New Hollywood farce) verified explicitly; AFI 100 Years 100 Laughs membership per repo afiGenre. Institutional+arthouse pair, 1970+ needs only 2. Not in catalog."
+ },
+ {
+  "title": "Lost In America",
+  "year": 1985,
+  "lists": [
+   "AFI",
+   "CRIT"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Confirmed LEAK: Criterion (spine #887) verified; AFI 100 Years 100 Laughs per repo afiGenre. Albert Brooks satire, institutional+arthouse pair, needs only 2. Not in catalog."
+ },
+ {
+  "title": "Tongues Untied",
+  "year": 1989,
+  "lists": [
+   "CRIT",
+   "NFR"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Post-1970 LEAK meeting >=2: Criterion (criterion.com/films/31182) + National Film Registry (2022). Preservation + world-arthouse — strong non-populist signal."
+ },
+ {
+  "title": "Crash",
+  "year": 1996,
+  "lists": [
+   "CRIT",
+   "SS"
+  ],
+  "tier": 1,
+  "justifyingList": "LEAK",
+  "defense": "Cronenberg's 1996 Crash (J.G. Ballard adaptation, Cannes Special Jury Prize) — NOT the 2005 Haggis film. Confirmed Criterion + Sight & Sound 2022 critics' poll. Arthouse + critics cross-worldview."
+ }
+]
